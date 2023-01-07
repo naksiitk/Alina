@@ -1,0 +1,20 @@
+.full-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+}
+
+.login-card {
+    min-width: 400px;
+    max-width: 450px;
+    margin-top: 20px;
+    margin: auto;
+    width: 40%;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+}
