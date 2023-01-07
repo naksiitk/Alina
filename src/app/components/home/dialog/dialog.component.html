@@ -1,1 +1,33 @@
-<p>dialog works!</p>
+<h1 mat-dialog-title>Upload File</h1>
+<div mat-dialog-content>
+    <form [formGroup] = "file_list">
+        <mat-form-field appearance="outline" style="margin-top: 4%; width: 100%;">
+            <mat-label>Name of the file</mat-label>
+            <input formControlName="file_name" matInput placeholder="Provide File Name">
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="margin-top: 4%; width: 100%;">
+              <mat-label>Purpose</mat-label>
+              <mat-select formControlName="purpose" placeholder="Purpose of uploading">
+                  <mat-option value="GST">GST</mat-option>
+                  <mat-option value="ITR">Income Tax Returns</mat-option>
+                  <mat-option value="Others"> Others</mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="margin-top: 4%; width: 100%;">
+              <mat-label>Comments</mat-label>
+              <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
+              </mat-form-field>
+          <div mat-dialog-action [align]="'center'">
+              <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
+          </div>
+    </form>
+
+    <div mat-dialog-action [align]="'center'">
+        <button mat-raised-button color="warn" style="margin-right: 7%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+        <button mat-raised-button color="primary" style="width: 45%" mat-dialog-close>Close</button>
+    </div>
+            
+</div>
+
+
+
