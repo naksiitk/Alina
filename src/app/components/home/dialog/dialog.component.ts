@@ -53,8 +53,8 @@ export class DialogComponent implements OnInit{
     }
   }
   updateProduct(){
-    console.log(this.editdata.id, this.file_list.value);
-    this.api.putfile(this.editdata.id, this.file_list.value)
+    console.log(this.editdata._id, this.file_list.value);
+    this.api.putfile(this.editdata._id, this.file_list.value)
     .subscribe({
       next:(res)=>{
         alert("File Updated Successfully");

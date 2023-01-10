@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,11 +8,11 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   hide = true;
   signup_form !: FormGroup;
 
-  constructor(private formbuilder : FormBuilder, private api : AuthService) {};
+  constructor(private formbuilder : FormBuilder, private api : AuthService, public router: Router) {};
 
   ngOnInit(): void {
 
@@ -29,6 +30,7 @@ export class SignupComponent {
           .subscribe({
               next:(res)=>{alert("User Added");
               this.signup_form.reset();
+              this.router.navigate(['/login']);
               },
           error:()=>{
               alert("Cannot add user!");

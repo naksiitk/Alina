@@ -6,6 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { ApiService } from 'src/app/services/api.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class HomeComponent implements OnInit {
   title = 'my-app';
+  email = this.route.snapshot.paramMap.get('email');
 
   displayedColumns: string[] = ['file_name', 'purpose', 'comments', 'files_uploaded', 'Edit', 'Delete'];
   dataSource  !: MatTableDataSource<any>;
@@ -21,11 +23,12 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog, private api : ApiService ) {}
+  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute) {};
+
   ngOnInit(): void {
     this.getAllfiles();
-  }
-;
+    console.log(this.route.snapshot.paramMap.get('email'))
+  };
 
   openDialog() {
     this.dialog.open(DialogComponent,
@@ -52,8 +55,8 @@ export class HomeComponent implements OnInit {
     };
   
   deletefile(row : any){
-    console.log(row.id);
-    this.api.deletefile(row.id)
+    console.log(row._id);
+    this.api.deletefile(row._id)
     .subscribe({
       next:(res) => {alert("product Successfully Deleted");
       this.getAllfiles();

@@ -12,4 +12,7 @@ export class AuthService {
     return this.http.post<any>("http://localhost:8000/user",data);
   }
 
+  checkuser(data : any){
+    return this.http.post<any>("http://localhost:8000/user/login",data);
+  }
 }
