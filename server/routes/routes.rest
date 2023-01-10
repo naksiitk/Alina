@@ -1,0 +1,36 @@
+
+GET http://localhost:4041/doc_client/
+
+###
+
+POST http://localhost:4041/doc_client/
+Content-Type: application/json
+
+{
+    "file_name" : "GST DEC 2022", 
+    "purpose" : "ITR", 
+    "comments" : "I have the purchase bill", 
+    "files_uploaded" : "Files Uploaded"
+}
+
+###
+
+GET http://localhost:4041/doc_client/63ba7dde20ae526a897ef4d2
+
+
+###
+
+DELETE http://localhost:4041/doc_client/63ba84ac97a558b654d264cc
+
+
+###
+
+PUT http://localhost:4041/doc_client/63ba7ded20ae526a897ef4d5
+Content-Type: application/json
+
+{
+    "file_name" : "GST DEC 2022", 
+    "purpose" : "ITR", 
+    "comments" : "I have the purchase bill", 
+    "files_uploaded" : "Files Uploaded"
+}

@@ -52,8 +52,8 @@ export class HomeComponent implements OnInit {
     };
   
   deletefile(row : any){
-    console.log(row.id);
-    this.api.deletefile(row.id)
+    console.log(row._id);
+    this.api.deletefile(row._id)
     .subscribe({
       next:(res) => {alert("product Successfully Deleted");
       this.getAllfiles();
