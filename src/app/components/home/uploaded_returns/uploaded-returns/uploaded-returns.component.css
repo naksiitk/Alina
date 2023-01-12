@@ -34,9 +34,6 @@ td, th {
   z-index: 1;
 }
 
-.list-item-active {
-  font-weight: bold;
-  color: rgba(0, 5, 099, 0.50);
-  background-color : rgba(55, 0, 88, 0.10);
+.focus{
+  color: orange;
 }
-

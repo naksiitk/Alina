@@ -8,23 +8,33 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { ApiService } from 'src/app/services/api.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver) {};
+
   title = 'my-app';
   email = this.route.snapshot.paramMap.get('email');
 
   displayedColumns: string[] = ['file_name', 'purpose', 'comments', 'files_uploaded', 'Edit', 'Delete'];
   dataSource  !: MatTableDataSource<any>;
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute) {};
-
+  
   ngOnInit(): void {
     this.getAllfiles();
     console.log(this.route.snapshot.paramMap.get('email'))
