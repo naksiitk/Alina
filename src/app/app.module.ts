@@ -25,6 +25,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { UploadedReturnsComponent } from './components/home/uploaded_returns/uploaded-returns/uploaded-returns.component';
+import { UploadHistoryComponent } from './components/home/upload-history/upload-history.component';
+import { CredentialsComponent } from './components/home/credentials/credentials.component';
+import { FileUploadedComponent } from './components/home/file-uploaded/file-uploaded.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { UploadedReturnsComponent } from './components/home/uploaded_returns/upl
     SignupComponent,
     HomeComponent,
     DialogComponent,
-    UploadedReturnsComponent
+    UploadedReturnsComponent,
+    UploadHistoryComponent,
+    CredentialsComponent,
+    FileUploadedComponent
     
   ],
   imports: [
