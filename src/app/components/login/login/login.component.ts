@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
               next:(res)=>{
                 // console.log(this.login_form.value.email)
                 if(res.status == '200') {
-                  this.router.navigate(['/home/file_uploaded', {email : this.login_form.value['email']}])
+                  this.api.save_email_local('email',this.login_form.value['email'])
+                  this.router.navigate(['/home/file_uploaded'])
                   this.login_form.reset()
                 } else {
                   alert("Error")

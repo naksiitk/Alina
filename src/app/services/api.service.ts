@@ -1,20 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private api_auth:AuthService) { }
 
   postfile(data : any){
     return this.http.post<any>("http://localhost:8000/doc_client",data);
   }
-  getfile(){
-    
-    return this.http.get<any>("http://localhost:8000/doc_client/");
+  getfile(data:any){  
+    return this.http.get<any>("http://localhost:8000/doc_client/"+data);
   }
   putfile(id: number, data: any)
   {

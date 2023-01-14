@@ -12,8 +12,13 @@ router.get('/' , async (req,res)=>{
     }
 })
 //Getting One
-router.get('/:id' ,get_the_client, (req,res)=>{
-    res.json(res.client)
+router.get('/:id' , async (req,res)=>{
+    try {
+        const clients_list = await Doc_client.find({email : req.params.id})
+        res.json(clients_list)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 })
 //Creating One
 router.post('/' , async(req,res)=>{
@@ -21,7 +26,8 @@ router.post('/' , async(req,res)=>{
         file_name: req.body.file_name,
         purpose: req.body.purpose,
         comments: req.body.comments,
-        files_uploaded: req.body.files_uploaded
+        files_uploaded: req.body.files_uploaded,
+        email : req.body.email
     })
     try {
         const newDoc_client = await clients_list.save()
@@ -33,12 +39,11 @@ router.post('/' , async(req,res)=>{
 //Updating One
 router.put('/:id' ,get_the_client, async(req,res)=>{
     if(req.body !=null){
-        
         res.client.file_name= req.body.file_name;
         res.client.purpose= req.body.purpose;
         res.client.comments= req.body.comments;
         res.client.files_uploaded= req.body.files_uploaded;
-    
+        res.client.email = req.body.email;
         try {
             const newDoc_client = await res.client.save()
             res.status(201).json({message:'Updated Successfully'})

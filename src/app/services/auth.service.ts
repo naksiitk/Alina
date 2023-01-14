@@ -15,4 +15,18 @@ export class AuthService {
   checkuser(data : any){
     return this.http.post<any>("http://localhost:8000/user/login",data);
   }
+  public save_email_local(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+
+  public get_email_local(key: string) {
+    return localStorage.getItem(key)
+  }
+  public remove_email_local(key: string) {
+    localStorage.removeItem(key);
+  }
+
+  public clear_data_local() {
+    localStorage.clear();
+  }
 }

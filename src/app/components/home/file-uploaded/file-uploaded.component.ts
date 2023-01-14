@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -15,13 +16,15 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./file-uploaded.component.css']
 })
 export class FileUploadedComponent implements OnInit {
-  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver) {};
+  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver
+    , private api_auth : AuthService) {};
 
   title = 'my-app';
-  email = this.route.snapshot.paramMap.get('email');
 
+  public email = this.api_auth.get_email_local('email')
   displayedColumns: string[] = ['file_name', 'purpose', 'comments', 'files_uploaded', 'Edit', 'Delete'];
-  dataSource  !: MatTableDataSource<any>;
+  
+  dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -34,7 +37,6 @@ export class FileUploadedComponent implements OnInit {
   
   ngOnInit(): void {
     this.getAllfiles();
-    console.log(this.route.snapshot.paramMap.get('email'))
   };
 
   openDialog() {
@@ -73,12 +75,11 @@ export class FileUploadedComponent implements OnInit {
     
   }
   getAllfiles(){
-    this.api.getfile().subscribe({
+    this.api.getfile(this.api_auth.get_email_local('email')).subscribe({
         next:(res)=>{
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log(res);
         },
         error:()=>{
           alert("Error while fetching products");

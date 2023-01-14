@@ -16,6 +16,10 @@ const doc_client_schema = new mongoose.Schema({
     files_uploaded : {
         type : String, 
         required : true
+    },
+    email : {
+        type : String, 
+        required : true
     }
 });
 
