@@ -40,3 +40,7 @@ td, th {
   background-color : rgba(55, 0, 88, 0.10);
 }
 
+.mat-icon{
+  vertical-align: middle;
+  margin-right: 3%;
+}
