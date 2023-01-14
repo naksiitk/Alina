@@ -24,10 +24,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
-import { UploadedReturnsComponent } from './components/home/uploaded_returns/uploaded-returns/uploaded-returns.component';
-import { UploadHistoryComponent } from './components/home/upload-history/upload-history.component';
 import { CredentialsComponent } from './components/home/credentials/credentials.component';
 import { FileUploadedComponent } from './components/home/file-uploaded/file-uploaded.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { BillingHistoryComponent } from './components/home/billing-history/billing-history.component';
+import { UploadedReturnsComponent } from './components/home/uploaded-returns/uploaded-returns.component';
 
 @NgModule({
   declarations: [
@@ -37,9 +38,9 @@ import { FileUploadedComponent } from './components/home/file-uploaded/file-uplo
     HomeComponent,
     DialogComponent,
     UploadedReturnsComponent,
-    UploadHistoryComponent,
     CredentialsComponent,
-    FileUploadedComponent
+    FileUploadedComponent,
+    BillingHistoryComponent
     
   ],
   imports: [
@@ -61,7 +62,8 @@ import { FileUploadedComponent } from './components/home/file-uploaded/file-uplo
     MatPaginatorModule,
     MatSidenavModule,
     LayoutModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
