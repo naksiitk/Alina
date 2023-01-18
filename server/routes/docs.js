@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const Doc_client = require('../models/doc_clients')
+const docs = require('../models/docs')
+const users = require('../models/docs')
 
 //Getting All
 router.get('/' , async (req,res)=>{
     try {
-        const clients_list = await Doc_client.find()
-        res.json(clients_list)
+        const doc_list = await docs.find()
+        res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -14,20 +15,30 @@ router.get('/' , async (req,res)=>{
 //Getting One
 router.get('/:id' , async (req,res)=>{
     try {
-        const clients_list = await Doc_client.find({email : req.params.id})
-        res.json(clients_list)
+        const doc_list = await docs.find({email : req.params.id})
+        res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 })
 //Creating One
 router.post('/' , async(req,res)=>{
-    const clients_list = new Doc_client({
+    let userPAN
+
+    try {
+        const user = await users.findOne({email: req.body.email})
+        userPAN = user.PAN
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+    const clients_list = new docs({
         file_name: req.body.file_name,
         purpose: req.body.purpose,
         comments: req.body.comments,
         files_uploaded: req.body.files_uploaded,
-        email : req.body.email
+        email : req.body.email,
+        PAN : userPAN,
+        seen : false
     })
     try {
         const newDoc_client = await clients_list.save()
@@ -37,15 +48,15 @@ router.post('/' , async(req,res)=>{
     }
 })
 //Updating One
-router.put('/:id' ,get_the_client, async(req,res)=>{
+router.put('/:id' ,getDoc, async(req,res)=>{
     if(req.body !=null){
-        res.client.file_name= req.body.file_name;
-        res.client.purpose= req.body.purpose;
-        res.client.comments= req.body.comments;
-        res.client.files_uploaded= req.body.files_uploaded;
-        res.client.email = req.body.email;
+        res.doc.file_name= req.body.file_name;
+        res.doc.purpose= req.body.purpose;
+        res.doc.comments= req.body.comments;
+        res.doc.files_uploaded= req.body.files_uploaded;
+        res.doc.email = req.body.email;
         try {
-            const newDoc_client = await res.client.save()
+            const newDoc = await res.doc.save()
             res.status(201).json({message:'Updated Successfully'})
         } catch (error) {
             res.status(400).json({message: error.message})
@@ -54,9 +65,9 @@ router.put('/:id' ,get_the_client, async(req,res)=>{
     
 })
 //Deleting One
-router.delete('/:id' ,get_the_client, async(req,res)=>{
+router.delete('/:id' ,getDoc, async(req,res)=>{
     try {
-        await res.client.remove();
+        await res.doc.remove();
         res.status(200).json({message:'Deleted Successfully'});
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -64,18 +75,18 @@ router.delete('/:id' ,get_the_client, async(req,res)=>{
 })
 
 
-async function get_the_client(req,res, next)
+async function getDoc(req,res, next)
 {
-    let client
+    let doc
     try {
-        client = await Doc_client.findById(req.params.id)
-        if(client == null){
-            return res.status(404).json({message : 'Cannot Find Subscirber'})
+        doc = await docs.findById(req.params.id)
+        if(doc == null){
+            return res.status(404).json({message : 'Cannot Find Doc'})
         }
     } catch (error) {
         return res.status(500).json({message: error.message})
     }
-    res.client = client
+    res.doc = doc
     next()
 }
 module.exports = router

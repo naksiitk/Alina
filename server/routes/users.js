@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/user')
+const User = require('../models/users')
 const bcrypt = require('bcrypt')
 
 //Getting all
@@ -27,7 +27,15 @@ router.post('/', async (req, res) =>{
         const salt = await bcrypt.genSalt()
         const hashedpassword = await bcrypt.hash(req.body.password, salt)
 
-        const user = new User({ email: req.body.email, password: hashedpassword})
+        const user = new User({ 
+            email: req.body.email, 
+            password: hashedpassword,
+            mobile: req.body.mobile,
+            user_name: req.body.user_name,
+            user_type: req.body.user_type,
+            PAN: req.body.PAN,
+            company_name: req.body.user_name
+        })
         const newUser = await user.save()
         res.status(201).json(newUser)
     } catch (err) {

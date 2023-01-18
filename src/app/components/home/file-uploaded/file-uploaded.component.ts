@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -62,12 +63,22 @@ export class FileUploadedComponent implements OnInit {
       })
       
     };
-  
+
+  openDialogDelete(row: any) {
+    const dialogRef = this.dialog.open(DialogDeleteComponent, {
+      width : '30%'
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) this.deletefile(row);
+    })
+  };
+
   deletefile(row : any){
     console.log(row._id);
     this.api.deletefile(row._id)
     .subscribe({
-      next:(res) => {alert("product Successfully Deleted");
+      next:(res) => {alert("File Deleted Successfully");
       this.getAllfiles();
     },
       error:(err) => {alert("File Deletion Failed")}

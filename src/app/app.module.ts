@@ -29,6 +29,7 @@ import { FileUploadedComponent } from './components/home/file-uploaded/file-uplo
 import {MatTabsModule} from '@angular/material/tabs';
 import { BillingHistoryComponent } from './components/home/billing-history/billing-history.component';
 import { UploadedReturnsComponent } from './components/home/uploaded-returns/uploaded-returns.component';
+import { DialogDeleteComponent } from './components/home/dialog-delete/dialog-delete.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UploadedReturnsComponent } from './components/home/uploaded-returns/upl
     UploadedReturnsComponent,
     CredentialsComponent,
     FileUploadedComponent,
-    BillingHistoryComponent
+    BillingHistoryComponent,
+    DialogDeleteComponent
     
   ],
   imports: [

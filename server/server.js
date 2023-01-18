@@ -20,11 +20,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors());
 
-const userRouter = require('./routes/users.js')
-app.use('/user', userRouter)
+const usersRouter = require('./routes/users.js')
+app.use('/user', usersRouter)
 
-const doc_client_routes = require('./routes/doc_client')
-app.use('/doc_client', doc_client_routes)
+const docsRouter = require('./routes/docs.js')
+app.use('/doc_client', docsRouter)
+
+const credentialsRouter = require('./routes/credentials.js')
+app.use('/credential', credentialsRouter)
 
 app.listen(8000, () => console.log('Server Started'))
 
