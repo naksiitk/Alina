@@ -26,4 +26,7 @@ export class ApiService {
     console.log("http://localhost:8000/doc_client/"+id)
     return this.http.delete<any>("http://localhost:8000/doc_client/"+id);
   }
+  getclient(data:any){  
+    return this.http.get<any>("http://localhost:8000/doc_client/client_list/"+data);
+  }
 }

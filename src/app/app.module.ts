@@ -30,6 +30,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BillingHistoryComponent } from './components/home/billing-history/billing-history.component';
 import { UploadedReturnsComponent } from './components/home/uploaded-returns/uploaded-returns.component';
 
+import { AuditorHomeComponent } from './components/auditor_home/auditor-home/auditor-home.component';
+import { ItrComponent } from './components/auditor_home/itr/itr.component';
+import { GstComponent } from './components/auditor_home/gst/gst.component';
+import { TdsComponent } from './components/auditor_home/tds/tds.component';
+import { AuditorCredComponent } from './components/auditor_home/auditor-cred/auditor-cred.component';
+import { AudBilingComponent } from './components/auditor_home/aud-biling/aud-biling.component';
+import { DashboardComponent } from './components/auditor_home/dashboard/dashboard.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatBadgeModule} from '@angular/material/badge';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +49,14 @@ import { UploadedReturnsComponent } from './components/home/uploaded-returns/upl
     UploadedReturnsComponent,
     CredentialsComponent,
     FileUploadedComponent,
-    BillingHistoryComponent
+    BillingHistoryComponent,
+    AuditorHomeComponent,
+    ItrComponent,
+    GstComponent,
+    TdsComponent,
+    AuditorCredComponent,
+    AudBilingComponent,
+    DashboardComponent
     
   ],
   imports: [
@@ -63,7 +79,9 @@ import { UploadedReturnsComponent } from './components/home/uploaded-returns/upl
     MatSidenavModule,
     LayoutModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    FontAwesomeModule,
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

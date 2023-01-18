@@ -1,16 +1,17 @@
 
-GET http://localhost:8000/doc_client/
+GET http://localhost:8000/client_list/
 
 ###
 
-POST http://localhost:4041/doc_client/
+POST http://localhost:8000/doc_client/
 Content-Type: application/json
 
 {
     "file_name" : "GST DEC 2022", 
     "purpose" : "ITR", 
     "comments" : "I have the purchase bill", 
-    "files_uploaded" : "Files Uploaded"
+    "files_uploaded" : "Files Uploaded",
+    "email" : "3"
 }
 
 ###

@@ -20,6 +20,15 @@ router.get('/:id' , async (req,res)=>{
         res.status(500).json({message: error.message})
     }
 })
+
+router.get('/client_list/:id' , async (req,res)=>{
+    try {
+        const clients_list = await Doc_client.find({purpose : req.params.id},{email:1})
+        res.json(clients_list)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
 //Creating One
 router.post('/' , async(req,res)=>{
     const clients_list = new Doc_client({

@@ -1,0 +1,46 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  table {
+    width: 100%;
+  }
+  
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.sidenav-container {
+  height: 100%;
+  
+}
+
+.sidenav {
+  width: 300px;
+  
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.list-item-active {
+  font-weight: bold;
+  color: rgba(0, 5, 099, 0.50);
+  background-color : rgba(55, 0, 88, 0.10);
+}
+
+.mat-icon{
+  vertical-align: middle;
+  margin-right: 3%;
+}

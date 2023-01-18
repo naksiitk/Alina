@@ -1,0 +1,52 @@
+
+<div class = "container" style="margin-top: 7%; margin-left: 6%; margin-right:6%;">
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="File Name" #input>
+      </mat-form-field>
+      
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort >
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+          </ng-container>
+      
+          <!-- PAN Column -->
+          <ng-container matColumnDef="pan">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> PAN </th>
+            <td mat-cell *matCellDef="let row"> {{row.pan}} </td>
+          </ng-container>
+      
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td style="padding-top: 1%;padding-bottom: 1%;" mat-cell *matCellDef="let row"> {{row.email}} </td>
+          </ng-container>
+      
+          <!-- New uploads Column -->
+          <ng-container matColumnDef="new_uploads">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> New Uploads </th>
+            <td style="padding-top: 1%;padding-bottom: 1%;" mat-cell *matCellDef="let row" > 
+              <button mat-raised-button matBadge=7 [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()">
+                  View
+              </button>
+                </td>
+                 <!-- {{row.new_uploads}}  -->
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      </div>
+      
+    </div>
