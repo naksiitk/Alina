@@ -1,17 +1,19 @@
 .full-page {
-    height: 100vh;
+  
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ccc;
+    background-color: #ffffff;
+}
+.image-responsive{
+    width: 30%;
+    padding: 2%;
 }
 
 .login-card {
-    min-width: 400px;
-    max-width: 450px;
-    margin-top: 20px;
-    margin: auto;
-    width: 40%;
+    margin-top: 0;
+    width: 50%;
 }
 
 mat-form-field {

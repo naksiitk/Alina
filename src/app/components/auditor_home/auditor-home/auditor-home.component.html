@@ -17,9 +17,9 @@
     <mat-sidenav  color="primary" #drawer class="sidenav" >
       <mat-toolbar ><mat-icon>dashboard</mat-icon> Menu</mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : 1"
+        <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         routerLink="/auditor/dashboard" (click)="drawer.toggle()"><mat-icon color="primary">home</mat-icon><span style="vertical-align : middle;"> DashBoard </span></a>
-        <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : 1"
+        <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         routerLink="/auditor/itr" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon><span style="vertical-align : middle;"> Income Tax Returns </span></a>
         <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
         routerLink="/auditor/gst" class="mat-list-item-focus" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon> Goods and Service Tax</a>

@@ -1,0 +1,47 @@
+
+GET http://localhost:8000/doc/
+
+###
+
+GET http://localhost:8000/doc/client_list/ITR
+
+###
+
+GET http://localhost:8000/user/client_doc_summary
+
+###
+POST http://localhost:8000/doc/
+Content-Type: application/json
+
+{
+    "file_name" : "File Aug", 
+    "purpose" : "TDS", 
+    "comments" : "I have the purchase bill", 
+    "files_uploaded" : "Files Uploaded",
+    "email" : "1"
+}
+
+###
+
+GET http://localhost:8000/doc_client/63c7a4788861b69efc9d7d72
+
+###
+
+DELETE http://localhost:8000/doc_client/63c7a4788861b69efc9d7d72
+
+
+###
+
+PUT http://localhost:8000/doc_client/63ba7ded20ae526a897ef4d5
+Content-Type: application/json
+
+{
+    "file_name" : "GST DEC 2022", 
+    "purpose" : "ITR", 
+    "comments" : "I have the purchase bill", 
+    "files_uploaded" : "Files Uploaded"
+}
+
+###
+
+DELETE http://localhost:8000/doc/

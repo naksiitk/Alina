@@ -1,0 +1,34 @@
+GET http://localhost:8000/user
+
+
+###
+
+GET http://localhost:8000/user/63bad7eb0f73c53301b11d6v
+
+###
+
+POST http://localhost:8000/user
+Content-Type: application/json
+
+{
+    "email": "9",
+    "password": "qwerty99",
+    "mobile": "8754004419",
+    "user_name": "anbarasu",
+    "user_type": "auditor",
+    "PAN": "POIUY0987M"
+}
+
+###
+
+POST http://localhost:8000/user/login
+Content-Type: application/json
+
+{
+    "email": "1",
+    "password": "1"
+}
+
+###
+
+DELETE http://localhost:8000/user/63c8338184bfae78bb6c8fcf

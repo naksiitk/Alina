@@ -4,59 +4,66 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-gst',
   templateUrl: './gst.component.html',
   styleUrls: ['./gst.component.css']
 })
-export class GstComponent {
+export class GstComponent implements OnInit{
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver,
-    private api:ApiService) {};
+    private api:ApiService, private router : Router, private auth_api : AuthService) {};
 
-  displayedColumns: string[] = ['name', 'pan', 'email', 'new_uploads'];
+
+    displayedColumns: string[] = ['user.user_name', 'user.PAN', 'email', 'unseen'];
   
-  dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-  ngOnInit(): void {
-     this.getclients();
-  };
-
-  getclients(){
-    this.api.getclient("GST").subscribe({
-        next:(res)=>{
-          this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        },
-        error:()=>{
-          alert("Error while fetching products");
-        }
-      })
-  }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+  
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+  
+    ngAfterViewInit() {
+      this.dataSource.sort = this.sort;
     }
-  }
-
-  hidden = false;
-
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
-  }
+    ngOnInit(): void {
+       this.getclients();
+    };
+  
+    getclients(){
+      this.api.getclient("GST").subscribe({
+          next:(res)=>{
+            
+            this.dataSource = new MatTableDataSource(res);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            console.log(res[0])
+          },
+          error:()=>{
+            alert("Error while fetching products");
+          }
+        })
+    }
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+  
+    hidden = false;
+  
+    router_link_client_tab(email : string) {
+      this.auth_api.save_email_local("auditor_view_client_email_gst", email)
+      this.router.navigate(['auditor/gst/client_tab'])
+      this.hidden = !this.hidden;
+    }
+  
 
 }

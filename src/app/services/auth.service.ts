@@ -12,6 +12,13 @@ export class AuthService {
     return this.http.post<any>("http://localhost:8000/user",data);
   }
 
+  user_signup(data : any){
+    return this.http.post<any>("http://localhost:8000/user/signup",data);
+  }
+  generate_otp(data : any){
+    return this.http.post<any>("http://localhost:8000/user/generate_otp",data);
+  }
+
   checkuser(data : any){
     return this.http.post<any>("http://localhost:8000/user/login",data);
   }

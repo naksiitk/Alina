@@ -14,6 +14,9 @@ import { TdsComponent } from './components/auditor_home/tds/tds.component';
 import { AuditorCredComponent } from './components/auditor_home/auditor-cred/auditor-cred.component';
 import { AudBilingComponent } from './components/auditor_home/aud-biling/aud-biling.component';
 import { GstComponent } from './components/auditor_home/gst/gst.component';
+import { ClientTabComponent } from './components/auditor_home/itr/client-tab/client-tab.component';
+import { ClientTabTdsComponent } from './components/auditor_home/tds/client-tab-tds/client-tab-tds.component';
+import { ClientTabGstComponent } from './components/auditor_home/gst/client-tab-gst/client-tab-gst.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -38,9 +41,15 @@ const routes: Routes = [
       {path: 'gst', component: GstComponent},
       {path: 'tds', component: TdsComponent},
       {path: 'credentials', component: AuditorCredComponent},
-      {path: 'billing_history', component: AudBilingComponent}
+      {path: 'billing_history', component: AudBilingComponent},
+      {path: 'itr/client_tab', component: ClientTabComponent },
+      {path: 'gst/client_tab', component: ClientTabGstComponent },
+      {path: 'tds/client_tab', component: ClientTabTdsComponent }
+      
+      
     ]
   }
+  
 ];
 
 @NgModule({

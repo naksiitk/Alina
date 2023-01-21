@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/user')
+const User = require('../models/users')
 const bcrypt = require('bcrypt')
+const client_doc_summary = require('../models/client_doc_summary')
 
 //Getting all
 router.get('/', async (req, res) =>{
@@ -12,6 +13,16 @@ router.get('/', async (req, res) =>{
         res.status(500).json({message: error.message})
     }
 })
+//Getting Clinet_doc_summary
+router.get('/client_doc_summary', async (req, res) =>{
+    try {
+        const users = await client_doc_summary.find()
+        res.json(users)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 
 //Getting One
 router.get('/:id', getUser, (req, res) =>{
@@ -27,8 +38,27 @@ router.post('/', async (req, res) =>{
         const salt = await bcrypt.genSalt()
         const hashedpassword = await bcrypt.hash(req.body.password, salt)
 
-        const user = new User({ email: req.body.email, password: hashedpassword})
-        const newUser = await user.save()
+        const user = new User({ 
+            email: req.body.email, 
+            password: hashedpassword,
+            mobile: req.body.mobile,
+            user_name: req.body.user_name,
+            user_type: req.body.user_type,
+            PAN: req.body.PAN,
+            company_name: req.body.user_name
+        })
+        
+        const newUser = await user.save();
+
+        // const client_doc = new client_doc_summary({
+        //     unseen : 0,
+        //     total : 0,
+        //     email : req.body.email,
+        //     user : newUser.id,
+        // });
+        // client_doc.save()
+
+        //const newUser = await user.saveInstance();
         res.status(201).json(newUser)
     } catch (err) {
         res.status(400).json({ message: err.message})

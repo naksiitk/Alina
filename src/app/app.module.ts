@@ -29,6 +29,7 @@ import { FileUploadedComponent } from './components/home/file-uploaded/file-uplo
 import {MatTabsModule} from '@angular/material/tabs';
 import { BillingHistoryComponent } from './components/home/billing-history/billing-history.component';
 import { UploadedReturnsComponent } from './components/home/uploaded-returns/uploaded-returns.component';
+import { DialogDeleteComponent } from './components/home/dialog-delete/dialog-delete.component';
 
 import { AuditorHomeComponent } from './components/auditor_home/auditor-home/auditor-home.component';
 import { ItrComponent } from './components/auditor_home/itr/itr.component';
@@ -39,6 +40,22 @@ import { AudBilingComponent } from './components/auditor_home/aud-biling/aud-bil
 import { DashboardComponent } from './components/auditor_home/dashboard/dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatBadgeModule} from '@angular/material/badge';
+import { ClientTabComponent } from './components/auditor_home/itr/client-tab/client-tab.component';
+// import { ClientTabDialogComponent } from './components/auditor_home/itr/client-tab-dialog/client-tab-dialog.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ClientTabGstComponent } from './components/auditor_home/gst/client-tab-gst/client-tab-gst.component';
+import { ClientTabTdsComponent } from './components/auditor_home/tds/client-tab-tds/client-tab-tds.component';
+import { FilesUploadedItrComponent } from './components/auditor_home/itr/files-uploaded-itr/files-uploaded-itr.component';
+import { ReturnsUploadedItrComponent } from './components/auditor_home/itr/returns-uploaded-itr/returns-uploaded-itr.component';
+import { FilesUploadedGstComponent } from './components/auditor_home/gst/files-uploaded-gst/files-uploaded-gst.component';
+import { ReturnsUploadedGstComponent } from './components/auditor_home/gst/returns-uploaded-gst/returns-uploaded-gst.component';
+import { ReturnsUploadedTdsComponent } from './components/auditor_home/tds/returns-uploaded-tds/returns-uploaded-tds.component';
+import { FilesUploadedTdsComponent } from './components/auditor_home/tds/files-uploaded-tds/files-uploaded-tds.component';
+// import { ClientTabTdsComponent } from '.components/auditor_home/tds/client-tab-tds/client-tab-tds.component';
+// import { ClientTabGstComponent } from '.components/auditor_home/gst/client-tab-gst/client-tab-gst.component'; 
+import {MatStepperModule} from '@angular/material/stepper'; 
+import { NgOtpInputModule } from 'ng-otp-input';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,8 +73,18 @@ import {MatBadgeModule} from '@angular/material/badge';
     TdsComponent,
     AuditorCredComponent,
     AudBilingComponent,
-    DashboardComponent
-    
+    DashboardComponent,
+    DialogDeleteComponent,
+    ClientTabComponent,
+    ClientTabGstComponent,
+    ClientTabTdsComponent,
+    FilesUploadedItrComponent,
+    ReturnsUploadedItrComponent,
+    FilesUploadedGstComponent,
+    ReturnsUploadedGstComponent,
+    ReturnsUploadedTdsComponent,
+    FilesUploadedTdsComponent
+     
   ],
   imports: [
     BrowserModule,
@@ -81,7 +108,10 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatListModule,
     MatTabsModule,
     FontAwesomeModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSlideToggleModule,
+    MatStepperModule,
+    NgOtpInputModule  
   ],
   providers: [],
   bootstrap: [AppComponent]
