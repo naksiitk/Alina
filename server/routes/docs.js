@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const docs = require('../models/docs')
-const users = require('../models/docs')
+const users = require('../models/users')
 
 //Getting All
 router.get('/' , async (req,res)=>{
@@ -21,13 +21,24 @@ router.get('/:id' , async (req,res)=>{
         res.status(500).json({message: error.message})
     }
 })
+
+//Getting docs based on purpose
+router.post('/purpose' , async (req,res)=>{
+    try {
+        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose})
+        res.json(doc_list)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 //Creating One
 router.post('/' , async(req,res)=>{
     let userPAN
 
     try {
         const user = await users.findOne({email: req.body.email})
-        userPAN = user.PAN
+        userPAN = user.PAN[0]
     } catch (error) {
         res.status(500).json({message: error.message})
     }

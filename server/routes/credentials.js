@@ -28,8 +28,7 @@ router.post('/', async (req, res) =>{
 
             user_id : req.body.user_id,
             password : req.body.password,
-        
-            PAN: req.body.PAN,
+
             registered_mobile: req.body.registered_mobile,
             registered_email: req.body.registered_email
         })
@@ -60,7 +59,6 @@ router.put('/:id', getCredentials, async(req, res) =>{
         res.credential.user_id = req.body.user_id;
         res.credential.password = req.body.password;
     
-        res.credential.PAN = req.body.PAN;
         res.credential.registered_mobile = req.body.registered_mobile;
         res.credential.registered_email = req.body.registered_email;
         try {

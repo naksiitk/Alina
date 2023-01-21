@@ -1,32 +1,41 @@
 
-GET http://localhost:8000/doc_client/
+GET http://localhost:8000/doc/
 
 ###
 
-POST http://localhost:8000/doc_client/
+POST http://localhost:8000/doc/
 Content-Type: application/json
 
 {
     "file_name" : "GST dec 2022", 
-    "purpose" : "ITR", 
+    "purpose" : "GST", 
     "comments" : "I have the purchase bill", 
     "files_uploaded" : "Files Uploaded",
-    "email" : "1",
-    "PAN" : "MPDS3456H"
+    "email" : "1"
 }
 
 ###
 
-GET http://localhost:8000/doc_client/63c7a4788861b69efc9d7d72
+POST http://localhost:8000/doc/purpose
+Content-Type: application/json
+
+{
+    "purpose" : "GST", 
+    "email" : "1"
+}
 
 ###
 
-DELETE http://localhost:8000/doc_client/63c7a4788861b69efc9d7d72
+GET http://localhost:8000/doc/63c7a4788861b69efc9d7d72
+
+###
+
+DELETE http://localhost:8000/doc/63c7a4788861b69efc9d7d72
 
 
 ###
 
-PUT http://localhost:8000/doc_client/63ba7ded20ae526a897ef4d5
+PUT http://localhost:8000/doc/63ba7ded20ae526a897ef4d5
 Content-Type: application/json
 
 {

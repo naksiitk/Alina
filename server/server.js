@@ -24,7 +24,7 @@ const usersRouter = require('./routes/users.js')
 app.use('/user', usersRouter)
 
 const docsRouter = require('./routes/docs.js')
-app.use('/doc_client', docsRouter)
+app.use('/doc', docsRouter)
 
 const credentialsRouter = require('./routes/credentials.js')
 app.use('/credential', credentialsRouter)

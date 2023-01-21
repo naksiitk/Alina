@@ -30,6 +30,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BillingHistoryComponent } from './components/home/billing-history/billing-history.component';
 import { UploadedReturnsComponent } from './components/home/uploaded-returns/uploaded-returns.component';
 import { DialogDeleteComponent } from './components/home/dialog-delete/dialog-delete.component';
+import { DialogCredentialsComponent } from './components/home/dialog-credentials/dialog-credentials.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DialogDeleteComponent } from './components/home/dialog-delete/dialog-de
     CredentialsComponent,
     FileUploadedComponent,
     BillingHistoryComponent,
-    DialogDeleteComponent
+    DialogDeleteComponent,
+    DialogCredentialsComponent
     
   ],
   imports: [
