@@ -16,6 +16,9 @@ export class ApiService {
   getfile(data:any){  
     return this.http.get<any>("http://localhost:8000/doc/"+data);
   }
+  getFilesWithPurpose(data: any) {
+    return this.http.post<any>("http://localhost:8000/doc/purpose",data);
+  }
   putfile(id: number, data: any)
   {
     

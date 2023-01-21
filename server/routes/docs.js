@@ -32,6 +32,17 @@ router.get('/client_list/:id' , async (req,res)=>{
     }
 })
 
+
+//Getting docs based on purpose
+router.post('/purpose' , async (req,res)=>{
+    try {
+        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose})
+        res.json(doc_list)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 //Creating One
 router.post('/' , async(req,res)=>{
     let userPAN

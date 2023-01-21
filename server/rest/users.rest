@@ -3,6 +3,10 @@ GET http://localhost:8000/user
 
 ###
 
+GET http://localhost:8000/user/otps
+
+###
+
 GET http://localhost:8000/user/63bad7eb0f73c53301b11d6v
 
 ###
@@ -31,4 +35,28 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8000/user/63c8338184bfae78bb6c8fcf
+DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
+
+
+###
+POST http://localhost:8000/user/generate_otp
+Content-Type: application/json
+
+{
+    "email": "naksiitk@gmail.com"
+}
+
+###
+
+POST http://localhost:8000/user/signup
+Content-Type: application/json
+
+{
+    "email": "naksiitk@gmail.com",
+    "password": "1",
+    "mobile": "9887241556",
+    "user_name": "reithick",
+    "user_type": "auditor",
+    "PAN": "MOPJD4592D",
+    "OTP": "aaaaa"
+}

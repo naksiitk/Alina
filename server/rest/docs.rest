@@ -23,16 +23,26 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/doc_client/63c7a4788861b69efc9d7d72
+POST http://localhost:8000/doc/purpose
+Content-Type: application/json
+
+{
+    "purpose" : "GST", 
+    "email" : "1"
+}
 
 ###
 
-DELETE http://localhost:8000/doc_client/63c7a4788861b69efc9d7d72
+GET http://localhost:8000/doc/63c7a4788861b69efc9d7d72
+
+###
+
+DELETE http://localhost:8000/doc/63c7a4788861b69efc9d7d72
 
 
 ###
 
-PUT http://localhost:8000/doc_client/63ba7ded20ae526a897ef4d5
+PUT http://localhost:8000/doc/63ba7ded20ae526a897ef4d5
 Content-Type: application/json
 
 {

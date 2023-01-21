@@ -11,7 +11,6 @@ const credentialSchema = new mongoose.Schema({
     user_id : { type : String, required : true },
     password : { type : String, required : true },
 
-    PAN: { type : String },
     registered_mobile: { type : Number},
     registered_email: { type: String}
 });
