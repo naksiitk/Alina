@@ -159,6 +159,7 @@ router.post('/signup', async (req, res) =>{
 
 //Creating one
 router.post('/generate_otp', async (req, res) =>{
+    console.log('hi')
     const user = await User.findOne({email: req.body.email})
     if(user != null) return res.status(400).json({Status : "Email already exists"})
 
