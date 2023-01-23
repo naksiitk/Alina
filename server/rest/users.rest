@@ -35,7 +35,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
+DELETE http://localhost:8000/user/63cc141db5553e88bc6ebbdd
 
 
 ###
@@ -51,12 +51,12 @@ Content-Type: application/json
 POST http://localhost:8000/user/signup
 Content-Type: application/json
 
-{
-    "email": "naksiitk@gmail.com",
-    "password": "1",
-    "mobile": "9887241556",
-    "user_name": "reithick",
-    "user_type": "auditor",
-    "PAN": "MOPJD4592D",
-    "OTP": "aaaaa"
-}
+{"email":"reithick@gmail.com",
+"mobile":"94",
+"user_name":"94",
+"PAN":"94",
+"password":"94",
+"retype_password":"94",
+"user_type":"client",
+"OTP":"RU46x",
+"otp_phone":"12345"}

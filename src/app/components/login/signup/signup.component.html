@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <mat-toolbar color="primary">
       <button
         type="button"
@@ -10,68 +10,81 @@
       <span > </span>
     </div>
     </mat-toolbar>
-  </div>
+  </div> -->
 
 <div class="full-page">
     <img class = "image-responsive" src="../../../../assets/Images/alinalogo.png" alt="Alina Logo">
-    <mat-card class="login-card">
+    <mat-card class="login-card" class="mat-elevation-z0">
+        <mat-card-header>
+            <mat-card-title>Sign-up</mat-card-title>
+        </mat-card-header>
         <mat-stepper orientation="vertical" [linear]="true" #stepper>
-            <form [formGroup] = "signup_form">
-            <mat-step>
-            <ng-template matStepLabel>Step 1</ng-template>
-            <ng-template matStepContent>
-                <h2> Register your Email and Phone Number</h2>
-                <mat-form-field appearance="outline">
-                    <mat-label>Email ID</mat-label>
-                    <input formControlName="email" matInput placeholder="kamala@gmail.com">
-                    <mat-icon matSuffix>mail</mat-icon>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Phone Number</mat-label>
-                    <input formControlName="mobile" matInput placeholder="1234567890">
-                    <mat-icon matSuffix>phone</mat-icon>
-                </mat-form-field>
-                <button mat-button matStepperNext>Next</button>
-            </ng-template>
+            
+            <mat-step [stepControl]="email_form">
+            
+                <ng-template matStepLabel>Step 1</ng-template>
+                <ng-template matStepContent>
+                    <form [formGroup] = "email_form">
+                    <h2> Register your Email and Phone Number</h2>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email ID</mat-label>
+                        <input formControlName="email" matInput placeholder="kamala@gmail.com">
+                        <mat-icon matSuffix>mail</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone Number</mat-label>
+                        <input formControlName="mobile" matInput placeholder="1234567890">
+                        <mat-icon matSuffix>phone</mat-icon>
+                    </mat-form-field>
+                    <button mat-button matStepperNext>Next</button>
+                    </form>
+                </ng-template>
+            
             </mat-step>
             
             <mat-step [stepControl]="signup_form">
-            <ng-template matStepLabel>Step 2</ng-template>
-            <ng-template matStepContent>
-            <h2>Fill out the Details</h2>
-            
-                <mat-form-field appearance="outline">
-                    <mat-label>Name</mat-label>
-                    <input formControlName="user_name" matInput placeholder="kamala">
-                    <mat-icon matSuffix>name</mat-icon>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>PAN</mat-label>
-                    <input  matInput formControlName="PAN" placeholder="AKMPK5944M">
-                    <mat-icon matSuffix>name</mat-icon>
-                </mat-form-field>
                 
-                <mat-form-field appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Retype-Password</mat-label>
-                    <input matInput formControlName="retype_password" [type]="hide ? 'password' : 'text'">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                </mat-form-field>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button  (click)="AddUser()">Next</button>
+                <ng-template matStepLabel>Step 2</ng-template>
+                <ng-template matStepContent>
+                    <form [formGroup] = "signup_form">
+                <h2>Fill out the Details</h2>
+                
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input formControlName="user_name" matInput placeholder="kamala">
+                        <mat-icon matSuffix>name</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>PAN</mat-label>
+                        <input  matInput formControlName="PAN" placeholder="AKMPK5944M">
+                        <mat-icon matSuffix>name</mat-icon>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Retype-Password</mat-label>
+                        <input matInput formControlName="retype_password" [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <span *ngIf="!pass"> <p style="color: red;"> please type correct password </p>   </span> 
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button  (click)="Otp_generation()">Next</button>
+            </form> 
+              
             </ng-template>
+            
             </mat-step>
 
-        </form>
+        
             <mat-step [stepControl]="otp_form">
                 <ng-template matStepLabel>Step 3</ng-template>
                 <ng-template matStepContent>
@@ -97,6 +110,10 @@
                 <ng-template matStepContent>
                 <h1> Account Has been Created</h1>
                 <p> Go to Login Page</p>
+                <button mat-fab extended color="primary" (click)="moveout()">
+                    Login
+                <mat-icon>login</mat-icon>
+                </button>
             </ng-template>
             </mat-step>
         </mat-stepper>

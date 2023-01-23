@@ -1,4 +1,4 @@
-.full-page {
+/* .full-page {
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -12,6 +12,28 @@
     margin-top: 20px;
     margin: auto;
     width: 40%;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+} */
+.full-page {
+  
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:  #f8f8f8;
+}
+.image-responsive{
+    padding: 2%;
+    width: 30%;
+}
+
+.login-card {
+    margin-top: 0;
+    margin-right: 2%;
 }
 
 mat-form-field {
