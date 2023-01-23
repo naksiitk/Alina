@@ -1,6 +1,5 @@
 GET http://localhost:8000/user
 
-
 ###
 
 GET http://localhost:8000/user/otps
@@ -15,12 +14,12 @@ POST http://localhost:8000/user
 Content-Type: application/json
 
 {
-    "email": "9",
-    "password": "qwerty99",
-    "mobile": "8754004419",
-    "user_name": "anbarasu",
+    "email": "1",
+    "password": "1",
+    "mobile": "9887241556",
+    "user_name": "reithick",
     "user_type": "auditor",
-    "PAN": "POIUY0987M"
+    "PAN": "MOPJD4592D"
 }
 
 ###
@@ -30,7 +29,7 @@ Content-Type: application/json
 
 {
     "email": "1",
-    "password": "1"
+    "password": "2"
 }
 
 ###
@@ -43,7 +42,7 @@ POST http://localhost:8000/user/generate_otp
 Content-Type: application/json
 
 {
-    "email": "naksiitk@gmail.com"
+    "email": "reithick@gmail.com"
 }
 
 ###
