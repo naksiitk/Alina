@@ -21,7 +21,7 @@ export interface RowValue {
 })
 export class CredentialsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'colon','value'];
-  dataSource: [RowValue[],RowValue[],RowValue[]] = [[],[],[]]
+  dataSource: [RowValue[][],RowValue[][],RowValue[][]] = [[],[],[]]
   credential_type = ['GST', 'Income Tax', 'TDS'];
 
   constructor(public dialog: MatDialog, private api : CredentialsService, private api_auth: AuthService) {};
@@ -36,6 +36,7 @@ export class CredentialsComponent implements OnInit {
     this.api.FetchAllCredentials({email : user_email}).subscribe({
       next:(res)=>{
         
+        var a = 0, b = 0, c =0;
         for(var i= 0; i < res.length; i++) {
 
           let row0: RowValue = {name: res[i].credential_type + ' user_name', colon: ':', value: res[i].user_id, _id:res[i]._id}
@@ -43,9 +44,9 @@ export class CredentialsComponent implements OnInit {
           let row2: RowValue = {name: 'Registered Mobile', colon: ':', value: res[i].registered_mobile, _id:res[i]._id}
           let row3: RowValue = {name: 'Registered Email', colon: ':', value: res[i].registered_email, _id:res[i]._id}
 
-          if(res[i].credential_type == 'GST') this.dataSource[0] = [row0,row1,row2,row3]
-          if(res[i].credential_type == 'ITR') this.dataSource[1] = [row0,row1,row2,row3]
-          if(res[i].credential_type == 'TDS') this.dataSource[2] = [row0,row1,row2,row3]
+          if(res[i].credential_type == 'GST') { this.dataSource[0][a] = [row0,row1,row2,row3]; a = a+1; }
+          if(res[i].credential_type == 'ITR') { this.dataSource[1][b] = [row0,row1,row2,row3]; b = b+1; }
+          if(res[i].credential_type == 'TDS') { this.dataSource[2][c] = [row0,row1,row2,row3]; c = c+1; }
 
         }
 
@@ -59,17 +60,34 @@ export class CredentialsComponent implements OnInit {
   }
 
   openDialogAdd(type: string) {
-    console.log('You are awesome')
     const dialogRef = this.dialog.open(DialogCredentialsComponent, {
       width : '30%'
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      
+      if(result === 'add'){
+        this.getAllcredentials();
+      }
     })
   };
 
-  openDialogDelete(credential_id: any) {
+  openDialogEdit(tabno: number,indexno: number) {
+    let credential_id = this.dataSource[tabno][indexno][0]._id
+    console.log(credential_id)
+    const dialogRef = this.dialog.open(DialogCredentialsComponent, {
+      width : '30%'
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'edit'){
+        this.getAllcredentials();
+      }     
+    })
+  };
+
+  openDialogDelete(tabno: number,indexno: number) {
+    let credential_id = this.dataSource[tabno][indexno][0]._id
+  
     const dialogRef = this.dialog.open(DialogDeleteComponent, {
       width : '30%'
     });
@@ -80,7 +98,6 @@ export class CredentialsComponent implements OnInit {
   };
 
   deleteCredentials(credential_id: any) {
-    console.log(credential_id)
-    // this.api.DeleteOneCredentials()
+    this.api.DeleteOneCredentials(credential_id)
   };
 }

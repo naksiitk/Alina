@@ -25,7 +25,7 @@ export class CredentialsService {
 
   DeleteOneCredentials(id: number)
   {
-    console.log("http://localhost:8000/credential/"+id)
+    console.log("abc")
     return this.http.delete<any>("http://localhost:8000/credential/"+id);
   }
 }
