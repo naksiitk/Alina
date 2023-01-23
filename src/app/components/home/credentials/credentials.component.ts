@@ -11,6 +11,7 @@ export interface RowValue {
   name: string;
   colon: string;
   value: string;
+  _id: string;
 }
 
 @Component({
@@ -37,10 +38,10 @@ export class CredentialsComponent implements OnInit {
         
         for(var i= 0; i < res.length; i++) {
 
-          let row0: RowValue = {name: res[i].credential_type + ' user_name', colon: ':', value: res[i].user_id}
-          let row1: RowValue = {name: res[i].credential_type + ' password', colon: ':', value: res[i].password}
-          let row2: RowValue = {name: 'Registered Mobile', colon: ':', value: res[i].registered_mobile}
-          let row3: RowValue = {name: 'Registered Email', colon: ':', value: res[i].registered_email}
+          let row0: RowValue = {name: res[i].credential_type + ' user_name', colon: ':', value: res[i].user_id, _id:res[i]._id}
+          let row1: RowValue = {name: res[i].credential_type + ' password', colon: ':', value: res[i].password, _id:res[i]._id}
+          let row2: RowValue = {name: 'Registered Mobile', colon: ':', value: res[i].registered_mobile, _id:res[i]._id}
+          let row3: RowValue = {name: 'Registered Email', colon: ':', value: res[i].registered_email, _id:res[i]._id}
 
           if(res[i].credential_type == 'GST') this.dataSource[0] = [row0,row1,row2,row3]
           if(res[i].credential_type == 'ITR') this.dataSource[1] = [row0,row1,row2,row3]
@@ -57,27 +58,29 @@ export class CredentialsComponent implements OnInit {
     })
   }
 
-  openDialogAdd() {
+  openDialogAdd(type: string) {
+    console.log('You are awesome')
     const dialogRef = this.dialog.open(DialogCredentialsComponent, {
       width : '30%'
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      if(result) this.deleteCredentials();
+      
     })
   };
 
-  openDialogDelete() {
+  openDialogDelete(credential_id: any) {
     const dialogRef = this.dialog.open(DialogDeleteComponent, {
       width : '30%'
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      if(result) this.deleteCredentials();
+      if(result) this.deleteCredentials(credential_id);
     })
   };
 
-  deleteCredentials() {
+  deleteCredentials(credential_id: any) {
+    console.log(credential_id)
     // this.api.DeleteOneCredentials()
   };
 }
