@@ -3,6 +3,7 @@ const router = express.Router()
 const docs = require('../models/docs')
 const users = require('../models/users')
 const client_doc_summary = require('../models/client_doc_summary')
+const { faSleigh } = require('@fortawesome/free-solid-svg-icons')
 
 //Getting All
 router.get('/' , async (req,res)=>{
@@ -55,14 +56,17 @@ router.post('/' , async(req,res)=>{
         res.status(500).json({message: error.message})
     }
     const clients_list = new docs({
-        file_name: req.body.file_name,
+        filename : req.body.filename,
+        fy_month_quarter: req.body.fy_month_quarter,
+        uploadedat: req.body.uploadedat,
         purpose: req.body.purpose,
         comments: req.body.comments,
         files_uploaded: req.body.files_uploaded,
         email : req.body.email,
         PAN : userPAN,
         seen : false,
-        user : userid
+        user : userid,
+        lock : false,
     })
 
     await client_doc_summary.updateOne(
@@ -70,7 +74,6 @@ router.post('/' , async(req,res)=>{
         {$inc : {unseen: 1, total : 1}, user: userid},
         {upsert:true}
     )
-   
     try {
         const newDoc_client = await clients_list.save()
 
@@ -80,13 +83,29 @@ router.post('/' , async(req,res)=>{
     }
 })
 //Updating One
-router.put('/:id' ,getDoc, async(req,res)=>{
+router.put('/update/:id' ,getDoc, async(req,res)=>{
     if(req.body !=null){
-        res.doc.file_name= req.body.file_name;
+        res.doc.filename = req.body.filename,
+        res.doc.fy_month_quarter = req.body.fy_month_quarter;
+        res.doc.uploadedat =  req.body.uploadedat;
+        // res.doc.file_name= req.body.file_name;
         res.doc.purpose= req.body.purpose;
         res.doc.comments= req.body.comments;
         res.doc.files_uploaded= req.body.files_uploaded;
         res.doc.email = req.body.email;
+        try {
+            const newDoc = await res.doc.save()
+            res.status(201).json({message:'Updated Successfully'})
+        } catch (error) {
+            res.status(400).json({message: error.message})
+        }
+    }
+    
+})
+//Locking the file
+router.put('/lock/:id' ,getDoc, async(req,res)=>{
+    if(req.body !=null){
+        res.doc.lock = req.body.lock;
         try {
             const newDoc = await res.doc.save()
             res.status(201).json({message:'Updated Successfully'})
@@ -108,7 +127,7 @@ router.delete('/:id' ,getDoc, async(req,res)=>{
 //Delete All
 router.delete('/', async(req,res)=>{
     try {
-        await doc.deleteMany();
+        await docs.deleteMany();
         await client_doc_summary.deleteMany();
         res.status(200).json({message:'Deleted Successfully'});
     } catch (error) {

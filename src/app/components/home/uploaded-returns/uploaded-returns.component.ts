@@ -25,7 +25,7 @@ export class UploadedReturnsComponent  implements OnInit {
   title = 'my-app';
   email = this.route.snapshot.paramMap.get('email');
 
-  displayedColumns: string[] = ['file_name', 'purpose', 'comments', 'files_uploaded'];
+  displayedColumns: string[] = ['uploadedname', 'purpose', 'uploaded_date', 'uploaded_date'];
   dataSource  !: MatTableDataSource<any>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

@@ -1,7 +1,8 @@
 <div style="margin-top:2%; margin-left: 3%;">
           <!-- <button mat-raised-button color="warn" (click)="openDialog()">Add File</button> -->
           <button mat-stroked-button color="primary" (click)="goback()" style="padding: 1%" ><mat-icon>keyboard_backspace</mat-icon></button>
-</div>
+    </div>
+       
 <h2 style="text-align: center;">You are viewing ITR page of {{email}}</h2>
 
 <div class = "tab-container">
@@ -17,13 +18,31 @@
 
                 <mat-card-content>
                     <app-files-uploaded-itr></app-files-uploaded-itr>
-
                 </mat-card-content>
 
                 <mat-card-actions align="start">
                     <!-- --- Edit or Delte Action Comes Here --- -->
                 </mat-card-actions>
             </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Filed Asked">
+            <mat-card class="card-inside-tab">
+              <mat-card-header>
+                <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                <!-- <mat-card-title>Files Uploaded</mat-card-title> -->
+                <mat-card-subtitle>Files to be asked to the client</mat-card-subtitle>
+
+              </mat-card-header>
+
+              <mat-card-content>
+                  <app-ask-file-itr></app-ask-file-itr>
+              </mat-card-content>
+
+              <mat-card-actions align="start">
+                  <!-- --- Edit or Delte Action Comes Here --- -->
+              </mat-card-actions>
+          </mat-card>
         </mat-tab>
 
         <mat-tab label="Returns Uploaded">
