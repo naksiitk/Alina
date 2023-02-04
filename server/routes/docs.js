@@ -3,7 +3,6 @@ const router = express.Router()
 const docs = require('../models/docs')
 const users = require('../models/users')
 const client_doc_summary = require('../models/client_doc_summary')
-const { faSleigh } = require('@fortawesome/free-solid-svg-icons')
 
 //Getting All
 router.get('/' , async (req,res)=>{
@@ -57,7 +56,8 @@ router.post('/' , async(req,res)=>{
     }
     const clients_list = new docs({
         filename : req.body.filename,
-        fy_month_quarter: req.body.fy_month_quarter,
+        fy: req.body.fy,
+        month_quarter: req.body.month_quarter,
         uploadedat: req.body.uploadedat,
         purpose: req.body.purpose,
         comments: req.body.comments,
@@ -86,7 +86,8 @@ router.post('/' , async(req,res)=>{
 router.put('/update/:id' ,getDoc, async(req,res)=>{
     if(req.body !=null){
         res.doc.filename = req.body.filename,
-        res.doc.fy_month_quarter = req.body.fy_month_quarter;
+        res.doc.month_quarter = req.body.month_quarter;
+        res.doc.fy = req.body.fy;
         res.doc.uploadedat =  req.body.uploadedat;
         // res.doc.file_name= req.body.file_name;
         res.doc.purpose= req.body.purpose;

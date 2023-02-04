@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 const docSchema = new mongoose.Schema({
     filename : { type : String, required : true },
     //Extract the Fy year of the file
-    fy_month_quarter : { type : String, required : true },
+    month_quarter : { type : String },
+    //Extract the Fy year of the file
+    fy : { type : String, required : true },
     //Uploaded Date and Time
     uploadedat: { type : String, required : true },
     //GST, Income Tax, TDS

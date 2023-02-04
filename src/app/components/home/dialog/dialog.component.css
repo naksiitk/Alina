@@ -4,4 +4,6 @@
     align-items: flex-start;
   }
 
-  
+  .file-input {
+    display: none;
+  }

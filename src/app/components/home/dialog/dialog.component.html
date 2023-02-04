@@ -58,13 +58,24 @@
 
         
           
-          <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
-              <mat-label>Comments</mat-label>
-              <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
-              </mat-form-field>
-          <div mat-dialog-action [align]="'center'">
-              <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
-          </div>
+        <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+            <mat-label>Comments</mat-label>
+            <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
+            </mat-form-field>
+        <!-- <div mat-dialog-action [align]="'center'">
+            <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
+        </div> -->
+        <input type="file" class="file-input" (change)="upload($event)" #fileUpload>
+        <div mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 2%;">
+            {{fileName || "No file uploaded yet."}}
+            <button mat-mini-fab color="primary" class="upload-btn"
+            (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+        </div>
+        <!-- <div mat-dialog-action [align]="'center'">
+        <input type="file" (change)="upload($event)" /> 
+    </div> -->
     </form>
 
     <div mat-dialog-action [align]="'center'">

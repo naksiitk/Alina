@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const asked_files = require('../models/asked_files')
 const users = require('../models/users')
-const { faSleigh } = require('@fortawesome/free-solid-svg-icons')
 
 //Getting All
 router.get('/asked_files/' , async (req,res)=>{

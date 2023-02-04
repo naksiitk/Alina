@@ -26,7 +26,7 @@ export class FileUploadedComponent implements OnInit {
   title = 'my-app';
 
   public email = this.api_auth.get_email_local('email')
-  displayedColumns: string[] = ['filename', 'purpose','fy_month_quarter', 'files_uploaded'];
+  displayedColumns: string[] = ['filename', 'purpose','fy','month_quarter', 'files_uploaded'];
   
   show_everything = false;
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
@@ -84,12 +84,20 @@ export class FileUploadedComponent implements OnInit {
     this.api.deletefile(row._id)
     .subscribe({
       next:(res) => {alert("File Deleted Successfully");
+      
       this.getAllfiles();
     },
       error:(err) => {alert("File Deletion Failed")}
     });
-    
+
+    this.api.delete_file_upload_aws(row.files_uploaded)
+    .subscribe({
+      next:(res) => {alert("File Deleted Successfully");},
+      error:(err) => {alert("File Deletion Failed")}
+    });  
+      
   }
+  
   getAllfiles(){
     this.api.getfile(this.api_auth.get_email_local('email')).subscribe({
         next:(res)=>{

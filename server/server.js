@@ -35,6 +35,10 @@ app.use('/return', returnsRouter)
 const credentialsRouter = require('./routes/credentials.js')
 app.use('/credential', credentialsRouter)
 
+const docs_uploadRouter = require('./routes/docs_upload.js')
+app.use('/docs_upload', docs_uploadRouter)
+
+
 app.listen(8000, () => console.log('Server Started'))
 
 // 404 Handler
