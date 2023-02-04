@@ -66,17 +66,31 @@ export class DialogComponent implements OnInit{
     if(!this.editdata || this.editdata.from_asked_dialog_box){
       if(this.file_list.valid){
         
-        this.file_list.controls['fy_month_quarter'].setValue(this.file_list.value.fy 
-          + ' ; ' + this.file_list.value.month_quarter);
+        // this.file_list.controls['fy_month_quarter'].setValue(this.file_list.value.fy 
+        //   + ' ; ' + this.file_list.value.month_quarter);
         
         this.file_list.controls['uploadedat'].setValue(String(this.date));
 
         this.api.post_file_upload_aws(this.formData).subscribe({
           next:(res)=>{
             alert("File Uploaded Successfully");
-            console.log(res.filename);
-            this.fileName = res.filename;
-            this.file_list.controls['files_uploaded'].setValue(res.filename);         
+            console.log(res.key);
+            this.fileName = res.key;
+            //this.file_list.controls['files_uploaded'].setValue(file.name);
+            this.file_list.controls['files_uploaded'].setValue(this.fileName); 
+            
+            this.api.postfile(this.file_list.value)
+            .subscribe({
+              next:(res)=>{alert("file_added");
+              console.log(this.file_list.value.files_uploaded)
+              this.file_list.reset();
+              this.dialogref.close("save");
+              },
+              error:()=>{
+                alert("Error while adding");
+              }        
+            })
+
           },
           error:(err)=>{
             alert(err);
@@ -84,16 +98,7 @@ export class DialogComponent implements OnInit{
           }
         })
         
-        this.api.postfile(this.file_list.value)
-        .subscribe({
-          next:(res)=>{alert("file_added");
-          this.file_list.reset();
-          this.dialogref.close("save");
-          },
-          error:()=>{
-            alert("Error while adding");
-          }        
-        })
+        
       }
     }
     else{

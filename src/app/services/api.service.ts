@@ -70,6 +70,7 @@ export class ApiService {
 
   delete_file_upload_aws(id : any)
   {
+    console.log("http://localhost:8000/docs_upload/images/" + id);
     return this.http.delete<any>("http://localhost:8000/docs_upload/images/" + id);
   }
 
