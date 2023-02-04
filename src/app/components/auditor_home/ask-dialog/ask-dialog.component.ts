@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { HomeComponent } from '../../home/home/home.component';
 
 @Component({
@@ -22,7 +23,7 @@ export class AskDialogComponent implements OnInit{
   purpose_list = ["GST", "ITR", "TDS"];
   file_list !: FormGroup;
   actionBtn : string = "Save";
-  constructor(private formbuilder : FormBuilder, private api : ApiService, private dialogref : MatDialogRef<AskDialogComponent>,
+  constructor(private localStorage: LocalStorageService ,private formbuilder : FormBuilder, private api : ApiService, private dialogref : MatDialogRef<AskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public editdata: any, private api_auth : AuthService ){
 
       for (let year = this.selectedYear; year >= 2018; year--) {
@@ -30,7 +31,7 @@ export class AskDialogComponent implements OnInit{
     };
   }
 
-  email : any = this.api_auth.get_email_local('email');
+  email: any = this.localStorage.getClientEmailITR()
   ngOnInit(): void {
     
     this.file_list = this.formbuilder.group({

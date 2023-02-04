@@ -1,0 +1,11 @@
+1. Hide scroll bar and add sticky to nav-tool-bar
+2. Signup Frontend issue and Backend error handling 
+3. Login Proper error handling
+4. add mat-snackbar
+5. Financial year from asked files to upload files
+6. Add Alina to toolbar
+7. Increase security while seeing img from aws
+8. Add link in auditor side
+9. Total and seen change after viewing and deleting 
+10. aws s3 implementation for editing 
+

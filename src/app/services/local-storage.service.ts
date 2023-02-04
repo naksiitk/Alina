@@ -13,6 +13,10 @@ export class LocalStorageService {
   public saveRole(value : string) { localStorage.setItem('role', value); }
   public getRole() { return localStorage.getItem('role'); }
 
+  public saveClientEmailITR(value : string) { return localStorage.setItem('auditor_view_client_email_itr', value); }
+  public getClientEmailITR() { return localStorage.getItem('auditor_view_client_email_itr'); }
+
+
   public clearLocalStorage() { localStorage.clear(); }
 
   public remove_email_local(key: string) {
