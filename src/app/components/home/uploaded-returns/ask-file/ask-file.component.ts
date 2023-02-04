@@ -20,8 +20,8 @@ export class AskFileComponent implements OnInit {
 
   
 
-  constructor(public dialog: MatDialog, private api : ApiService, private route: Router, private breakpointObserver: BreakpointObserver
-    , private api_auth : AuthService) {};
+  constructor(public dialog: MatDialog, private route: Router, private breakpointObserver: BreakpointObserver
+    , private api_auth : AuthService, private api : ApiService     ) {};
 
     title = 'my-app';
  
