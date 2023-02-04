@@ -25,23 +25,8 @@ export class LoginComponent implements OnInit {
 
     CheckUser(){
       if(this.login_form.valid){
-          // console.log(this.signup_form.value)
-          this.api.checkuser(this.login_form.value)
-          .subscribe({
-              next:(res)=>{
-                // console.log(this.login_form.value.email)
-                if(res.status == '200') {
-                  this.api.save_email_local('email',this.login_form.value['email'])
-                  this.router.navigate(['/home/file_uploaded'])
-                  this.login_form.reset()
-                } else {
-                  alert("Error")
-                }
-              },
-          error:()=>{
-              alert("Incorrect credentials");
-          }
-        })
+          this.api.login_user(this.login_form.value)
+          this.login_form.reset()
       }
     }
 

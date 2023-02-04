@@ -17,14 +17,19 @@ import { GstComponent } from './components/auditor_home/gst/gst.component';
 import { ClientTabComponent } from './components/auditor_home/itr/client-tab/client-tab.component';
 import { ClientTabTdsComponent } from './components/auditor_home/tds/client-tab-tds/client-tab-tds.component';
 import { ClientTabGstComponent } from './components/auditor_home/gst/client-tab-gst/client-tab-gst.component';
+import { ClientUnAuthGuard } from './guards/client-un-auth.guard';
+import { AuditorUnAuthGuard } from './guards/auditor-un-auth.guard';
+import { ClientAuthGuard } from './guards/client-auth.guard';
+import { AuditorAuthGuard } from './guards/auditor-auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent },
+  {path: 'login', component: LoginComponent, canActivate: [ClientUnAuthGuard,AuditorUnAuthGuard] },
+  {path: 'signup', component: SignupComponent, canActivate: [ClientUnAuthGuard,AuditorUnAuthGuard] },
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [ClientAuthGuard,AuditorUnAuthGuard],
     children: [
       {path: '', redirectTo: '/home/file_uploaded', pathMatch: 'full'},
       {path: 'file_uploaded', component: FileUploadedComponent},
@@ -33,7 +38,10 @@ const routes: Routes = [
       {path: 'billing_history', component: BillingHistoryComponent}
     ]
   },
-  {path: 'auditor', component: AuditorHomeComponent, 
+  {
+    path: 'auditor', 
+    component: AuditorHomeComponent, 
+    canActivate: [AuditorAuthGuard,ClientUnAuthGuard],
     children: [
       {path: '', redirectTo: '/auditor/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
@@ -45,10 +53,9 @@ const routes: Routes = [
       {path: 'itr/client_tab', component: ClientTabComponent },
       {path: 'gst/client_tab', component: ClientTabGstComponent },
       {path: 'tds/client_tab', component: ClientTabTdsComponent }
-      
-      
     ]
-  }
+  },
+  {path: '**', redirectTo: '/login', pathMatch: 'full'}
   
 ];
 

@@ -42,7 +42,7 @@ POST http://localhost:8000/user/generate_otp
 Content-Type: application/json
 
 {
-    "email": "reithick@gmail.com"
+    "email": "2"
 }
 
 ###
@@ -51,11 +51,11 @@ POST http://localhost:8000/user/signup
 Content-Type: application/json
 
 {
-    "email": "naksiitk@gmail.com",
-    "password": "1",
+    "email": "2",
+    "password": "2",
     "mobile": "9887241556",
     "user_name": "reithick",
-    "user_type": "auditor",
+    "user_type": "client",
     "PAN": "MOPJD4592D",
     "OTP": "cbHDT"
 }

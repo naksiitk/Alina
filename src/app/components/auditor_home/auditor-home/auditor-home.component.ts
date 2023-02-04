@@ -11,6 +11,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
 @Component({
@@ -21,11 +22,11 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AuditorHomeComponent {
   constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, 
     private breakpointObserver: BreakpointObserver,
-    private api_auth : AuthService ) {}
+    private localStorage : LocalStorageService ) {}
 ;
  
  title = 'my-app';
- email : any = this.api_auth.get_email_local('email');
+ email : any = this.localStorage.getEmail();
  
  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
    .pipe(
@@ -34,7 +35,7 @@ export class AuditorHomeComponent {
    );
 
  logout(){
-   this.api_auth.clear_data_local();
+   this.localStorage.clearLocalStorage();
    }
 
 }
