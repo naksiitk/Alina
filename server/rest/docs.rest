@@ -13,13 +13,8 @@ GET http://localhost:8000/user/client_doc_summary
 POST http://localhost:8000/doc/
 Content-Type: application/json
 
-{
-    "file_name" : "File Aug", 
-    "purpose" : "TDS", 
-    "comments" : "I have the purchase bill", 
-    "files_uploaded" : "Files Uploaded",
-    "email" : "1"
-}
+{"purpose":"TDS","comments":"123","files_uploaded":"123","email":"1","uploadedat":"26/01/2023","fy":"2022-2021","month_quarter":"Q2","fy_month_quarter":"2022-2021 ;Q2"}
+
 
 ###
 
@@ -42,16 +37,38 @@ DELETE http://localhost:8000/doc/63c7a4788861b69efc9d7d72
 
 ###
 
-PUT http://localhost:8000/doc/63ba7ded20ae526a897ef4d5
+PUT http://localhost:8000/doc/update/63d1a29dd0585e309fc629fc
 Content-Type: application/json
-
 {
-    "file_name" : "GST DEC 2022", 
-    "purpose" : "ITR", 
-    "comments" : "I have the purchase bill", 
-    "files_uploaded" : "Files Uploaded"
+"filename":"123",
+"purpose":"TDS",
+"comments":"123",
+"files_uploaded":"123",
+"email":"1",
+"uploadedat":"28/01/2023",
+"fy":"2022-2021",
+"month_quarter":"Q2",
+"fy_month_quarter": "2021-2022; Q1"
 }
 
 ###
 
-DELETE http://localhost:8000/doc/
+DELETE http://localhost:8000/doc
+
+
+###
+
+PUT http://localhost:8000/doc/lock/63d1a239d0585e309fc629f4
+Content-Type: application/json
+
+{
+    "lock" : "true"
+}
+
+###
+
+POST http://localhost:8000/asked_files/asked_files/
+Content-Type: application/json
+
+{"filename":"123","purpose":"ITR","comments":"Provide the Bank Statement","email":"1","fy":"2022-2021","month_quarter":""}
+

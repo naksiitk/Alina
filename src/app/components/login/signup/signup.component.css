@@ -4,16 +4,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #f8f8f8;
 }
 .image-responsive{
-    width: 30%;
     padding: 2%;
+    width: 30%;
 }
 
 .login-card {
     margin-top: 0;
-    width: 50%;
+    margin-right: 2%;
 }
 
 mat-form-field {

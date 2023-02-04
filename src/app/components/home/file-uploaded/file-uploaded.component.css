@@ -1,3 +1,13 @@
+.tab-container{
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 95%;
+  min-width: 500px;
+  text-align: center;
+}
+
 .example-spacer {
     flex: 1 1 auto;
   }
@@ -11,21 +21,12 @@
 }
 
 td, th {
-  width: 25%;
+  width: 10%;
 }
 
 .sidenav-container {
   height: 100%;
   
-}
-
-.sidenav {
-  width: 300px;
-  
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
 }
 
 .mat-toolbar.mat-primary {
@@ -34,9 +35,11 @@ td, th {
   z-index: 1;
 }
 
-.list-item-active {
-  font-weight: bold;
-  color: rgba(0, 5, 099, 0.50);
-  background-color : rgba(55, 0, 88, 0.10);
-}
+mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: unset;
+  right: unset;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 
+}

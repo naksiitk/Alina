@@ -15,34 +15,43 @@ export class SignupComponent implements OnInit {
 
   signup_form !: FormGroup;
   otp_form !: FormGroup;
+  email_form !: FormGroup;
  
   whole_form !: FormGroup;
   constructor(private formbuilder : FormBuilder, private api : AuthService, public router: Router) {};
 
   @ViewChild('stepper') private myStepper: MatStepper;
   
-  
+  pass = true;
   ngOnInit(): void {
      
+    this.email_form = this.formbuilder.group({
+      email : ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      mobile: ['', [Validators.required,Validators.minLength(10) ]]
+    })
+
       this.signup_form = this.formbuilder.group({
-        email : ['', Validators.required],
-        mobile: ['', Validators.required],
         user_name : ['', Validators.required],
         PAN : [''],
-        password : ['', Validators.required],
-        retype_password : ['', Validators.required],
+        password : ['', Validators.compose(
+          [Validators.minLength(5), Validators.required])],
+        retype_password : ['', Validators.compose(
+          [Validators.minLength(5), Validators.required])],
         user_type : ['client', Validators.required]
-      })
+      },
+      );
 
       this.whole_form = this.formbuilder.group({
         email : ['', Validators.required],
         mobile: ['', Validators.required],
         user_name : ['', Validators.required],
         PAN : [''],
-        password : ['', Validators.required],
-        retype_password : ['', Validators.required],
+        password : ['', Validators.compose(
+          [Validators.minLength(5), Validators.required])],
+        retype_password : ['', Validators.compose(
+          [Validators.minLength(5), Validators.required])],
         user_type : ['client', Validators.required],
-        otp_mail  : ['', Validators.required],
+        OTP  : ['', Validators.required],
         otp_phone : ['', Validators.required],
       })
 
@@ -52,50 +61,66 @@ export class SignupComponent implements OnInit {
       })
     }
 
+    Otp_generation(){
+      if(this.signup_form.value.password == this.signup_form.value.retype_password)
+      {
+        if(this.signup_form.valid && this.email_form.valid){
+          console.log(this.signup_form.value)
+          console.log(this.email_form.value)
+          this.api.generate_otp({"email":this.email_form.value.email})
+          .subscribe({
+            next:(res)=>{alert("OTP GENERATED"); 
+            this.myStepper.next();
+          },
+          error:()=>{
+            alert("Cannot add user!");
+          } 
+          });
+        
+        //   
+        }
+      }
+      else{
+        this.pass = false;
+      }
+    }
+
   Otp_verification()
   {
     console.log(this.otp_form.value)
     if(this.otp_form.valid)
     {
 
-      this.whole_form.controls['email'].setValue(this.signup_form.controls['email']);
-      this.whole_form.controls['mobile'].setValue(this.signup_form.controls['mobile']);
-      this.whole_form.controls['user_name'].setValue(this.signup_form.controls['user_name']);
-      this.whole_form.controls['PAN'].setValue(this.signup_form.controls['PAN']);
-      this.whole_form.controls['password'].setValue(this.signup_form.controls['password']);
-      this.whole_form.controls['retype_password'].setValue(this.signup_form.controls['retype_password']);
-      this.whole_form.controls['user_type'].setValue(this.signup_form.controls['user_type']);
-      this.whole_form.controls['otp_mail'].setValue(this.otp_form.controls['otp_mail']);
-      this.whole_form.controls['otp_phone'].setValue(this.otp_form.controls['otp_phone']);
-      this.api.generate_otp({"email":this.whole_form.value.email})
-      .subscribe({
-        next:(res)=>{alert("OTP GENERATED");  
-        this.api.user_signup(this.whole_form.value)
+      this.whole_form.controls['email'].setValue(this.email_form.value['email']);
+      this.whole_form.controls['mobile'].setValue(this.email_form.value['mobile']);
+      this.whole_form.controls['user_name'].setValue(this.signup_form.value['user_name']);
+      this.whole_form.controls['PAN'].setValue(this.signup_form.value['PAN']);
+      this.whole_form.controls['password'].setValue(this.signup_form.value['password']);
+      this.whole_form.controls['retype_password'].setValue(this.signup_form.value['retype_password']);
+      this.whole_form.controls['user_type'].setValue(this.signup_form.value['user_type']);
+      
+      this.whole_form.controls['OTP'].setValue(this.otp_form.value['otp_mail']);
+      this.whole_form.controls['otp_phone'].setValue(this.otp_form.value['otp_phone']);
+      console.log(this.whole_form.value)
+
+      this.api.user_signup(this.whole_form.value)
       .subscribe({
         next:(res)=>{alert("User Added");        
         this.myStepper.next();
+        this.signup_form.reset();
+        this.email_form.reset();
         },
       error:()=>{
         alert("Cannot add user!");
       }
       });
-      },
-      error:()=>{
-        alert("Cannot add user!");
-      } 
-      });
+     
     }
   }
 
-  AddUser(){
-    if(this.signup_form.value.password == this.signup_form.value.retype_password)
-    {
-      console.log(this.signup_form.value)
-      if(this.signup_form.valid){
-        this.myStepper.next();
-        this.signup_form.reset();  
-    }
-    }
+  moveout(){
+    this.router.navigate([ '/login' ])
   }
+  
 
 }

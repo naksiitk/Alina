@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>Upload File</h1>
+<h1 mat-dialog-title>Ask for a file</h1>
 <div mat-dialog-content>
     <form [formGroup] = "file_list">
         <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
-            <mat-label>Purpose</mat-label>
-            <mat-select formControlName="purpose" placeholder="Purpose of uploading">
+            <mat-label>The File Related to</mat-label>
+            <mat-select formControlName="purpose" placeholder="Purpose File Related to">
                 <mat-option value="GST">GST</mat-option>
                 <mat-option value="ITR">Income Tax Returns</mat-option>
                 <mat-option value="TDS"> Tds/Tcs</mat-option>
@@ -11,7 +11,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
-            <mat-label>Name of the file</mat-label>
+            <mat-label>File Name to be asked</mat-label>
             <input formControlName="filename" matInput placeholder="Provide File Name">
           </mat-form-field>
 
@@ -55,27 +55,13 @@
                 <mat-option value="Mar">Mar</mat-option>
             </mat-select>
         </mat-form-field>
-
-        
-          
-        <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
-            <mat-label>Comments</mat-label>
-            <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
-            </mat-form-field>
-        <!-- <div mat-dialog-action [align]="'center'">
-            <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
-        </div> -->
-        <input type="file" class="file-input" (change)="upload($event)" #fileUpload>
-        <div mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 2%;">
-            {{fileName || "No file uploaded yet."}}
-            <button mat-mini-fab color="primary" class="upload-btn"
-            (click)="fileUpload.click()">
-                <mat-icon>attach_file</mat-icon>
-            </button>
-        </div>
-        <!-- <div mat-dialog-action [align]="'center'">
-        <input type="file" (change)="upload($event)" /> 
-    </div> -->
+          <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+              <mat-label>Comments</mat-label>
+              <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
+              </mat-form-field>
+          <!-- <div mat-dialog-action [align]="'center'">
+              <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
+          </div> -->
     </form>
 
     <div mat-dialog-action [align]="'center'">

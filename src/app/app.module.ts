@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -56,6 +56,11 @@ import { FilesUploadedTdsComponent } from './components/auditor_home/tds/files-u
 // import { ClientTabGstComponent } from '.components/auditor_home/gst/client-tab-gst/client-tab-gst.component'; 
 import {MatStepperModule} from '@angular/material/stepper'; 
 import { NgOtpInputModule } from 'ng-otp-input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { AskFileItrComponent } from './components/auditor_home/itr/ask-file-itr/ask-file-itr.component';
+import { AskDialogComponent } from './components/auditor_home/ask-dialog/ask-dialog.component';
+import { AskFileComponent } from './components/home/uploaded-returns/ask-file/ask-file.component'; 
+import {MatExpansionModule} from '@angular/material/expansion'; 
 
 @NgModule({
   declarations: [
@@ -85,7 +90,10 @@ import { NgOtpInputModule } from 'ng-otp-input';
     ReturnsUploadedGstComponent,
     ReturnsUploadedTdsComponent,
     FilesUploadedTdsComponent,
-    DialogCredentialsComponent
+    DialogCredentialsComponent,
+    AskFileItrComponent,
+    AskDialogComponent,
+    AskFileComponent
      
   ],
   imports: [
@@ -113,7 +121,10 @@ import { NgOtpInputModule } from 'ng-otp-input';
     MatBadgeModule,
     MatSlideToggleModule,
     MatStepperModule,
-    NgOtpInputModule  
+    NgOtpInputModule,
+    MatDatepickerModule,
+    NgbModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

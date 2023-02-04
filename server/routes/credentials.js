@@ -71,10 +71,10 @@ router.put('/:id', getCredentials, async(req, res) =>{
 })
 
 //Deleting one
-router.delete('/:id', getCredentials, async (req, res) =>{
+router.delete('/:id', async (req, res) =>{
     try {
-        await res.credential.remove()
-        res.json({ message: 'Deleted Credential'})
+        await res.credential.deleteMany();
+        res.status(200).json({ message: 'Deleted Credential'})
     } catch (err) {
         res.status(500).json({ message: err.message})
     }
