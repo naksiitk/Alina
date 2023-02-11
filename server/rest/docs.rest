@@ -51,7 +51,7 @@ Content-Type: application/json
 "fy_month_quarter": "2021-2022; Q1"
 }
 
-###
+### DELETE ALL
 
 DELETE http://localhost:8000/doc
 

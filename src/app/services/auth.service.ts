@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http : HttpClient,private localStorage : LocalStorageService, private router : Router) { }
+  constructor(private http : HttpClient,private localStorage : LocalStorageService, private router : Router,
+    private _snackBar: MatSnackBar) { }
 
   adduser(data : any){
     return this.http.post<any>("http://localhost:8000/user",data);
@@ -36,14 +38,21 @@ export class AuthService {
             this.localStorage.saveEmail(res.email)
             this.localStorage.saveRole(res.role)
 
-            if(res.role == 'client') this.router.navigate(['/home/file_uploaded']);
+            if(res.role == 'client') {
+              this.router.navigate(['/home/file_uploaded']);
+              this.save_email_local('email_add_file', res.email); 
+            }
             else if(res.role == 'auditor') this.router.navigate(['/auditor']);
           } else {
-            alert("Error")
+            this._snackBar.open('ERROR', 'TRY AGAIN !!!!!', {
+                duration: 2000,
+              }); 
           }
         },
     error:()=>{
-        alert("Incorrect credentials");
+      this._snackBar.open('INCORRECT CREDENTIALS', 'TRY AGAIN !!!!!', {
+        duration: 2000,
+      }); 
     }
   })
   }

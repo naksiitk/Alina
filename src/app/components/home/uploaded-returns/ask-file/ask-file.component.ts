@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {  Router } from '@angular/router';
@@ -21,7 +22,7 @@ export class AskFileComponent implements OnInit {
   
 
   constructor(public dialog: MatDialog, private route: Router, private breakpointObserver: BreakpointObserver
-    , private api_auth : AuthService, private api : ApiService     ) {};
+    , private api_auth : AuthService, private api : ApiService, public _snackBar: MatSnackBar,    ) {};
 
     title = 'my-app';
  
@@ -76,10 +77,14 @@ export class AskFileComponent implements OnInit {
     console.log(row._id);
     this.api.delete_file_asked(row._id)
     .subscribe({
-      next:(res) => {alert("File Deleted Successfully");
+      next:(res) => {this._snackBar.open("File Deleted Successfully","OK", {
+        duration: 3000,
+      });
       this.getAllaskedfiles();
     },
-      error:(err) => {alert("File Deletion Failed")}
+      error:(err) => {this._snackBar.open(err.error.Status,"Contact Us", {
+        duration: 3000,
+      });}
     });
     
   }
@@ -91,7 +96,9 @@ export class AskFileComponent implements OnInit {
           // this.dataSource.sort = this.sort;
         },
         error:()=>{
-          alert("Error while fetching products");
+          this._snackBar.open("Error while fetching products","Contact Us", {
+            duration: 3000,
+          });
         }
       })
   }
@@ -104,7 +111,9 @@ export class AskFileComponent implements OnInit {
           this.dataSource.sort = this.sort;
         },
         error:()=>{
-          alert("Error while fetching products");
+          this._snackBar.open("Error while fetching products","Contact Us", {
+            duration: 3000,
+          });
         }
       })
   }

@@ -39,3 +39,12 @@ module.exports.deletefile = async(req) => {
     return s3.deleteObject(deleteParams).promise();
 };
 
+module.exports.copyfile = async(req) => {
+    var params = {
+        Bucket: bucketName, 
+        CopySource: "/" + bucketName + "/" + req.sourcefileKey, 
+        Key: req.destfileKey
+    };
+    return s3.copyObject(params).promise();
+};
+

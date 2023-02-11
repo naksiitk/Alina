@@ -20,9 +20,7 @@ export class LoginComponent implements OnInit {
         email : ['', Validators.required],
         password : ['', Validators.required]
       })
-  
     }
-
     CheckUser(){
       if(this.login_form.valid){
           this.api.login_user(this.login_form.value)

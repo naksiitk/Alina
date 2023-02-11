@@ -44,3 +44,8 @@ td, th {
   vertical-align: middle;
   margin-right: 3%;
 }
+
+.image-responsive{
+  padding: 0%;
+  width: 8%;
+}

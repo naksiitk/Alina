@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatStepper } from '@angular/material/stepper';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -12,13 +13,15 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 })
 export class SignupComponent implements OnInit {
   hide = true;
+  hide1 = true;
 
   signup_form !: FormGroup;
   otp_form !: FormGroup;
   email_form !: FormGroup;
  
   whole_form !: FormGroup;
-  constructor(private formbuilder : FormBuilder, private api : AuthService, public router: Router) {};
+  constructor(private formbuilder : FormBuilder, private api : AuthService, public router: Router,
+    private _snackBar: MatSnackBar) {};
 
   @ViewChild('stepper') private myStepper: MatStepper;
   
@@ -69,11 +72,17 @@ export class SignupComponent implements OnInit {
           console.log(this.email_form.value)
           this.api.generate_otp({"email":this.email_form.value.email})
           .subscribe({
-            next:(res)=>{alert("OTP GENERATED"); 
+            next:(res)=>{
+              this._snackBar.open('OTP GENERATED', 'HURRAH !!!!!', {
+                duration: 2000,
+              });           
             this.myStepper.next();
           },
-          error:()=>{
-            alert("Cannot add user!");
+          error:(err)=>{
+            console.log(err.error.Status);
+            this._snackBar.open(err.error.Status, 'Use /login', {
+              duration: 2000,
+            });  
           } 
           });
         
@@ -105,13 +114,19 @@ export class SignupComponent implements OnInit {
 
       this.api.user_signup(this.whole_form.value)
       .subscribe({
-        next:(res)=>{alert("User Added");        
+        next:(res)=>{
+        this._snackBar.open("User Added Hurrah", 'Hurrah', {
+          duration: 2000,
+        });
+                
         this.myStepper.next();
         this.signup_form.reset();
         this.email_form.reset();
         },
-      error:()=>{
-        alert("Cannot add user!");
+      error:(err)=>{
+        this._snackBar.open(err.error.Status, 'Sorry', {
+          duration: 2000,
+        });
       }
       });
      

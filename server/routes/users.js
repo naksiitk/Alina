@@ -165,28 +165,28 @@ router.post('/generate_otp', async (req, res) =>{
 
     const otpGenerated = generateOTP();
 
-    try {
-        await sendOTP_mail({to: req.body.email, OTP: otpGenerated});
-    } catch (error) {
-        return res.status(400).json({Status : "Cannot Send OTP"})
-    }
-
     const oldOTP = await otp.findOne({email: req.body.email})
-    if(oldOTP != NULL) {
+    if(oldOTP != null) {
         try {
             await oldOTP.remove()
         } catch (err) {
             return res.status(201).json({Status : "Cannot remove old OTP from data"})
         }
     }
-
     const otp_for_db = new otp({ 
         email: req.body.email, 
         OTP: otpGenerated
     })
 
     const newOTP = await otp_for_db.save()
-    res.status(201).json({Status : "OTP Send to the email!"})
+    
+    try {
+        await sendOTP_mail({to: req.body.email, OTP: otpGenerated});
+        return res.status(201).json({Status : "OTP Send to the email!"})
+    } catch (error) {
+        return res.status(400).json({Status : "Cannot Send OTP"})
+    }
+    
 
 })
 

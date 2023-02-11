@@ -13,7 +13,7 @@ const docSchema = new mongoose.Schema({
     //Comments
     comments : { type : String, required : true },
     //Link to file uploaded
-    files_uploaded : { type : String, required : true },
+    files_uploaded : { type : [String], required : true },
     //User detail and PAN
     email : { type : String, required : true },
     PAN: { type : String, required: true },

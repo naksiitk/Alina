@@ -7,7 +7,7 @@ const util = require('util');
 const unlinkfile = util.promisify(fs.unlink);
 
 const multer = require("multer")
-const { uploadfile, getfile, deletefile } = require('../services/s3')
+const { uploadfile, getfile, deletefile, copyfile } = require('../services/s3')
 
 
 const storage = multer.diskStorage({
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now();
-      cb(null, `${file.originalname}_${Date.now()}`);
+      cb(null, `${Date.now()}_${file.originalname}`);
     }
   })
 
@@ -28,25 +28,38 @@ router.get("/", (req,res) =>{
 })
 
 
-router.post("/file", upload.single("file"), async(req,res) =>{
+router.post("/file", upload.array("files"), async(req,res) =>{
   try {
-    const file = req.file;
-    if(file)
+    results = []
+    // console.log(req)
+    const files = req.files;
+    console.log(req.files)
+    if(Array.isArray(files) && files.length > 0 )
     {
-      const result = await uploadfile({file: file});
-      console.log(result);
-      res.json(result);
-      await unlinkfile(file.path);
+      for (const file of files) 
+        {
+          let file_name = file.filename;
+          file.filename = req.body.files_from +"/" 
+              +req.body.files_name +"/" + file.filename;
+          const result = await uploadfile({file: file});
+          console.log(result);
+          result.key = file_name;
+          results.push(result.key);
+          await unlinkfile(file.path);
+        }
+
+      res.status(200).json({keys : results});
     }
   } catch (error) {
-    res.status(500).json({message: error.message})
+    res.status(500).json({Status: error.message})
   }
 })
 
-router.get("/images/:key", async(req,res) =>{
+router.get("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
   try {
-    console.log(req.params.key)
-    const fileKey = req.params.key;
+    console.log(req.params.fy+"/"+req.params.email+"/"+req.params.key)
+    const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
+    console.log(fileKey);
     const result = await getfile({fileKey:fileKey});
     result.pipe(res);
   } catch (error) {
@@ -54,13 +67,37 @@ router.get("/images/:key", async(req,res) =>{
   }
 })
 
-router.delete("/images/:key", async(req,res) =>{
+router.delete("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
   try {
     console.log(req.params.key)
-    const fileKey = req.params.key;
+    const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
     const result = await deletefile({fileKey:fileKey});
     console.log(result);
     res.json(result);
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+})
+
+router.put("/file_copy", async(req,res) =>{
+  try {
+    let results = []
+    console.log(req.body.files_uploaded)
+    for (let file of req.body.files_uploaded) 
+        { 
+          //console.log(file)
+          let fileKey = file;
+          sourcefileKey = req.body.source_files_from +"/" 
+                +req.body.source_files_name +"/" + fileKey;
+          destfileKey = req.body.dest_files_from +"/" 
+                +req.body.dest_files_name +"/" + fileKey;
+          const result = await copyfile({ sourcefileKey: sourcefileKey, destfileKey : destfileKey});
+          results.push(result);
+          if(sourcefileKey  != destfileKey){
+          const result1 = await deletefile({fileKey:sourcefileKey});
+          results.push(result1);}
+      }
+    return res.json(results);
   } catch (error) {
     res.status(500).json({message: error.message})
   }

@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 import { DialogComponent } from '../dialog/dialog.component';
 import { NgbAccordionConfig, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilesShowDialogComponent } from '../files-show-dialog/files-show-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-file-uploaded',
   templateUrl: './file-uploaded.component.html',
@@ -18,9 +20,9 @@ import { NgbAccordionConfig, NgbAccordionModule } from '@ng-bootstrap/ng-bootstr
 })
 export class FileUploadedComponent implements OnInit {
   constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver
-    , private api_auth : AuthService,
+    , private api_auth : AuthService,public _snackBar: MatSnackBar,
     ) {
-     
+
     };
 
   title = 'my-app';
@@ -66,7 +68,6 @@ export class FileUploadedComponent implements OnInit {
           this.getAllfiles();
         }
       })
-      
     };
 
   openDialogDelete(row: any) {
@@ -80,22 +81,35 @@ export class FileUploadedComponent implements OnInit {
   };
 
   deletefile(row : any){
-    console.log(row._id);
-    this.api.deletefile(row._id)
-    .subscribe({
-      next:(res) => {alert("File Deleted Successfully");
-      
-      this.getAllfiles();
-    },
-      error:(err) => {alert("File Deletion Failed")}
-    });
+    console.log(row.files_uploaded.length );
+    let k = 0, i =0;
+    if(k == i)
+    {
+      this.api.deletefile(row._id)
+      .subscribe({
+        next:(res) => {this._snackBar.open("File Deleted Successfully","OK", {
+          duration: 3000,
+        });
+        this.getAllfiles();
+        },
+        error:(err) => {this._snackBar.open(err.error.Status,"Contact Us", {
+          duration: 3000,
+        });}
+        });
+    } 
 
-    this.api.delete_file_upload_aws(row.files_uploaded)
-    .subscribe({
-      next:(res) => {alert("File Deleted Successfully");},
-      error:(err) => {alert("File Deletion Failed")}
-    });  
-      
+    console.log(k,i);
+
+    for (i = 0 ; i<= row.files_uploaded.length ; i++)
+    {
+      this.api.delete_file_upload_aws(row, i)
+      .subscribe({
+        next:(res) => {k = k+1; console.log(k)},
+        error:(err) => {this._snackBar.open(err.error.Status,"Contact Us", {
+          duration: 2000,
+        });}
+      });
+    }  
   }
   
   getAllfiles(){
@@ -106,10 +120,13 @@ export class FileUploadedComponent implements OnInit {
           this.dataSource.sort = this.sort;
         },
         error:()=>{
-          alert("Error while fetching products");
+          this._snackBar.open("Error while fetching products","Contact Us", {
+            duration: 3000,
+          });
         }
-      })
+    })
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -137,6 +154,16 @@ export class FileUploadedComponent implements OnInit {
   show_more : boolean = false;
   showmore(){
     this.show_more = !this.show_more;
+  }
+
+  show_uploaded_files(row : any){
+      this.dialog.open(FilesShowDialogComponent,
+        {
+          width : '30%', 
+          data:row
+        })
+        
+      
   }
 
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 import { MatCardModule } from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { LoginComponent } from './components/login/login/login.component';
@@ -31,7 +31,7 @@ import { BillingHistoryComponent } from './components/home/billing-history/billi
 import { UploadedReturnsComponent } from './components/home/uploaded-returns/uploaded-returns.component';
 import { DialogDeleteComponent } from './components/home/dialog-delete/dialog-delete.component';
 import { DialogCredentialsComponent } from './components/home/dialog-credentials/dialog-credentials.component';
-
+import {MatSortModule} from '@angular/material/sort';
 import { AuditorHomeComponent } from './components/auditor_home/auditor-home/auditor-home.component';
 import { ItrComponent } from './components/auditor_home/itr/itr.component';
 import { GstComponent } from './components/auditor_home/gst/gst.component';
@@ -60,7 +60,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AskFileItrComponent } from './components/auditor_home/itr/ask-file-itr/ask-file-itr.component';
 import { AskDialogComponent } from './components/auditor_home/ask-dialog/ask-dialog.component';
 import { AskFileComponent } from './components/home/uploaded-returns/ask-file/ask-file.component'; 
-import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatExpansionModule} from '@angular/material/expansion';
+import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DialogCredentialsComponent,
     AskFileItrComponent,
     AskDialogComponent,
-    AskFileComponent
+    AskFileComponent,
+    FilesShowDialogComponent
      
   ],
   imports: [
@@ -124,7 +126,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     NgOtpInputModule,
     MatDatepickerModule,
     NgbModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule, 
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

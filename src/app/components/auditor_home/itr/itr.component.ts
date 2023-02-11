@@ -59,6 +59,7 @@ export class ItrComponent implements OnInit {
 
   router_link_client_tab(email : string) {
     this.auth_api.save_email_local("auditor_view_client_email_itr", email)
+    this.auth_api.save_email_local('email_add_file', email); 
     this.router.navigate(['auditor/itr/client_tab'])
     this.hidden = !this.hidden;
   }

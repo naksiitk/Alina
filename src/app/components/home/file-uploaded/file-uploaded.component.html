@@ -19,8 +19,6 @@
           <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
           
-              <!-- ID Column -->
-                    
               <!-- Progress Column -->
               <ng-container matColumnDef="purpose">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Purpose </th>
@@ -42,8 +40,6 @@
                 <td style="width: 5% !important;" mat-cell *matCellDef="let row"> {{row.month_quarter}} </td>
               </ng-container>
     
-              <!-- Name Column -->
-              
               <ng-container  *ngIf="this.show_everything" matColumnDef="comments">
                 <th style="width: 12% !important;" mat-header-cell *matHeaderCellDef mat-sort-header> Comment </th>
                 <td style="width: 12% !important;" mat-cell *matCellDef="let row"> {{row.comments}} </td>
@@ -53,11 +49,9 @@
               <ng-container matColumnDef="files_uploaded">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Uploaded File </th>
                 <td mat-cell *matCellDef="let row"> 
-                  <a href="http://localhost:8000/docs_upload/images/{{row.files_uploaded}}" target="_blank" download>
-                    {{row.files_uploaded.slice(0,15)}}
-                  </a>
+                  <button  mat-button color="primary" (click)="show_uploaded_files(row)"><mat-icon>insert_drive_file</mat-icon></button> 
                 </td>
-              </ng-container>
+              </ng-container> 
     
               <ng-container *ngIf="this.show_everything" matColumnDef="uploadedat">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded at</th>
@@ -65,12 +59,12 @@
               </ng-container>
     
               <ng-container  matColumnDef="Action">
-                <th style="width: 12% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
-                <td style="width: 12% !important;" mat-cell *matCellDef="let row"> 
-                  <button [disabled]="row.lock" mat-button color="primary" (click)="editfile(row)"><mat-icon>edit</mat-icon></button> 
-                  <button [disabled]="row.lock" mat-button color="warn" (click)="openDialogDelete(row)"><mat-icon>delete</mat-icon></button> 
-                </td>     
-                </ng-container>
+                  <th style="width: 12% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+                  <td style="width: 12% !important;" mat-cell *matCellDef="let row"> 
+                    <button [disabled]="row.lock" mat-button color="primary" (click)="editfile(row)"><mat-icon>edit</mat-icon></button> 
+                    <button [disabled]="row.lock" mat-button color="warn" (click)="openDialogDelete(row)"><mat-icon>delete</mat-icon></button> 
+                  </td>     
+              </ng-container>
             
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

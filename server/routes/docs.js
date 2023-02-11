@@ -94,15 +94,36 @@ router.put('/update/:id' ,getDoc, async(req,res)=>{
         res.doc.comments= req.body.comments;
         res.doc.files_uploaded= req.body.files_uploaded;
         res.doc.email = req.body.email;
+        res.doc.seen = 0;
         try {
+            if(req.body.purpose ==  res.doc.purpose){
+                await client_doc_summary.updateOne(
+                {email : req.body.email, purpose:req.body.purpose},
+                {$inc : {unseen: 1}},
+                {upsert:true}
+                )
+            }
+            else{
+                await client_doc_summary.updateOne(
+                {email : res.doc.email, purpose:res.doc.purpose},
+                {$inc : {unseen: -1,total : -1}},
+                {upsert:true}
+                )
+
+                await client_doc_summary.updateOne(
+                {email : req.body.email, purpose:req.body.purpose},
+                {$inc : {unseen: 1, total:1}},
+                {upsert:true}
+                )
+            }
             const newDoc = await res.doc.save()
             res.status(201).json({message:'Updated Successfully'})
         } catch (error) {
             res.status(400).json({message: error.message})
         }
     }
-    
 })
+
 //Locking the file
 router.put('/lock/:id' ,getDoc, async(req,res)=>{
     if(req.body !=null){
@@ -114,11 +135,34 @@ router.put('/lock/:id' ,getDoc, async(req,res)=>{
             res.status(400).json({message: error.message})
         }
     }
-    
 })
+
+//Dec while seeing the file
+router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
+    try {
+        if(res.doc.seen == 0){
+        await client_doc_summary.updateOne(
+            {email : res.doc.email, purpose:res.doc.purpose},
+            {$inc : {unseen: -1}},
+            {upsert:true}
+            )
+        res.doc.seen = 1;
+        const newDoc = await res.doc.save()
+        res.status(201).json({message:'Updated Successfully'})
+        }
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
+
 //Deleting One
 router.delete('/:id' ,getDoc, async(req,res)=>{
     try {
+        await client_doc_summary.updateOne(
+            {email : res.doc.email, purpose:res.doc.purpose},
+            {$inc : {unseen: -1, total : -1}},
+            {upsert:true}
+            )
         await res.doc.remove();
         res.status(200).json({message:'Deleted Successfully'});
     } catch (error) {
@@ -135,7 +179,6 @@ router.delete('/', async(req,res)=>{
         res.status(500).json({message: error.message})
     }
 })
-
 
 async function getDoc(req,res, next)
 {

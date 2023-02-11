@@ -1,11 +1,16 @@
-1. Hide scroll bar and add sticky to nav-tool-bar
-2. Signup Frontend issue and Backend error handling 
-3. Login Proper error handling
-4. add mat-snackbar
-5. Financial year from asked files to upload files
-6. Add Alina to toolbar
-7. Increase security while seeing img from aws
-8. Add link in auditor side
-9. Total and seen change after viewing and deleting 
-10. aws s3 implementation for editing 
-
+1. ****Hide scroll bar and add sticky to nav-tool-bar also view height -Ashish
+2. Signup Frontend issue (Not Done - Ashish) and ***Backend error handling (Done) 
+3. *****Login Proper error handling (Done)
+4. *****add mat-snackbar (Doing) - Reithick
+5. Financial year from asked files to upload files - Reithick
+6. ****Add Alina to toolbar (Done)
+7. Increase security while seeing img from aws - Need to discuss
+8. ****Add link in auditor side (Done)
+9. ****Total and seen change after viewing and deleting - Ashish
+10.****aws s3 implementation for editing - Reithick (Done)
+11. Badger in client front end. - Ashish
+12. ****Sorting in the table. - Reithick
+13. Cleaning the codes - Both - Saturday. 
+14. ****Multiple Uploads - Reithick (Done)
+15. Technical Documentation - Both Saturday 
+16. Add Link Based Filing. 

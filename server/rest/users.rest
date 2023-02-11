@@ -14,12 +14,12 @@ POST http://localhost:8000/user
 Content-Type: application/json
 
 {
-    "email": "1",
-    "password": "1",
-    "mobile": "9887241556",
-    "user_name": "reithick",
+    "email": "arasuaudit@gmail.com",
+    "password": "qwerty99",
+    "mobile": "9443245889",
+    "user_name": "Anbarasu",
     "user_type": "auditor",
-    "PAN": "MOPJD4592D"
+    "PAN": "AKMPK5944M1"
 }
 
 ###
