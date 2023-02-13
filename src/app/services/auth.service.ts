@@ -9,25 +9,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AuthService {
 
+  backend_route = 'http://54.90.42.79/api' 
   constructor(private http : HttpClient,private localStorage : LocalStorageService, private router : Router,
     private _snackBar: MatSnackBar) { }
 
   adduser(data : any){
-    return this.http.post<any>("http://localhost:8000/user",data);
+    return this.http.post<any>(this.backend_route + '/user',data);
   }
 
   user_signup(data : any){
     console.log(data)
-    return this.http.post<any>("http://localhost:8000/user/signup",data);
+    return this.http.post<any>(this.backend_route + '/user/signup',data);
   }
 
   generate_otp(data : any){
     console.log('hi')
-    return this.http.post<any>("http://localhost:8000/user/generate_otp",data);
+    return this.http.post<any>(this.backend_route + '/user/generate_otp',data);
   }
 
   checkuser(data : any){
-    return this.http.post<any>("http://localhost:8000/user/login",data);
+    return this.http.post<any>(this.backend_route + '/user/login',data);
   }
 
   login_user(data : any) {
