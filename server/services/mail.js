@@ -2,6 +2,10 @@
 //                      Node Mailer 
 // ******************************************************
 
+//    54.90.42.79
+
+
+
 require('dotenv').config()
 
 
@@ -9,7 +13,7 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   
     host: 'smtp.gmail.com',
-    port: 25,
+    port: 587,
     secure: false, // upgrade later with STARTTLS
     auth: {
         user: process.env.EMAIL_ID,
