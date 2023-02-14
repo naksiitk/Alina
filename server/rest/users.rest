@@ -1,8 +1,8 @@
-GET http://localhost:8000/user
+GET http://54.90.42.79:80/api/user
 
 ###
 
-GET http://localhost:8000/user/otps
+GET http://54.90.42.79:80/api/otps
 
 ###
 
@@ -10,7 +10,7 @@ GET http://localhost:8000/user/63bad7eb0f73c53301b11d6v
 
 ###
 
-POST http://localhost:8000/user
+POST http://54.90.42.79:80/api/user
 Content-Type: application/json
 
 {
@@ -38,7 +38,7 @@ DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
 
 
 ###
-POST http://localhost:8000/user/generate_otp
+POST http://54.90.42.79:3056/user/generate_otp
 Content-Type: application/json
 
 {

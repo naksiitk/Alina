@@ -6,27 +6,27 @@ import { Injectable } from '@angular/core';
 })
 export class CredentialsService {
 
+  backend_route = 'http://54.90.42.79/api'
   constructor(private http : HttpClient) { }
 
-
   AddCredentials(data : any){
-    return this.http.post<any>("http://localhost:8000/credential",data);
+    return this.http.post<any>(this.backend_route + '/credential',data);
   }
 
   FetchAllCredentials(data : any){
     console.log(data)
-    return this.http.post<any>("http://localhost:8000/credential/all",data);
+    return this.http.post<any>(this.backend_route + '/credential/all',data);
   }
 
   EditOneCredentials(id: number, data: any)
   {
-    return this.http.put<any>("http://localhost:8000/credential/"+id,data);
+    return this.http.put<any>(this.backend_route + '/credential/'+id,data);
   }
 
   DeleteOneCredentials(id: number)
   {
     console.log(id);
-    console.log("http://localhost:8000/credential/"+id);
-    return this.http.delete<any>("http://localhost:8000/credential/"+id);
+    console.log(this.backend_route + '/credential/'+id);
+    return this.http.delete<any>(this.backend_route + '/credential/'+id);
   }
 }

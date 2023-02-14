@@ -1,16 +1,25 @@
-1. ****Hide scroll bar and add sticky to nav-tool-bar also view height -Ashish
-2. Signup Frontend issue (Not Done - Ashish) and ***Backend error handling (Done) 
-3. *****Login Proper error handling (Done)
-4. *****add mat-snackbar (Doing) - Reithick
-5. Financial year from asked files to upload files - Reithick
-6. ****Add Alina to toolbar (Done)
-7. Increase security while seeing img from aws - Need to discuss
-8. ****Add link in auditor side (Done)
-9. ****Total and seen change after viewing and deleting - Ashish
-10.****aws s3 implementation for editing - Reithick (Done)
-11. Badger in client front end. - Ashish
-12. ****Sorting in the table. - Reithick
-13. Cleaning the codes - Both - Saturday. 
-14. ****Multiple Uploads - Reithick (Done)
-15. Technical Documentation - Both Saturday 
-16. Add Link Based Filing. 
+before 20
+:Have different production and dev environment variables
+
+:Hide scroll bar and add sticky to nav-tool-bar also view height -Ashish
+:Signup Frontend issue (Not Done - Ashish) 
+:Financial year from asked files to upload files - Reithick
+:Increase security while seeing img from aws - Need to discuss
+:Badger in client front end. - Ashish
+:Cleaning the codes - Both - Saturday.
+:Technical Documentation - Both Saturday
+
+:Front Page of auditor
+
+:Make Backend dump logs in a file on the server
+:Make backend online again after crashing automatically
+:jsonwebtoken -> start from viewing the files
+:Add link based onboarding and Filing
+:Ask Multiple files, Add Multiple clients -> csv file, 
+:Drafting two different emails for asking files and onboarding
+
+:Add forgot PASSWORD
+:Add signup link in login
+
+After 20
+:Change CSS ->PWA
