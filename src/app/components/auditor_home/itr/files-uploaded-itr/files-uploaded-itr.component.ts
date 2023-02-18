@@ -173,7 +173,7 @@ export class FilesUploadedItrComponent implements OnInit {
     });
     this.dialog.open(FilesShowDialogComponent,
       {
-        width : '30%', 
+        width : '40%', 
         data:row
       })
     }

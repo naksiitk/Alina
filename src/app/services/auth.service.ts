@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AuthService {
 
-  backend_route = 'http://54.90.42.79/api' 
+  backend_route = 'http://localhost:8000' 
   constructor(private http : HttpClient,private localStorage : LocalStorageService, private router : Router,
     private _snackBar: MatSnackBar) { }
 

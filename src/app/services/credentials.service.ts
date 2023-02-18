@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CredentialsService {
 
-  backend_route = 'http://54.90.42.79/api'
+  backend_route = 'http://localhost:8000'
   constructor(private http : HttpClient) { }
 
   AddCredentials(data : any){

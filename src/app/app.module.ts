@@ -61,7 +61,9 @@ import { AskFileItrComponent } from './components/auditor_home/itr/ask-file-itr/
 import { AskDialogComponent } from './components/auditor_home/ask-dialog/ask-dialog.component';
 import { AskFileComponent } from './components/home/uploaded-returns/ask-file/ask-file.component'; 
 import {MatExpansionModule} from '@angular/material/expansion';
-import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component'; 
+import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { FilePreviewDialogComponent } from './components/home/file-preview-dialog/file-preview-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,8 @@ import { FilesShowDialogComponent } from './components/home/files-show-dialog/fi
     AskFileItrComponent,
     AskDialogComponent,
     AskFileComponent,
-    FilesShowDialogComponent
+    FilesShowDialogComponent,
+    FilePreviewDialogComponent
      
   ],
   imports: [
@@ -128,7 +131,8 @@ import { FilesShowDialogComponent } from './components/home/files-show-dialog/fi
     NgbModule,
     MatExpansionModule,
     MatSnackBarModule, 
-    MatSortModule
+    MatSortModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

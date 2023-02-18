@@ -1,5 +1,4 @@
-GET http://54.90.42.79:80/api/user
-
+GET http://localhost:8000/user
 ###
 
 GET http://54.90.42.79:80/api/otps
@@ -29,7 +28,7 @@ Content-Type: application/json
 
 {
     "email": "1",
-    "password": "2"
+    "password": "1"
 }
 
 ###

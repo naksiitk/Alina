@@ -159,7 +159,7 @@ export class FileUploadedComponent implements OnInit {
   show_uploaded_files(row : any){
       this.dialog.open(FilesShowDialogComponent,
         {
-          width : '30%', 
+          width : '40%', 
           data:row
         })
         
