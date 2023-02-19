@@ -156,7 +156,10 @@ router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
 })
 
 //Deleting One
-router.delete('/:id' ,getDoc, async(req,res)=>{
+router.delete('/:id' , [OpenJWT, getDoc], async(req,res)=>{
+    if(req.JWT.email != req.params.email) 
+        return res.status(403).json({'message' : 'Access Denied, Different Email'})
+
     try {
         await client_doc_summary.updateOne(
             {email : res.doc.email, purpose:res.doc.purpose},
@@ -194,4 +197,20 @@ async function getDoc(req,res, next)
     res.doc = doc
     next()
 }
+
+const JWT = require('jsonwebtoken')
+
+function OpenJWT(req, res, next) {
+    const authHeader = req.headers.authorization
+    const Token = authHeader && authHeader.split(' ')[1]
+
+    if(Token == null) return res.status(401).json({'msg' : 'Access Denied, Please Login'})
+
+    JWT.verify(Token, process.env.JWT_SECRET_KEY , (err, user) => {
+        if(err) return res.status(403).json({'msg' : 'Access Denied, Invalid JWT'})
+        req.JWT = user
+        next()
+    })
+}
+
 module.exports = router

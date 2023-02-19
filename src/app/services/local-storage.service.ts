@@ -7,6 +7,9 @@ export class LocalStorageService {
 
   constructor() { }
 
+  public saveJWT(value : string) { localStorage.setItem('JWT', value); }
+  public getJWT() { return localStorage.getItem('JWT'); }
+
   public saveEmail(value : string) { localStorage.setItem('email', value); }
   public getEmail() { return localStorage.getItem('email'); }
 

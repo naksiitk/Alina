@@ -1,6 +1,8 @@
 import { Component ,Inject, Input} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { FileDownloadService } from 'src/app/services/file-download.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { FilePreviewDialogComponent } from '../file-preview-dialog/file-preview-dialog.component';
 @Component({
   selector: 'app-files-show-dialog',
@@ -11,7 +13,8 @@ export class FilesShowDialogComponent {
 
   doc_url = ''
   fileName_array : any[] = [];
-  constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any, public dialog: MatDialog){
+  JWT = this.localStorage.getJWT() 
+  constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any, public dialog: MatDialog, public localStorage: LocalStorageService, public fileDownloadService: FileDownloadService){
 
     for( let index = 0; index<= this.filesdata.files_uploaded.length; index++)
     {
@@ -50,4 +53,7 @@ export class FilesShowDialogComponent {
       })
   }
 
+  downloadFile(fy : string, email : string, files_uploaded : string) {
+    this.fileDownloadService.downloadFile(fy, email, files_uploaded)
+  }
 }

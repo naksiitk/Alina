@@ -55,7 +55,10 @@ router.post("/file", upload.array("files"), async(req,res) =>{
   }
 })
 
-router.get("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
+router.get("/images/fy/:fy/email/:email/key/:key", OpenJWT, async(req,res) =>{
+  if(req.user.email != req.params.email) 
+    return res.status(403).json({'message' : 'Access Denied, Different Email'})
+
   try {
     console.log(req.params.fy+"/"+req.params.email+"/"+req.params.key)
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
@@ -63,11 +66,14 @@ router.get("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
     const result = await getfile({fileKey:fileKey});
     result.pipe(res);
   } catch (error) {
-    res.status(500).json({message: error.message})
+    return res.status(500).json({message: error.message})
   }
 })
 
-router.delete("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
+router.delete("/images/fy/:fy/email/:email/key/:key", OpenJWT, async(req,res) =>{
+  if(req.user.email != req.params.email) 
+    return res.status(403).json({'message' : 'Access Denied, Different Email'})
+
   try {
     console.log(req.params.key)
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
@@ -103,5 +109,19 @@ router.put("/file_copy", async(req,res) =>{
   }
 })
 
+const JWT = require('jsonwebtoken')
+
+function OpenJWT(req, res, next) {
+    const authHeader = req.headers.authorization
+    const Token = authHeader && authHeader.split(' ')[1]
+
+    if(Token == null) return res.status(401).json({'msg' : 'Access Denied, Please Login'})
+
+    JWT.verify(Token, process.env.JWT_SECRET_KEY , (err, user) => {
+        if(err) return res.status(403).json({'msg' : 'Access Denied, Invalid JWT'})
+        req.user = user
+        next()
+    })
+}
 module.exports = router
 //Getting All

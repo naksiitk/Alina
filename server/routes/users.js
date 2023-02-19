@@ -1,4 +1,4 @@
- const express = require('express')
+const express = require('express')
 const router = express.Router()
 const User = require('../models/users')
 const otp = require('../models/otp')
@@ -73,26 +73,6 @@ router.post('/', async (req, res) =>{
 
         //const newUser = await user.saveInstance();
         res.status(201).json(newUser)
-    } catch (err) {
-        res.status(400).json({ message: err.message})
-    }
-})
-
-// Login one
-router.post('/login', async (req, res) =>{
-    const user = await User.findOne({email: req.body.email})
-
-    if (user == null) {
-        return res.status(404).json({status : "404"}) // email not found
-    }
-
-    try{
-        if (await bcrypt.compare(req.body.password, user.password)) {
-            res.status(201).json({status : "200", email : user.email, role : user.user_type}) // password correct
-        }
-        else {
-            res.status(400).json({status : "400"}) // password incorrect
-        }
     } catch (err) {
         res.status(400).json({ message: err.message})
     }

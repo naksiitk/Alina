@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   checkuser(data : any){
-    return this.http.post<any>(this.backend_route + '/user/login',data);
+    return this.http.post<any>(this.backend_route + '/login',data);
   }
 
   login_user(data : any) {
@@ -36,6 +36,7 @@ export class AuthService {
     .subscribe({
         next:(res)=>{
           if(res.status == '200') {
+            this.localStorage.saveJWT(res.JWT)
             this.localStorage.saveEmail(res.email)
             this.localStorage.saveRole(res.role)
 

@@ -19,7 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelect, MatSelectModule} from '@angular/material/select'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -64,6 +64,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { FilePreviewDialogComponent } from './components/home/file-preview-dialog/file-preview-dialog.component';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+import { FileDownloadService } from './services/file-download.service';
 
 @NgModule({
   declarations: [
@@ -134,7 +136,10 @@ import { FilePreviewDialogComponent } from './components/home/file-preview-dialo
     MatSortModule,
     NgxExtendedPdfViewerModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
+    FileDownloadService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
