@@ -1,5 +1,6 @@
 import { Component ,Inject, Input} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { FileDownloadService } from 'src/app/services/file-download.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -14,7 +15,9 @@ export class FilesShowDialogComponent {
   doc_url = ''
   fileName_array : any[] = [];
   JWT = this.localStorage.getJWT() 
-  constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any, public dialog: MatDialog, public localStorage: LocalStorageService, public fileDownloadService: FileDownloadService){
+  constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any, public dialog: MatDialog, 
+  public localStorage: LocalStorageService, public fileDownloadService: FileDownloadService, 
+  public _snackBar: MatSnackBar){
 
     for( let index = 0; index<= this.filesdata.files_uploaded.length; index++)
     {
@@ -43,14 +46,20 @@ export class FilesShowDialogComponent {
   }
 
   OpenPDFviewer(fy : string, email : string, files_uploaded : string) {
-    this.doc_url = "http://localhost:8000/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
+    this.fileDownloadService.getFileBlob(fy, email, files_uploaded)
+    .subscribe(blob => {  
+      let dialogref = this.dialog.open(FilePreviewDialogComponent,
+        {
+          width : '60%',
+          height: '95vh',
+          data: blob
+        })
+    }, (err) => {
+      this._snackBar.open('Error Fetching File', 'Try Again', {
+        duration: 2000,
+      });
+    })
 
-    let dialogref = this.dialog.open(FilePreviewDialogComponent,
-      {
-        width : '60%',
-        height: '95vh',
-        data: this.doc_url
-      })
   }
 
   downloadFile(fy : string, email : string, files_uploaded : string) {

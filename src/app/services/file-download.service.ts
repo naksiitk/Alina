@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators'
 
 @Injectable({
@@ -47,6 +47,25 @@ export class FileDownloadService {
     const doc_url = "http://localhost:8000/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
 
     return this.http.get(doc_url, {responseType: 'blob'}).pipe(catchError(this.parseErrorBlob))
+  }
+
+  public getFileBlob(fy : string, email : string, files_uploaded : string) {
+    const doc_url = "http://localhost:8000/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
+
+    var subject = new Subject<Blob>();
+
+    this.http.get(doc_url, {responseType: 'blob'})
+    .pipe(catchError(this.parseErrorBlob))
+    .subscribe((blob : Blob) => {
+        console.log(blob)
+        subject.next(blob)
+      }, (err) => {
+        this._snackBar.open(err.message,"Contact Us", {
+          duration: 2500,
+      });
+    })
+
+    return subject.asObservable()
   }
 
 }

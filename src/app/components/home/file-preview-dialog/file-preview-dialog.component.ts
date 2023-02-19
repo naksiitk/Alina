@@ -8,6 +8,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class FilePreviewDialogComponent {
 
-  constructor (@Inject(MAT_DIALOG_DATA) public doc_url : any) { }
+  constructor (@Inject(MAT_DIALOG_DATA) public Blob : any) { }
 
 }

@@ -156,9 +156,7 @@ router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
 })
 
 //Deleting One
-router.delete('/:id' , [OpenJWT, getDoc], async(req,res)=>{
-    if(req.JWT.email != req.params.email) 
-        return res.status(403).json({'message' : 'Access Denied, Different Email'})
+router.delete('/:id' , [OpenJWT, Access, getDoc], async(req,res)=>{
 
     try {
         await client_doc_summary.updateOne(
@@ -213,4 +211,16 @@ function OpenJWT(req, res, next) {
     })
 }
 
+async function Access(req, res, next) {
+    if(req.JWT.email == req.params.email) {
+      next()
+    }
+    else {
+      const user = await users.findOne({email: req.JWT.email})
+      if(user.user_type == 'auditor') {
+        next()
+      }
+      else return res.status(403).json({'message' : 'Hello Access Denied, Invalid JWT'})
+    }
+  }
 module.exports = router
