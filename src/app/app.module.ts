@@ -19,7 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelect, MatSelectModule} from '@angular/material/select'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -61,7 +61,16 @@ import { AskFileItrComponent } from './components/auditor_home/itr/ask-file-itr/
 import { AskDialogComponent } from './components/auditor_home/ask-dialog/ask-dialog.component';
 import { AskFileComponent } from './components/home/uploaded-returns/ask-file/ask-file.component'; 
 import {MatExpansionModule} from '@angular/material/expansion';
-import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component'; 
+import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component';
+import { ClientDocListTableComponent } from './components/auditor_home/dashboard/client-doc-list-table/client-doc-list-table.component';
+import { AskFileDashboardComponent } from './components/auditor_home/dashboard/ask-file-dashboard/ask-file-dashboard.component';
+import { UploadFileDashboardComponent } from './components/auditor_home/dashboard/upload-file-dashboard/upload-file-dashboard.component'; 
+import {MatGridListModule} from '@angular/material/grid-list';
+import { AddClientComponent } from './components/auditor_home/dashboard/add-client/add-client.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component'; 
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +104,13 @@ import { FilesShowDialogComponent } from './components/home/files-show-dialog/fi
     AskFileItrComponent,
     AskDialogComponent,
     AskFileComponent,
-    FilesShowDialogComponent
+    FilesShowDialogComponent,
+    ClientDocListTableComponent,
+    AskFileDashboardComponent,
+    UploadFileDashboardComponent,
+    AddClientComponent,
+    ForgotPasswordComponent,
+    OneTimeFileUploadComponent
      
   ],
   imports: [
@@ -128,9 +143,15 @@ import { FilesShowDialogComponent } from './components/home/files-show-dialog/fi
     NgbModule,
     MatExpansionModule,
     MatSnackBarModule, 
-    MatSortModule
+    MatSortModule,
+    MatGridListModule, 
+    MatAutocompleteModule
   ],
-  providers: [],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService, 
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

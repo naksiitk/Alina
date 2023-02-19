@@ -27,7 +27,7 @@ export class AskDialogComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public editdata: any, private api_auth : AuthService ){
 
       for (let year = this.selectedYear; year >= 2018; year--) {
-        this.years.push(String(year) + "-" + String(year-1));
+        this.years.push(String(year-1)  + "-" + String(year));
     };
   }
 

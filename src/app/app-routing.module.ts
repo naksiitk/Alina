@@ -21,11 +21,15 @@ import { ClientUnAuthGuard } from './guards/client-un-auth.guard';
 import { AuditorUnAuthGuard } from './guards/auditor-un-auth.guard';
 import { ClientAuthGuard } from './guards/client-auth.guard';
 import { AuditorAuthGuard } from './guards/auditor-auth.guard';
+import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
+import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [ClientUnAuthGuard,AuditorUnAuthGuard] },
   {path: 'signup', component: SignupComponent, canActivate: [ClientUnAuthGuard,AuditorUnAuthGuard] },
+  {path: 'forgot_password', component: ForgotPasswordComponent, canActivate: [ClientUnAuthGuard,AuditorUnAuthGuard] },
+  {path: 'one_time_upload', component: OneTimeFileUploadComponent, canActivate: [ClientUnAuthGuard,AuditorUnAuthGuard] },
   {
     path: 'home',
     component: HomeComponent,

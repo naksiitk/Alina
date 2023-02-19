@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CredentialsService {
 
-  backend_route = 'http://54.90.42.79/api'
+  backend_route =  environment.apiUrl;     //'http://54.90.42.79/api'
   constructor(private http : HttpClient) { }
 
   AddCredentials(data : any){

@@ -1,4 +1,4 @@
-GET http://54.90.42.79:80/api/user
+GET http://localhost:8000/user
 
 ###
 
@@ -34,7 +34,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
+DELETE http://localhost:8000/user/63f2011209aff95d6f24958a
 
 
 ###
@@ -59,3 +59,7 @@ Content-Type: application/json
     "PAN": "MOPJD4592D",
     "OTP": "cbHDT"
 }
+
+###
+
+GET http://localhost:3056/user/onboarding/reithick@gmail.com

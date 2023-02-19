@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,9 +10,9 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 import { DialogComponent } from '../dialog/dialog.component';
-import { NgbAccordionConfig, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilesShowDialogComponent } from '../files-show-dialog/files-show-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-file-uploaded',
   templateUrl: './file-uploaded.component.html',
@@ -22,6 +22,7 @@ export class FileUploadedComponent implements OnInit {
   constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver
     , private api_auth : AuthService,public _snackBar: MatSnackBar,
     ) {
+      console.log(environment.production);
 
     };
 
@@ -45,6 +46,7 @@ export class FileUploadedComponent implements OnInit {
   
   ngOnInit(): void {
     this.getAllfiles();
+    this.getAllaskedfiles();
   };
 
   openDialog() {
@@ -162,8 +164,15 @@ export class FileUploadedComponent implements OnInit {
           width : '30%', 
           data:row
         })
-        
-      
+  }
+
+  counter = 1;
+  getAllaskedfiles(){
+    this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":"ITR"}).subscribe({
+        next:(res)=>{
+          this.counter = res.length;
+        }
+      })
   }
 
 }

@@ -34,9 +34,13 @@ mat-form-field {
 .login-card {
     margin-top: 0;
     margin-right: 2%;
+    width: 20% !important;
 }
 
 mat-form-field {
     width: 100%;
     margin-top: 10px;
 }
+@media screen and (max-width: 800px){ #myelement{
+    margin-left: 5vw !important;   width: 90vw !important;
+}}

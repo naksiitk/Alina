@@ -137,6 +137,8 @@ router.put('/lock/:id' ,getDoc, async(req,res)=>{
     }
 })
 
+
+
 //Dec while seeing the file
 router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
     try {

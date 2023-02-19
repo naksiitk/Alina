@@ -1,25 +1,24 @@
 before 20
-:Have different production and dev environment variables
-
+****:Have different production and dev environment variables
 :Hide scroll bar and add sticky to nav-tool-bar also view height -Ashish
-:Signup Frontend issue (Not Done - Ashish) 
-:Financial year from asked files to upload files - Reithick
-:Increase security while seeing img from aws - Need to discuss
-:Badger in client front end. - Ashish
-:Cleaning the codes - Both - Saturday.
-:Technical Documentation - Both Saturday
+**** Signup Frontend issue  
+****:Financial year from asked files to upload files - Reithick
+****:Badger in client front end. - Ashish
+****:Front Page of auditor
+****:Make Backend dump logs in a file on the server
+****:Make backend online again after crashing automatically
 
-:Front Page of auditor
-
-:Make Backend dump logs in a file on the server
-:Make backend online again after crashing automatically
-:jsonwebtoken -> start from viewing the files
-:Add link based onboarding and Filing
-:Ask Multiple files, Add Multiple clients -> csv file, 
-:Drafting two different emails for asking files and onboarding
-
-:Add forgot PASSWORD
-:Add signup link in login
+:jsonwebtoken -> start from viewing the files -> get download differently. 
+****:Add link based onboarding and Filing
+****: Ask Multiple files, Add Multiple clients -> csv file, 
+****: Drafting two different emails for asking files and onboarding
+****: Add forgot PASSWORD
+****: Add signup link in login
+: Client Details
+: Backend production and development variables
 
 After 20
 :Change CSS ->PWA
+:Cleaning the codes - Both - Saturday.
+:Technical Documentation - Both Saturday
+:Increase security while seeing img from aws - Need to discuss

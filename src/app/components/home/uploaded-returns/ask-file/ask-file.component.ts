@@ -18,9 +18,6 @@ import { DialogComponent } from '../../../home/dialog/dialog.component';
   styleUrls: ['./ask-file.component.css']
 })
 export class AskFileComponent implements OnInit {
-
-  
-
   constructor(public dialog: MatDialog, private route: Router, private breakpointObserver: BreakpointObserver
     , private api_auth : AuthService, private api : ApiService, public _snackBar: MatSnackBar,    ) {};
 

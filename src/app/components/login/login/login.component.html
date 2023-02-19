@@ -1,6 +1,11 @@
 <div class="full-page">
-    <img class = "image-responsive" src="../../../../assets/Images/alinalogo.png" alt="Alina Logo">
-    <mat-card class="login-card" class="mat-elevation-z0">
+    <table style="   width: 1000px; text-align: center;">
+        <tr>
+            <td><img class = "image-responsive" src="../../../../assets/Images/alinalogo.png" alt="Alina Logo"></td>
+       </tr> 
+    <!-- <img class = "image-responsive" src="../../../../assets/Images/alinalogo.png" alt="Alina Logo"> -->
+    <tr ><td >
+    <mat-card  id="myelement" class="login-card" class="mat-elevation-z0">
         <mat-card-header>
             <mat-card-title>Login</mat-card-title>
         </mat-card-header>
@@ -28,6 +33,12 @@
             <mat-icon>login</mat-icon>
             </button>
         </mat-card-actions>
+        <span style="text-align: end; margin-right: 2%; margin-top: 2%;"> New user?  <a [routerLink]="['/signup']"> Sign Up here </a></span>
+        <span style="text-align: end; margin-right: 2%; margin-top: 1%;"> Forgot Password?  <a [routerLink]="['/forgot_password']"> Click here </a></span>
     </mat-card>
+</td></tr>
+           
+</table>
+
 </div>
 

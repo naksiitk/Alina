@@ -39,8 +39,12 @@ router.post('/asked_files' , async(req,res)=>{
     let userid
     try {
         const user = await users.findOne({email: req.body.email})
+        if(user!= null){
         userPAN = user.PAN[0]
-        userid = user.id
+        userid = user.id}
+        else{
+            res.status(500).json({message: "Email-id not there"})
+        }
     } catch (error) {
         res.status(500).json({message: error.message})
     }

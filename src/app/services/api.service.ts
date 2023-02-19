@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class ApiService {
 
-  backend_route = 'http://54.90.42.79/api' 
+  backend_route =  environment.apiUrl;    //'http://54.90.42.79/api' 
   constructor(private http : HttpClient, private api_auth:AuthService) { }
 
   postfile(data : any){
@@ -16,6 +17,7 @@ export class ApiService {
     return this.http.post<any>(this.backend_route + "/doc",data);
   }
   getfile(data:any){  
+    console.log(this.backend_route)
     return this.http.get<any>(this.backend_route + "/doc/"+data);
   }
   getFilesWithPurpose(data: any) {
@@ -82,6 +84,14 @@ export class ApiService {
   dec_client_doc_seen(id : any)
   {
     return this.http.put<any>(this.backend_route + '/doc/client_summary/seen/' + id, id);
+  }
+
+  onboard(data:any){  
+    return this.http.get<any>(this.backend_route + "/user/onboarding/"+data);
+  }
+
+  ask_email(data:any){  
+    return this.http.post<any>(this.backend_route + "/user/ask_file_mail",data);
   }
 
 

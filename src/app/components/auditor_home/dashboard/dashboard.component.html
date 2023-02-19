@@ -1,42 +1,145 @@
 
-<h1 style="margin-top: 5%;margin-left: 5%;">What would you like to do today ?</h1>
-<h2 style="margin-left: 5%;">Dashboard Make a right side nav for Checklist or todo</h2>
-<div style="text-align: center;">
+<div style="margin-top:2%; margin-left: 3%;">
+    <!-- <button mat-raised-button color="warn" (click)="openDialog()">Add File</button> -->
+</div>
+ 
+<h2 style="text-align: center;margin-bottom: 3%;">You are viewing Dashboard</h2>
+
+
+<div class = "tab-container">
+    <mat-grid-list cols="6">
+       
+        <mat-grid-tile [colspan]= 2 [rowspan]= 1 style="margin-right: 5%; border-radius: 20px; background-color: rgb(247, 243, 243);" >
+            <div style="margin-top:2% ;">   
+                <i class="fa-sharp fa-solid fa-file-circle-plus fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+                <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="ask_file()" >Ask File</button>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]= 2 [rowspan]= 1 style="border-radius: 20px; background-color:white;" >   
+            <div style="margin-top:2% ;"> 
+            <i class="fa-sharp fa-solid fa-solid fa-person fa-4x" style="margin-top: 0%;color:rgba(25, 25, 112, 0.822);"></i><br>
+            <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="client_add()">Client Onboard</button>
+            </div>
+        </mat-grid-tile>
+        
+        <mat-grid-tile [colspan]= 2 [rowspan]= 1 style="border-radius: 20px;background-color:rgb(247, 243, 243)" >
+            <div style="margin-top:2% ;">
+                <i class="fa-sharp fa-solid fa-upload fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+                <button mat-raised-button color="primary" style="margin-top: 6%;"  (click)="upload_file()">Upload File</button>
+            </div>
+        </mat-grid-tile>
+        <!-- <mat-grid-tile [colspan]= 6 [rowspan]= 1 style="border-radius: 20px; background-color: beige;" >
+            <h1>{{date}}</h1>
+            </mat-grid-tile> -->
+        <mat-grid-tile [colspan]= 2 [rowspan]= 2 style="border-radius: 20px; background-color: white;" >   
+            <div style="margin-top:2% ;"> 
+                <app-client-doc-list-table [childToMaster]= this.ITR ></app-client-doc-list-table>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]= 2 [rowspan]= 2 style="border-radius: 20px; background-color:rgb(247, 243, 243);" >   
+            <div style="margin-top:2% ;"> 
+                <app-client-doc-list-table [childToMaster]= this.GST ></app-client-doc-list-table>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]= 2 [rowspan]= 2 style="border-radius: 20px; background-color:white" >   
+            <div style="margin-top:2% ;"> 
+                <app-client-doc-list-table [childToMaster]= this.TDS ></app-client-doc-list-table>
+            </div>
+        </mat-grid-tile>
+        
+
+
+</mat-grid-list>
+
+      
+<!-- <mat-tab-group>
+  <mat-tab label="Clients List">
+      <mat-card class="card-inside-tab">
+          <mat-card-header>
+            <mat-card-subtitle>Clients of Arasuaudit</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <app-client-doc-list-table></app-client-doc-list-table>
+          </mat-card-content>
+          <mat-card-actions align="start">
+          </mat-card-actions>
+      </mat-card>
+  </mat-tab> -->
+
+  <!-- <mat-tab label="Upload A File">
+      <mat-card  style="width: 40%;" class="card-inside-tab">
+        <mat-card-header>
+          <mat-card-subtitle>Files to be uploaded behalf the client</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <app-upload-file-dashboard style="margin-left: 10%; width: 80%; margin-top: 3%;"></app-upload-file-dashboard>
+        </mat-card-content>
+        <mat-card-actions align="start">
+        </mat-card-actions>
+    </mat-card>
+  </mat-tab> -->
+
+  <!-- <mat-tab label="Ask a File">
+      <mat-card  style="width: 40%;"  class="card-inside-tab">
+          <mat-card-header>
+            <mat-card-subtitle>Files to be Asked to a Client</mat-card-subtitle>       
+          </mat-card-header>
+          <mat-card-content>
+            <app-ask-file-dashboard style="margin-left: 10%; width: 80%; margin-top: 3%;"></app-ask-file-dashboard>
+          </mat-card-content>
+          <mat-card-actions align="start">
+          </mat-card-actions>
+      </mat-card>
+  </mat-tab>
+</mat-tab-group> -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1 style="margin-top: 5%;margin-left: 5%;"></h1> -->
+<!-- <h2 style="margin-left: 5%;">Dashboard Make a right side nav for Checklist or todo</h2> -->
+<!-- <div style="text-align:center;">
     <table>
         <tr>
     <td>
     <div style="margin-top:2% ;">
-        <i class="fa-sharp fa-solid fa-file-circle-plus fa-6x" style="margin-top: 2%;color:indigo;"></i><br>
-        <button mat-raised-button color="primary" style="margin-top: 6%;">Add Client</button>
+        <i class="fa-sharp fa-solid fa-solid fa-person fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+        <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="client_add()">Add Client</button>
     </div>
 </td>
-<!-- <td>
+<td>
     <div style="margin-top:2% ;">   
-        <i class="fa-sharp fa-solid fa-trademark fa-7x" style="margin-top: 6%;color:indigo;"></i><br>   
-        <button mat-raised-button color="primary" style="margin-top: 6%;">Add Trade name</button>
+        <i class="fa-sharp fa-solid fa-file-circle-plus fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+        <button mat-raised-button color="primary" style="margin-top: 6%;">Ask a File</button>
     </div>
-</td> -->
-<!-- <td>    
+</td>
+<td>    
     <div style="margin-top:2% ;">
-            <span class="example-spacer" style="margin-left: 45%; "></span>
-            <button mat-raised-button color="primary">Raise invoice</button> 
+        <i class="fa-sharp fa-solid fa-upload fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+        <button mat-raised-button color="primary" style="margin-top: 6%;">Upload File</button>
     </div>
-</td> -->
+</td>
 </tr>
     </table>
-</div>
-<div style="margin: 5%;">
+</div> -->
+<!-- <div style="margin: 5%;">
     <h1 >Messages For you :</h1>
     <table class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- Position Column -->
     <ng-container matColumnDef="message">
     </ng-container>
-  
     </table>
   
-  
-</div>
+</div> -->

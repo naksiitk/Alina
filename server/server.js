@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-// app.use(cors());
+app.use(cors());
 
 const usersRouter = require('./routes/users.js')
 app.use('/user', usersRouter)
@@ -40,7 +40,7 @@ const docs_uploadRouter = require('./routes/docs_upload.js')
 app.use('/docs_upload', docs_uploadRouter)
 
 
-app.listen(3056, () => console.log('Server Started'))
+app.listen(8000, () => console.log('Server Started'))
 
 // 404 Handler
 app.use((req, res, next) => {

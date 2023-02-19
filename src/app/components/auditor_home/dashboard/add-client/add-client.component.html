@@ -1,0 +1,42 @@
+<div mat-dialog-content>
+    <form [formGroup] = "client_list">
+        <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-label>Email of the Client</mat-label>
+        <input formControlName="clientemail" matInput placeholder="Provide Email">
+        <mat-error *ngIf="client_list.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+            <mat-label>Name of the Client</mat-label>
+            <input formControlName="clientname" matInput placeholder="Provide Name">
+            </mat-form-field>
+
+        <br>
+        <p style="text-align: center;"><strong> or</strong> </p>
+        
+        Use CSV template <br>
+        <!-- <mat-form-field appearance="outline" style="margin-top: 1%; width: 80%;">
+            <mat-label>CSV Upload</mat-label>
+            <textarea matInput cols="30" rows="1"></textarea>
+            </mat-form-field>
+        <span mat-dialog-action>
+        <button mat-button color="basic" style="margin-left: 1%; width: 10%;"><mat-icon> attach_file</mat-icon></button>
+        </span> -->
+    </form>
+
+    <input type="file" class="file-input" (change)="changeListener($event)"  #fileUpload>
+        <div mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 3%;">
+            {{fileName || "No file uploaded yet."}}
+            <button mat-mini-fab color="primary" class="upload-btn"
+            (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+        </div>
+    <!-- <input type="file" class="upload" (change)="changeListener($event)"> -->
+
+    <div mat-dialog-action [align]="'center'">
+        <button mat-raised-button color="warn" style="margin-right: 4%; width: 45%;" (click)="Onboard_Client()" > Send </button>
+        <button mat-raised-button color="primary" style="width: 45%" mat-dialog-close> Close </button>
+    </div>
+            
+</div>
