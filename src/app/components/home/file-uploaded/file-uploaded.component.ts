@@ -94,7 +94,7 @@ export class FileUploadedComponent implements OnInit {
         });
         this.getAllfiles();
         },
-        error:(err) => {this._snackBar.open(err.error.Status,"Contact Us", {
+        error:(err) => {this._snackBar.open(err.error.message,"Contact Us", {
           duration: 3000,
         });}
         });
@@ -161,7 +161,7 @@ export class FileUploadedComponent implements OnInit {
   show_uploaded_files(row : any){
       this.dialog.open(FilesShowDialogComponent,
         {
-          width : '30%', 
+          width : '40%', 
           data:row
         })
   }

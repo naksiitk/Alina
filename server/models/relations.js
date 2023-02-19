@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
 const relationSchema = new mongoose.Schema({
-    auditor__id : { type : String, required : true },
-    clients__id: { type : [String] }, //use emails only
-    staffs__id: { type: [String] }
+    auditor_email : { type : String, required : true },
+    clients_email : { type : [String] }, //use emails only
+    staffs_email : { type: [String] }
 });
 
 module.exports = mongoose.model('relations', relationSchema);

@@ -55,7 +55,7 @@ router.post("/file", upload.array("files"), async(req,res) =>{
   }
 })
 
-router.get("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
+router.get("/images/fy/:fy/email/:email/key/:key", [OpenJWT, Access], async(req,res) =>{
   try {
     console.log(req.params.fy+"/"+req.params.email+"/"+req.params.key)
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
@@ -65,11 +65,11 @@ router.get("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
     //res.download(result)
     result.pipe(res);
   } catch (error) {
-    res.status(500).json({message: error.message})
+    return res.status(500).json({message: error.message})
   }
 })
 
-router.delete("/images/fy/:fy/email/:email/key/:key", async(req,res) =>{
+router.delete("/images/fy/:fy/email/:email/key/:key", [OpenJWT, Access], async(req,res) =>{
   try {
     console.log(req.params.key)
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
@@ -105,5 +105,32 @@ router.put("/file_copy", async(req,res) =>{
   }
 })
 
+const JWT = require('jsonwebtoken')
+
+function OpenJWT(req, res, next) {
+    const authHeader = req.headers.authorization
+    const Token = authHeader && authHeader.split(' ')[1]
+
+    if(Token == null) return res.status(401).json({'msg' : 'Access Denied, Please Login'})
+
+    JWT.verify(Token, process.env.JWT_SECRET_KEY , (err, user) => {
+        if(err) return res.status(403).json({'msg' : 'Access Denied, Invalid JWT'})
+        req.JWT = user
+        next()
+    })
+}
+
+async function Access(req, res, next) {
+  if(req.JWT.email == req.params.email) {
+    next()
+  }
+  else {
+    const user = await users.findOne({email: req.JWT.email})
+    if(user.user_type == 'auditor') {
+      next()
+    }
+    else return res.status(403).json({'message' : 'Hello Access Denied, Invalid JWT'})
+  }
+}
 module.exports = router
 //Getting All

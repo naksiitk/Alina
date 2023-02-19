@@ -1,7 +1,12 @@
 import { Component ,Inject, Input} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment';
+import { FileDownloadService } from 'src/app/services/file-download.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { FilePreviewDialogComponent } from '../file-preview-dialog/file-preview-dialog.component';
+
 @Component({
   selector: 'app-files-show-dialog',
   templateUrl: './files-show-dialog.component.html',
@@ -9,9 +14,13 @@ import { environment } from 'src/environments/environment';
 })
 export class FilesShowDialogComponent {
 
+  doc_url = ''
   fileName_array : any[] = [];
+  JWT = this.localStorage.getJWT() 
   backend_route : string
-  constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any){
+  constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any, public dialog: MatDialog, 
+  public localStorage: LocalStorageService, public fileDownloadService: FileDownloadService, 
+  public _snackBar: MatSnackBar){
     this.backend_route = environment.apiUrl;
 
     for( let index = 0; index<= this.filesdata.files_uploaded.length; index++)
@@ -25,7 +34,7 @@ export class FilesShowDialogComponent {
     console.log(filesdata)
   }
 
-  displayedColumns: string[] = ['files_uploaded'];
+  displayedColumns: string[] = ['files_uploaded', 'preview', 'download'];
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
   getAllfiles(res : any){ 
@@ -33,10 +42,31 @@ export class FilesShowDialogComponent {
     this.dataSource = new MatTableDataSource(res);
   }
 
+  IsPDF(filename : string) {
+    if(filename.slice(-4) == '.pdf')
+      return true
+    else 
+      return false
+  }
 
-  
-  
-       
+  OpenPDFviewer(fy : string, email : string, files_uploaded : string) {
+    this.fileDownloadService.getFileBlob(fy, email, files_uploaded)
+    .subscribe(blob => {  
+      let dialogref = this.dialog.open(FilePreviewDialogComponent,
+        {
+          width : '60%',
+          height: '95vh',
+          data: blob
+        })
+    }, (err) => {
+      this._snackBar.open('Error Fetching File', 'Try Again', {
+        duration: 2000,
+      });
+    })
 
+  }
 
+  downloadFile(fy : string, email : string, files_uploaded : string) {
+    this.fileDownloadService.downloadFile(fy, email, files_uploaded)
+  }
 }

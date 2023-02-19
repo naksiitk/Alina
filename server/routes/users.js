@@ -78,26 +78,6 @@ router.post('/', async (req, res) =>{
     }
 })
 
-// Login one
-router.post('/login', async (req, res) =>{
-    const user = await User.findOne({email: req.body.email})
-
-    if (user == null) {
-        return res.status(404).json({status : "404"}) // email not found
-    }
-
-    try{
-        if (await bcrypt.compare(req.body.password, user.password)) {
-            res.status(201).json({status : "200", email : user.email, role : user.user_type}) // password correct
-        }
-        else {
-            res.status(400).json({status : "400"}) // password incorrect
-        }
-    } catch (err) {
-        res.status(400).json({ message: err.message})
-    }
-})
-
 //Updating one
 router.patch('/:id', getUser, (req, res) =>{
     

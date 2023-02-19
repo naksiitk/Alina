@@ -93,7 +93,7 @@ export class FilesUploadedItrComponent implements OnInit {
       this.getAllfiles();
     },
       error:(err) => {
-        this._snackBar.open(err.error.Status,"Contact Us", {
+        this._snackBar.open(err.error.message,"Contact Us", {
           duration: 3000,
         });}
     });
@@ -173,7 +173,7 @@ export class FilesUploadedItrComponent implements OnInit {
     });
     this.dialog.open(FilesShowDialogComponent,
       {
-        width : '30%', 
+        width : '40%', 
         data:row
       })
     }

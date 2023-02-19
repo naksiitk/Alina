@@ -29,12 +29,12 @@ Content-Type: application/json
 
 {
     "email": "1",
-    "password": "2"
+    "password": "1"
 }
 
 ###
 
-DELETE http://localhost:8000/user/63f2011209aff95d6f24958a
+DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
 
 
 ###

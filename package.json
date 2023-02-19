@@ -36,6 +36,7 @@
     "mongoose": "^6.8.3",
     "multer": "^1.4.5-lts.1",
     "ng-otp-input": "^1.8.5",
+    "ngx-extended-pdf-viewer": "^16.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

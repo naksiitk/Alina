@@ -61,7 +61,11 @@ import { AskFileItrComponent } from './components/auditor_home/itr/ask-file-itr/
 import { AskDialogComponent } from './components/auditor_home/ask-dialog/ask-dialog.component';
 import { AskFileComponent } from './components/home/uploaded-returns/ask-file/ask-file.component'; 
 import {MatExpansionModule} from '@angular/material/expansion';
-import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component';
+import { FilesShowDialogComponent } from './components/home/files-show-dialog/files-show-dialog.component'; 
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { FilePreviewDialogComponent } from './components/home/file-preview-dialog/file-preview-dialog.component';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+import { FileDownloadService } from './services/file-download.service';
 import { ClientDocListTableComponent } from './components/auditor_home/dashboard/client-doc-list-table/client-doc-list-table.component';
 import { AskFileDashboardComponent } from './components/auditor_home/dashboard/ask-file-dashboard/ask-file-dashboard.component';
 import { UploadFileDashboardComponent } from './components/auditor_home/dashboard/upload-file-dashboard/upload-file-dashboard.component'; 
@@ -71,6 +75,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component'; 
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
+
+
 
 @NgModule({
   declarations: [
@@ -110,8 +116,8 @@ import { OneTimeFileUploadComponent } from './components/login/one-time-file-upl
     UploadFileDashboardComponent,
     AddClientComponent,
     ForgotPasswordComponent,
-    OneTimeFileUploadComponent
-     
+    OneTimeFileUploadComponent,
+    FilePreviewDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -145,13 +151,13 @@ import { OneTimeFileUploadComponent } from './components/login/one-time-file-upl
     MatSnackBarModule, 
     MatSortModule,
     MatGridListModule, 
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxExtendedPdfViewerModule
   ],
-  providers: [{
-    provide:HTTP_INTERCEPTORS,
-    useClass: TokenInterceptorService, 
-    multi: true
-  }],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
+    FileDownloadService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

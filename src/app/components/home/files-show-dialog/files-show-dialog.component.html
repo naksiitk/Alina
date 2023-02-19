@@ -1,12 +1,27 @@
 <div align="center">
     <table mat-table [dataSource]="dataSource" matSort>
+        
         <ng-container matColumnDef="files_uploaded">
             <th mat-header-cell *matHeaderCellDef> Files Uploaded </th>
-        <td mat-cell *matCellDef="let row"> 
-            <a href="{{backend_route}}/docs_upload/images/fy/{{filesdata.fy}}/email/{{filesdata.email}}/key/{{row.files_uploaded}}" target="_blank" download>
-                {{row.files_uploaded}}
-              </a>
-        </td>
+            <td mat-cell *matCellDef="let row"> {{row.files_uploaded}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="preview">
+            <th mat-header-cell *matHeaderCellDef> Preview </th>
+            <td mat-cell *matCellDef="let row"> 
+                <button mat-button color="primary" *ngIf="IsPDF(row.files_uploaded)" (click)="OpenPDFviewer(filesdata.fy,filesdata.email,row.files_uploaded)">
+                    <mat-icon>file_copy</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="download">
+            <th mat-header-cell *matHeaderCellDef> Download </th>
+            <td mat-cell *matCellDef="let row">
+                <button mat-button color="warn" (click)="downloadFile(filesdata.fy,filesdata.email,row.files_uploaded)">
+                    <mat-icon>file_download </mat-icon>
+                </button>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
