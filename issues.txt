@@ -14,11 +14,13 @@ before 20
 ****: Drafting two different emails for asking files and onboarding
 ****: Add forgot PASSWORD
 ****: Add signup link in login
-: Client Details
-: Backend production and development variables
+
 
 After 20
+: Client Details
+: Backend production and development variables
+: Contact Us - Auditor & as well us. 
+: GST and TDS auditor side
 :Change CSS ->PWA
 :Cleaning the codes - Both - Saturday.
 :Technical Documentation - Both Saturday
-:Increase security while seeing img from aws - Need to discuss

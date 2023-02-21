@@ -1,4 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -26,14 +27,17 @@ export class AskFileComponent implements OnInit {
   public email = this.api_auth.get_email_local('email')
   
   displayedColumns: string[] = ['filename','fy','month_quarter', 'comments', 'Action'];
-
+  displayedColumns_mobile: string[] = ['filename','Action'];
   show_everything = false;
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  Breakpoints = Breakpoints;
+  current_break_point = 0;
+  readonly breakpoint$ = this.breakpointObserver
+    .observe([Breakpoints.HandsetPortrait])
     .pipe(
-      map(result => result.matches),
-      shareReplay()
+      tap(value => console.log(value)),
+      distinctUntilChanged()
     );
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -42,14 +46,40 @@ export class AskFileComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllfiles();
     this.getAllaskedfiles();
-  };
 
+    this.breakpoint$.subscribe(() =>
+      this.breakpointChanged()
+    );
+  }
+
+  private breakpointChanged() {
+    if(this.breakpointObserver.isMatched(Breakpoints.HandsetPortrait)) {
+      this.current_break_point = 1;
+      this.dialog_size_function(this.current_break_point);
+  //    this.dialog_size = '90%';
+    } else {
+      this.current_break_point = 0;
+      this.dialog_size_function(this.current_break_point);
+  //    this.dialog_size = '30%';
+    } 
+  }
+  dialog_size = '30%'
+  dialog_size_function(current_break_point : Number)
+  {
+    if(this.current_break_point) {
+      this.dialog_size = '95%';
+    } else {
+      this.dialog_size = '30%';
+    } 
+    return this.dialog_size
+  }
   
   uploadfile(row : any){
+    console.log(this.dialog_size)
     row["from_asked_dialog_box"]= true
     this.dialog.open(DialogComponent,
       {
-        width : '30%', 
+        width : this.dialog_size, 
         data:row
       }).afterClosed().subscribe(val => {
         if(val === 'save'){
@@ -62,7 +92,7 @@ export class AskFileComponent implements OnInit {
 
   openDialogDelete(row: any) {
     const dialogRef = this.dialog.open(DialogDeleteComponent, {
-      width : '30%'
+      width : this.dialog_size,
     });
     
     dialogRef.afterClosed().subscribe(result => {

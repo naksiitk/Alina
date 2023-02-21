@@ -75,7 +75,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component'; 
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
-
+import {MatMenuModule} from '@angular/material/menu'; 
 
 
 @NgModule({
@@ -152,7 +152,8 @@ import { OneTimeFileUploadComponent } from './components/login/one-time-file-upl
     MatSortModule,
     MatGridListModule, 
     MatAutocompleteModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    MatMenuModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},

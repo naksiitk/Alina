@@ -1,4 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,6 +14,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { FilesShowDialogComponent } from '../files-show-dialog/files-show-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-file-uploaded',
   templateUrl: './file-uploaded.component.html',
@@ -21,23 +23,24 @@ import { environment } from 'src/environments/environment';
 export class FileUploadedComponent implements OnInit {
   constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver
     , private api_auth : AuthService,public _snackBar: MatSnackBar,
-    ) {
-      console.log(environment.production);
-
-    };
+    ) {console.log(environment.production);};
 
   title = 'my-app';
 
   public email = this.api_auth.get_email_local('email')
   displayedColumns: string[] = ['filename', 'purpose','fy','month_quarter', 'files_uploaded'];
+  displayedColumns_mobile: string[] = ['filename','files_uploaded'];
   
   show_everything = false;
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  Breakpoints = Breakpoints;
+  current_break_point = 0;
+  readonly breakpoint$ = this.breakpointObserver
+    .observe([Breakpoints.HandsetPortrait])
     .pipe(
-      map(result => result.matches),
-      shareReplay()
+      tap(value => console.log(value)),
+      distinctUntilChanged()
     );
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,12 +50,38 @@ export class FileUploadedComponent implements OnInit {
   ngOnInit(): void {
     this.getAllfiles();
     this.getAllaskedfiles();
+
+    this.breakpoint$.subscribe(() =>
+      this.breakpointChanged()
+    );
+  
   };
 
+  private breakpointChanged() {
+    if(this.breakpointObserver.isMatched(Breakpoints.HandsetPortrait)) {
+      this.current_break_point = 1;
+  //    this.dialog_size = '90%';
+    } else {
+      this.current_break_point = 0;
+  //    this.dialog_size = '30%';
+    } 
+  }
+  dialog_size = '30%'
+  dialog_size_function(current_break_point : Number)
+  {
+    if(this.current_break_point) {
+      this.dialog_size = '95%';
+    } else {
+      this.dialog_size = '30%';
+    } 
+    return this.dialog_size
+  }
+  
   openDialog() {
+    this.dialog_size_function(this.current_break_point)
     this.dialog.open(DialogComponent,
     {
-      width : '30%'
+      width : this.dialog_size,
     }).afterClosed().subscribe(val => {
       if(val === 'save'){
         this.getAllfiles();
@@ -61,9 +90,10 @@ export class FileUploadedComponent implements OnInit {
   };
   
   editfile(row : any){
+    this.dialog_size_function(this.current_break_point)
     this.dialog.open(DialogComponent,
       {
-        width : '30%', 
+        width : this.dialog_size,
         data:row
       }).afterClosed().subscribe(val => {
         if(val === 'update'){
@@ -73,8 +103,9 @@ export class FileUploadedComponent implements OnInit {
     };
 
   openDialogDelete(row: any) {
+    this.dialog_size_function(this.current_break_point)
     const dialogRef = this.dialog.open(DialogDeleteComponent, {
-      width : '30%'
+      width : this.dialog_size,
     });
     
     dialogRef.afterClosed().subscribe(result => {
@@ -159,9 +190,10 @@ export class FileUploadedComponent implements OnInit {
   }
 
   show_uploaded_files(row : any){
+    this.dialog_size_function(this.current_break_point)
       this.dialog.open(FilesShowDialogComponent,
         {
-          width : '40%', 
+          width : this.dialog_size, 
           data:row
         })
   }

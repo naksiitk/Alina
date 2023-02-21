@@ -61,7 +61,7 @@ router.get("/images/fy/:fy/email/:email/key/:key", [OpenJWT, Access], async(req,
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
     console.log(fileKey);
     const result = await getfile({fileKey:fileKey});
-    console.log(result)
+  
     //res.download(result)
     result.pipe(res);
   } catch (error) {

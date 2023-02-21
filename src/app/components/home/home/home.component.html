@@ -7,13 +7,32 @@
       (click)="drawer.toggle()">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-    <img style="position:fixed; margin-left: 45%; text-align: center;"  class = "image-responsive" src="../../../../assets/Images/alinalogo_white.png" alt="Alina Logo">
-        
-    <div class="example-spacer" style="text-align: end;">
-        <span>
-        Hi! {{email}}
+    <img *ngIf="current_break_point==0" style="position:fixed; margin-left: 45%; text-align: center;"  class = "image-responsive" src="../../../../assets/Images/alinalogo_white.png" alt="Alina Logo">    
+    <div *ngIf="current_break_point==0" class="example-spacer" style="text-align: end;">
+        <span>  
+          Hi! {{email}}
         </span>
-  </div>
+    </div>
+
+    <img *ngIf="current_break_point==1" style="position:fixed; margin-left: 14vh; text-align: center;"  class = "image-responsive1" src="../../../../assets/Images/alinalogo_white.png" alt="Alina Logo">
+    <div *ngIf="current_break_point==1" class="example-spacer" style="text-align: end;">
+      <span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item >
+            <mat-icon>person</mat-icon>
+            <span> {{email}} </span>
+          </button>
+          <button (click)="logout()" mat-menu-item >
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      
+      </span>
+    </div>
   </mat-toolbar>
 </div>
 

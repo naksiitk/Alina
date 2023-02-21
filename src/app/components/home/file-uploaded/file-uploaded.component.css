@@ -4,15 +4,16 @@
   margin-right: auto;
   width: 100%;
   max-width: 95%;
-  min-width: 500px;
+  
   text-align: center;
 }
 
 .example-spacer {
     flex: 1 1 auto;
   }
-  table {
+table {
     width: 100%;
+    margin-bottom: 1%;
   }
   
 .mat-mdc-form-field {
@@ -35,11 +36,7 @@ td, th {
   z-index: 1;
 }
 
-mat-badge-medium.mat-badge-above .mat-badge-content {
-  top: unset;
-  right: unset;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-
+.mat-badge-medium.mat-badge-above .mat-badge-content {
+  position: absolute;
+  top: -3px;
 }
