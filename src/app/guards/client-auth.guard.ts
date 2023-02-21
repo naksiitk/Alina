@@ -14,10 +14,11 @@ export class ClientAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const email = this.localStorage.getEmail()
+
       const role = this.localStorage.getRole()
+      const jwt = this.localStorage.getJWT()
   
-      if(email && role == 'client') {
+      if(jwt && role == 'auditor') {
         return true
       }
       

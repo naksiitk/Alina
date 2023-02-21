@@ -31,7 +31,7 @@
         <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
         routerLink="/auditor/billing_history" (click)="drawer.toggle()"><mat-icon color="primary">monetization_on</mat-icon>Billing History</a> 
       <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
-      routerLink="/login" (click)="logout()"><mat-icon>login</mat-icon>Logout</a>
+      (click)="logout()"><mat-icon>login</mat-icon>Logout</a>
       </mat-nav-list>
     </mat-sidenav>
   

@@ -14,10 +14,11 @@ export class AuditorUnAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const email = this.localStorage.getEmail()
+
       const role = this.localStorage.getRole()
+      const jwt = this.localStorage.getJWT()
   
-      if(email && role == 'auditor') {
+      if(jwt && role == 'auditor') {
         this.router.navigate(['/auditor']);
         return false
       }

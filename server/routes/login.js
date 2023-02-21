@@ -16,7 +16,13 @@ router.post('/', async (req, res) =>{
         if (await bcrypt.compare(req.body.password, user.password)) {
             const jwtToken = jwt.sign({email : user.email, role : user.user_type}, process.env.JWT_SECRET_KEY)
 
-            res.status(200).json({status : "200", JWT: jwtToken, email : user.email, role : user.user_type}) // password correct
+            res.status(200).json({
+                status : "200", 
+                JWT: jwtToken, 
+                email : user.email,
+                role : user.user_type,
+                name : user.user_name
+            }) // password correct
         }
         else {
             res.status(400).json({status : "400"}) // password incorrect

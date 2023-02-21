@@ -60,6 +60,7 @@ export class AuthService {
             this.localStorage.saveJWT(res.JWT)
             this.localStorage.saveEmail(res.email)
             this.localStorage.saveRole(res.role)
+            this.localStorage.saveName(res.name)
 
             if(res.role == 'client') {
               this.router.navigate(['/home/file_uploaded']);
@@ -78,6 +79,11 @@ export class AuthService {
       }); 
     }
   })
+  }
+
+  logout_user(){
+    this.localStorage.clearLocalStorage();
+    this.router.navigate(['/login']);
   }
 
   public save_email_local(key: string, value: string) {

@@ -61,7 +61,7 @@ router.get("/images/fy/:fy/email/:email/key/:key", [OpenJWT, Access], async(req,
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
     console.log(fileKey);
     const result = await getfile({fileKey:fileKey});
-    console.log(result)
+    // console.log(result)
     //res.download(result)
     result.pipe(res);
   } catch (error) {
@@ -74,7 +74,7 @@ router.delete("/images/fy/:fy/email/:email/key/:key", [OpenJWT, Access], async(r
     console.log(req.params.key)
     const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
     const result = await deletefile({fileKey:fileKey});
-    console.log(result);
+    // console.log(result);
     res.json(result);
   } catch (error) {
     res.status(500).json({message: error.message})
