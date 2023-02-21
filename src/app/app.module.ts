@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
@@ -73,9 +73,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { AddClientComponent } from './components/auditor_home/dashboard/add-client/add-client.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component'; 
-import { TokenInterceptorService } from './services/token-interceptor.service';
 import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
-import {MatMenuModule} from '@angular/material/menu'; 
+import {MatMenuModule} from '@angular/material/menu';
+import { ServiceWorkerModule } from '@angular/service-worker'; 
 
 
 @NgModule({
@@ -153,7 +153,13 @@ import {MatMenuModule} from '@angular/material/menu';
     MatGridListModule, 
     MatAutocompleteModule,
     NgxExtendedPdfViewerModule,
-    MatMenuModule
+    MatMenuModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},

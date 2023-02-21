@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit{
     );
 
   constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver,
-     private localStorage : LocalStorageService) {}
+     private localStorage : LocalStorageService, private authService : AuthService) {}
   
      ngOnInit(): void {
       this.breakpoint$.subscribe(() =>
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit{
   email : any = this.localStorage.getEmail();
   
   logout(){
-    this.localStorage.clearLocalStorage();
+    this.authService.logout_user()
     }
 
 }

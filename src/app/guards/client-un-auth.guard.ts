@@ -14,10 +14,11 @@ export class ClientUnAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const email = this.localStorage.getEmail()
+
       const role = this.localStorage.getRole()
+      const jwt = this.localStorage.getJWT()
   
-      if(email && role == 'client') {
+      if(jwt && role == 'auditor') {
         this.router.navigate(['/home']);
         return false
       }

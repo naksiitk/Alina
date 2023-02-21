@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 /////////////////////////////////////////////////////////////////////
 /////// Use CORS only in dev, nginx takes care in prod
-const cors = require('cors');
-app.use(cors());
+// const cors = require('cors');
+// app.use(cors());
 
 /////////////////////////////////////////////////////////////////////
 /////Routes

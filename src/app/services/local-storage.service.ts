@@ -16,6 +16,9 @@ export class LocalStorageService {
   public saveRole(value : string) { localStorage.setItem('role', value); }
   public getRole() { return localStorage.getItem('role'); }
 
+  public saveName(value : string) { localStorage.setItem('name', value); }
+  public getName() { return localStorage.getItem('name'); }
+
   public saveClientEmailITR(value : string) { return localStorage.setItem('auditor_view_client_email_itr', value); }
   public getClientEmailITR() { return localStorage.getItem('auditor_view_client_email_itr'); }
 

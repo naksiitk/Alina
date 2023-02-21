@@ -22,7 +22,8 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class AuditorHomeComponent {
   constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, 
     private breakpointObserver: BreakpointObserver,
-    private localStorage : LocalStorageService ) {}
+    private localStorage : LocalStorageService,
+    private authService: AuthService) {}
 ;
  
  title = 'my-app';
@@ -35,7 +36,7 @@ export class AuditorHomeComponent {
    );
 
  logout(){
-   this.localStorage.clearLocalStorage();
+    this.authService.logout_user()
    }
 
 }
