@@ -3,16 +3,12 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators'
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileDownloadService {
 
-  backend_route =  environment.apiUrl; 
-
- 
   constructor(private http: HttpClient, public _snackBar: MatSnackBar) { 
    
   }
@@ -50,14 +46,14 @@ export class FileDownloadService {
   }
 
   getFile(fy : string, email : string, files_uploaded : string): Observable<Blob> {
-    const doc_url = this.backend_route + "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
+    const doc_url = "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
 
 
     return this.http.get(doc_url, {responseType: 'blob'}).pipe(catchError(this.parseErrorBlob))
   }
 
   public getFileBlob(fy : string, email : string, files_uploaded : string) {
-    const doc_url =  this.backend_route + "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
+    const doc_url =  "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
 
     var subject = new Subject<Blob>();
 

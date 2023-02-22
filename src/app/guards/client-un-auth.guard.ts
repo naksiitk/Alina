@@ -18,7 +18,7 @@ export class ClientUnAuthGuard implements CanActivate {
       const role = this.localStorage.getRole()
       const jwt = this.localStorage.getJWT()
   
-      if(jwt && role == 'auditor') {
+      if(jwt && role == 'client') {
         this.router.navigate(['/home']);
         return false
       }
