@@ -18,8 +18,7 @@ export class FilesShowDialogComponent implements OnInit{
 
   doc_url = ''
   fileName_array : any[] = [];
-  JWT = this.localStorage.getJWT() 
-  backend_route : string
+  JWT = this.localStorage.getJWT()
 
   Breakpoints = Breakpoints;
   current_break_point = 0;
@@ -33,7 +32,6 @@ export class FilesShowDialogComponent implements OnInit{
   constructor(@Inject(MAT_DIALOG_DATA) public filesdata: any, public dialog: MatDialog, 
   public localStorage: LocalStorageService, public fileDownloadService: FileDownloadService, 
   public _snackBar: MatSnackBar,private breakpointObserver: BreakpointObserver){
-    this.backend_route = environment.apiUrl;
 
     for( let index = 0; index<= this.filesdata.files_uploaded.length; index++)
     {

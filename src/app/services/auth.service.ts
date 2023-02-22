@@ -3,53 +3,50 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  
-  backend_route =  environment.apiUrl;   //'http://54.90.42.79/api' 
   constructor(private http : HttpClient,private localStorage : LocalStorageService, private router : Router,
     private _snackBar: MatSnackBar) { }
 
   adduser(data : any){
-    return this.http.post<any>(this.backend_route + '/user',data);
+    return this.http.post<any>('/user',data);
   }
 
   user_signup(data : any){
     console.log(data)
-    return this.http.post<any>(this.backend_route + '/user/signup',data);
+    return this.http.post<any>('/user/signup',data);
   }
 
   otp_verification(data : any){
     console.log(data)
-    return this.http.post<any>(this.backend_route + '/user/otp_verification',data);
+    return this.http.post<any>('/user/otp_verification',data);
   }
 
   change_password(data : any){
     console.log(data)
-    return this.http.post<any>(this.backend_route + '/user/password_change',data);
+    return this.http.post<any>('/user/password_change',data);
   }
 
 
   getalluser(){
-    return this.http.get<any>(this.backend_route + '/user');
+    return this.http.get<any>('/user');
   }
 
   generate_otp(data : any){
-    return this.http.post<any>(this.backend_route + '/user/generate_otp',data);
+    return this.http.post<any>('/user/generate_otp',data);
   }
 
   generate_otp_forgot(data : any){
-    return this.http.post<any>(this.backend_route + '/user/generate_otp_forgot_otp',data);
+    return this.http.post<any>('/user/generate_otp_forgot_otp',data);
   }
 
   checkuser(data : any){
     console.log(data)
-    return this.http.post<any>(this.backend_route + '/login',data);
+    return this.http.post<any>('/login',data);
   }
 
   login_user(data : any) {
