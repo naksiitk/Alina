@@ -18,7 +18,7 @@ export class ClientAuthGuard implements CanActivate {
       const role = this.localStorage.getRole()
       const jwt = this.localStorage.getJWT()
   
-      if(jwt && role == 'auditor') {
+      if(jwt && role == 'client') {
         return true
       }
       
