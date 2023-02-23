@@ -2,6 +2,13 @@
     *ngIf= "Blob"
     [src] = 'Blob' 
     [useBrowserLocale]="true"
-    [minifiedJSLibraries]="false">
+    [minifiedJSLibraries]="false"
+    [zoom]="'page-width'"
+    [(page)]="page"
+    [(pageLabel)]="pageLabel"
+    [textLayer]="true"
+    [theme]='dark'
+    (pageRendered)="onPageRendered()"
+    >
 
 </ngx-extended-pdf-viewer>

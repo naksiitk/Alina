@@ -9,7 +9,7 @@
       </button>
       <img style="position:fixed; margin-left: 45%; text-align: center;"  class = "image-responsive" src="../../../../assets/Images/alinalogo_white.png" alt="Alina Logo">
       <div class="example-spacer" style="text-align: right;">
-      <span >Hi! {{email}}</span>
+      <span >Hi! {{Name}}</span>
     </div>
     </mat-toolbar>
   </div>
@@ -21,14 +21,14 @@
         <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         routerLink="/auditor/dashboard" (click)="drawer.toggle()"><mat-icon color="primary">home</mat-icon><span style="vertical-align : middle;"> DashBoard </span></a>
         <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
-        routerLink="/auditor/itr" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon><span style="vertical-align : middle;"> Income Tax Returns </span></a>
+        [routerLink]="['/auditor/itr','ITR']" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon><span style="vertical-align : middle;"> Income Tax Returns </span></a>
         <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
-        routerLink="/auditor/gst" class="mat-list-item-focus" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon> Goods and Service Tax</a>
+        [routerLink]="['/auditor/gst','GST']" class="mat-list-item-focus" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon> Goods and Service Tax</a>
         <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
-        routerLink="/auditor/tds" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon>Tds/Tcs</a>
-        <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
+        [routerLink]="['/auditor/tds','TDS']" (click)="drawer.toggle()"><mat-icon color="primary">description icon</mat-icon>Tds/Tcs</a>
+        <a *ngIf="current_finish==1"  mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
         routerLink="/auditor/credentials" (click)="drawer.toggle()"><mat-icon color="primary">account_box</mat-icon>Credentials</a>
-        <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
+        <a *ngIf="current_finish==1" mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
         routerLink="/auditor/billing_history" (click)="drawer.toggle()"><mat-icon color="primary">monetization_on</mat-icon>Billing History</a> 
       <a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
       (click)="logout()"><mat-icon>login</mat-icon>Logout</a>

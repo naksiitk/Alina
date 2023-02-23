@@ -30,7 +30,7 @@
 
           <ng-container matColumnDef="month_quarter">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> M/Q </th>
-            <td mat-cell *matCellDef="0let row"> {{row.month_quarter}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.month_quarter}} </td>
           </ng-container>
 
           <!-- Name Column -->

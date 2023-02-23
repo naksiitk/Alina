@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { HomeComponent } from '../../home/home/home.component';
+
 
 @Component({
   selector: 'app-ask-dialog',
@@ -17,7 +17,6 @@ export class AskDialogComponent implements OnInit{
   years: string[] = [];
   d = new Date();
   date = new Date(Date.now()).toLocaleString('en-GB').split(',')[0];
-  TDS_Container = false;
   
   
   purpose_list = ["GST", "ITR", "TDS"];

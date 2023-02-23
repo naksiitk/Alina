@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-
+  current_finish = 0
   Breakpoints = Breakpoints;
   current_break_point = 0;
   readonly breakpoint$ = this.breakpointObserver

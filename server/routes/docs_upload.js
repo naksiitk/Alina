@@ -122,6 +122,7 @@ function OpenJWT(req, res, next) {
 
 async function Access(req, res, next) {
   if(req.JWT.email == req.params.email) {
+    console.log(req.JWT.email,"hi")
     next()
   }
   else {

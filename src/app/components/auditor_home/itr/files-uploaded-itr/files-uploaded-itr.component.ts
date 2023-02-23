@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,12 +24,14 @@ export class FilesUploadedItrComponent implements OnInit {
   
 
   constructor(public dialog: MatDialog, private api : ApiService, private route: Router, private breakpointObserver: BreakpointObserver
-    , private api_auth : AuthService, public _snackBar: MatSnackBar) {};
+    , private api_auth : AuthService, public _snackBar: MatSnackBar) {
+    };
 
-    title = 'my-app';
- 
-  public email = this.api_auth.get_email_local('auditor_view_client_email_itr')
+  email : any = ''
   
+  @Input('childToMaster') id_ITR: string;
+
+ 
   displayedColumns: string[] = ['filename','fy','month_quarter', 'files_uploaded'];
 
   show_everything = false;
@@ -45,7 +47,10 @@ export class FilesUploadedItrComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   
   ngOnInit(): void {
+    this.email = this.api_auth.get_email_local('auditor_view_client_email' + this.id_ITR)
     this.getAllfiles();
+   
+    
   };
 
   openDialog() {
@@ -99,7 +104,8 @@ export class FilesUploadedItrComponent implements OnInit {
     });
   }
   getAllfiles(){
-    this.api.getFilesWithPurpose({"email":this.email, "purpose":"ITR"}).subscribe({
+    console.log(this.email)
+    this.api.getFilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
         next:(res)=>{
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Input} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,7 +19,7 @@ import { AskDialogComponent } from '../../ask-dialog/ask-dialog.component';
   styleUrls: ['./ask-file-itr.component.css']
 })
 export class AskFileItrComponent implements OnInit {
-
+  @Input('childToMaster') id_ITR:string;
   constructor(public dialog: MatDialog, private api : ApiService, private route: Router, private breakpointObserver: BreakpointObserver
     , private api_auth : AuthService, public _snackBar: MatSnackBar) {};
 
@@ -98,7 +98,7 @@ export class AskFileItrComponent implements OnInit {
     
   }
   getAllfiles(){
-    this.api. getFilesWithPurpose({"email":this.email, "purpose":"ITR"}).subscribe({
+    this.api. getFilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
         next:(res)=>{
           // this.dataSource = new MatTableDataSource(res);
           // this.dataSource.paginator = this.paginator;
@@ -113,7 +113,7 @@ export class AskFileItrComponent implements OnInit {
   }
 
   getAllaskedfiles(){
-    this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":"ITR"}).subscribe({
+    this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
         next:(res)=>{
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;

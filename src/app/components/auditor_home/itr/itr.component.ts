@@ -16,8 +16,14 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ItrComponent implements OnInit {
   constructor(public dialog: MatDialog, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver,
-    private api:ApiService, private router : Router, private auth_api : AuthService) {};
-
+    private api:ApiService, private router : Router, private auth_api : AuthService) {
+      this.id = this.route.snapshot.paramMap.get('id')
+    };
+  id : any 
+  get_id_route()
+  {
+    return this.route.snapshot.paramMap.get('id')
+  }
   displayedColumns: string[] = ['user.user_name', 'user.PAN', 'email', 'unseen'];
   
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
@@ -29,17 +35,18 @@ export class ItrComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
-     this.getclients();
+    this.id = this.route.snapshot.paramMap.get('id')
+    this.getclients();
   };
 
   getclients(){
-    this.api.getclient("ITR").subscribe({
+    this.api.getclient(this.get_id_route()).subscribe({
         next:(res)=>{
           
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log(res[0])
+          console.log(this.id)
         },
         error:()=>{
           alert("Error while fetching products");
@@ -58,11 +65,9 @@ export class ItrComponent implements OnInit {
   hidden = false;
 
   router_link_client_tab(email : string) {
-    this.auth_api.save_email_local("auditor_view_client_email_itr", email)
+    this.auth_api.save_email_local('auditor_view_client_email' + this.id, email)
     this.auth_api.save_email_local('email_add_file', email); 
-    this.router.navigate(['auditor/itr/client_tab'])
+    this.router.navigate(['auditor/' + this.id + '/client_tab',this.id])
     this.hidden = !this.hidden;
   }
-
-
 }

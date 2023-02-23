@@ -3,7 +3,7 @@
           <button mat-stroked-button color="primary" (click)="goback()" style="padding: 1%" ><mat-icon>keyboard_backspace</mat-icon></button>
     </div>
        
-<h2 style="text-align: center;">You are viewing ITR page of {{email}}</h2>
+<h2 style="text-align: center;">You are viewing {{id}} page of {{email}}</h2>
 
 <div class = "tab-container">
     <mat-tab-group>
@@ -17,7 +17,7 @@
                 </mat-card-header>
 
                 <mat-card-content>
-                    <app-files-uploaded-itr></app-files-uploaded-itr>
+                    <app-files-uploaded-itr [childToMaster]=this.id></app-files-uploaded-itr>
                 </mat-card-content>
 
                 <mat-card-actions align="start">
@@ -36,7 +36,7 @@
               </mat-card-header>
 
               <mat-card-content>
-                  <app-ask-file-itr></app-ask-file-itr>
+                  <app-ask-file-itr [childToMaster]=this.id ></app-ask-file-itr>
               </mat-card-content>
 
               <mat-card-actions align="start">
@@ -45,7 +45,7 @@
           </mat-card>
         </mat-tab>
 
-        <mat-tab label="Returns Uploaded">
+        <mat-tab *ngIf="current_finish==0" label="Returns Uploaded">
             <mat-card class="card-inside-tab">
                 <mat-card-header>
                   <!-- <div mat-card-avatar class="example-header-image"></div> -->
@@ -73,7 +73,7 @@
    
         </mat-tab>
 
-        <mat-tab label="Checklist">
+        <mat-tab *ngIf="current_finish==0" label="Checklist">
             <mat-card class="card-inside-tab">
                 <mat-card-header>
                   <!-- <div mat-card-avatar class="example-header-image"></div> -->

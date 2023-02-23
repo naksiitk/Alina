@@ -115,8 +115,16 @@ export class DialogComponent implements OnInit{
           }
         })        
       }
+      else{
+        this._snackBar.open("File Not filed properly","Contact Us", {
+          duration: 3000,
+        });
+      }
     }
     else{
+      this._snackBar.open("It is going to update","Contact Us", {
+        duration: 3000,
+      });
       this.updateProduct();
     }
   }
@@ -215,8 +223,6 @@ export class DialogComponent implements OnInit{
   getAllfiles(res : any){ 
     this.dataSource = new MatTableDataSource(res);
   }
-
-
   fileName_array : any[] = [];
   form_final_Data = new FormData();
   upload(event : any){
@@ -232,8 +238,11 @@ export class DialogComponent implements OnInit{
         this.fileName_array.push({'files_uploaded':file.name});
         console.log(this.fileName_array);
         this.getAllfiles(this.fileName_array); 
-        
+        this._snackBar.open(file.name,"Ok", {
+          duration: 3000,
+        });
       }
+      
     }
        
   }

@@ -158,7 +158,7 @@ router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
 })
 
 //Deleting One
-router.delete('/:id' , [OpenJWT, Access, getDoc], async(req,res)=>{
+router.delete('/:id' , [OpenJWT, getDoc, Access ], async(req,res)=>{
 
     try {
         await client_doc_summary.updateOne(
@@ -214,7 +214,9 @@ function OpenJWT(req, res, next) {
 }
 
 async function Access(req, res, next) {
-    if(req.JWT.email == req.params.email) {
+    
+    if(req.JWT.email == req.params.email || req.JWT.email == res.doc.email ){
+        
       next()
     }
     else {

@@ -1,15 +1,5 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ApiService } from 'src/app/services/api.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Component,  } from '@angular/core';
+import { ActivatedRoute,} from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
@@ -20,21 +10,14 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
   styleUrls: ['./auditor-home.component.css']
 })
 export class AuditorHomeComponent {
-  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, 
-    private breakpointObserver: BreakpointObserver,
+  constructor( private route: ActivatedRoute, 
     private localStorage : LocalStorageService,
     private authService: AuthService) {}
 ;
  
- title = 'my-app';
- email : any = this.localStorage.getEmail();
  
- isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-   .pipe(
-     map(result => result.matches),
-     shareReplay()
-   );
-
+ Name : any = this.localStorage.getName();
+ current_finish = 0
  logout(){
     this.authService.logout_user()
    }
