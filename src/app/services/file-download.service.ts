@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Observable, Subject } from 'rxjs'
 import { catchError } from 'rxjs/operators'
-import { saveAs } from 'file-saver'
- 
+ import { saveAs } from 'file-saver'
+//var FileSaver = require('file-saver');
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,7 @@ export class FileDownloadService {
   constructor(private http: HttpClient, public _snackBar: MatSnackBar) { 
    
   }
-
+  
   parseErrorBlob(err: HttpErrorResponse): Observable<any> {
     const reader: FileReader = new FileReader();
 
@@ -37,8 +38,9 @@ export class FileDownloadService {
       {
         //Success
         console.log('start download:', resultBlob);
-        var blob = new Blob([resultBlob], { type: "application/pdf" } );
+        var blob = new Blob([resultBlob] );
         saveAs(blob, files_uploaded);
+        
       },
     error => {
       //Error
