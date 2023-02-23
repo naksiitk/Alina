@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { Observable, Subject } from 'rxjs'
 import { catchError } from 'rxjs/operators'
-
+import { saveAs } from 'file-saver'
+ 
 @Injectable({
   providedIn: 'root'
 })
@@ -29,28 +30,28 @@ export class FileDownloadService {
     return obs;
   }
 
+
   downloadFile(fy : string, email : string, files_uploaded : string){
     this.getFile(fy, email, files_uploaded)
-    .subscribe(blob => {
-      const a = document.createElement('a')
-      const objectUrl = URL.createObjectURL(blob)
-      a.href = objectUrl
-      a.download = files_uploaded;
-      a.click();
-      URL.revokeObjectURL(objectUrl);
-    }, (err) => {
-      this._snackBar.open(err.message,"Contact Us", {
-        duration: 2500,
-      });
-    })
+    .subscribe(resultBlob => 
+      {
+        //Success
+        console.log('start download:', resultBlob);
+        var blob = new Blob([resultBlob], { type: "application/pdf" } );
+        saveAs(blob, files_uploaded);
+      },
+    error => {
+      //Error
+      console.log(error);
+    });
   }
+
 
   getFile(fy : string, email : string, files_uploaded : string): Observable<Blob> {
     const doc_url = "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
-
-
-    return this.http.get(doc_url, {responseType: 'blob'}).pipe(catchError(this.parseErrorBlob))
+    return this.http.get<Blob>(doc_url, { responseType: 'blob' as 'json' })
   }
+
 
   public getFileBlob(fy : string, email : string, files_uploaded : string) {
     const doc_url =  "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
