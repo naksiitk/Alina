@@ -1,9 +1,13 @@
+@apiUrl = http://localhost:8000
+# @apiUrl = https://silversoft.business/api
 
-GET http://localhost:8000/doc/
+@JWT = 
+
+GET {{apiUrl}}/doc/
 
 ###
 
-GET http://localhost:8000/doc/client_list/ITR
+GET {{apiUrl}}/doc/client_list/ITR
 
 ###
 
@@ -13,9 +17,10 @@ PUT http://localhost:8000/doc/client_summary/seen/6403338e88883611f50372b1
 ###
 
 GET http://localhost:8000/user/client_doc_summary
+GET {{apiUrl}}/user/client_doc_summary
 
 ###
-POST http://localhost:8000/doc/
+POST {{apiUrl}}/doc/
 Content-Type: application/json
 
 {"purpose":"TDS","comments":"123","files_uploaded":"123","email":"1","uploadedat":"26/01/2023","fy":"2022-2021","month_quarter":"Q2","fy_month_quarter":"2022-2021 ;Q2"}
@@ -23,7 +28,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/doc/purpose
+POST {{apiUrl}}/doc/purpose
 Content-Type: application/json
 
 {
@@ -33,16 +38,16 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/doc/63c7a4788861b69efc9d7d72
+GET {{apiUrl}}/doc/63c7a4788861b69efc9d7d72
 
 ###
 
-DELETE http://localhost:8000/doc/63c7a4788861b69efc9d7d72
+DELETE {{apiUrl}}/doc/63c7a4788861b69efc9d7d72
 
 
 ###
 
-PUT http://localhost:8000/doc/update/63d1a29dd0585e309fc629fc
+PUT {{apiUrl}}/doc/update/63d1a29dd0585e309fc629fc
 Content-Type: application/json
 {
 "filename":"123",
@@ -58,12 +63,12 @@ Content-Type: application/json
 
 ### DELETE ALL
 
-DELETE http://localhost:8000/doc
+DELETE {{apiUrl}}/doc
 
 
 ###
 
-PUT http://localhost:8000/doc/lock/63d1a239d0585e309fc629f4
+PUT {{apiUrl}}/doc/lock/63d1a239d0585e309fc629f4
 Content-Type: application/json
 
 {
@@ -72,7 +77,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/asked_files/asked_files/
+POST {{apiUrl}}/asked_files/asked_files/
 Content-Type: application/json
 
 {"filename":"123","purpose":"ITR","comments":"Provide the Bank Statement","email":"1","fy":"2022-2021","month_quarter":""}

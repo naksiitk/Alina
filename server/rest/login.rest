@@ -1,7 +1,10 @@
-POST http://localhost:8000/login
+# @apiUrl = http://localhost:8000
+@apiUrl = https://silversoft.business/api
+
+POST {{apiUrl}}/login
 Content-Type: application/json
 
 {
-    "email": "4",
-    "password": "1"
+    "email": "reithick@gmail.com",
+    "password": "123123123"
 }

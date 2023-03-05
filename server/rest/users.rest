@@ -1,16 +1,21 @@
-GET http://localhost:8000/user
+# @apiUrl = http://localhost:8000
+@apiUrl = https://silversoft.business/api
+
+@JWT = 
+
+GET {{apiUrl}}/user
 
 ###
 
-GET http://54.90.42.79:80/api/otps
+GET {{apiUrl}}/otps
 
 ###
 
-GET http://localhost:8000/user/63bad7eb0f73c53301b11d6v
+GET {{apiUrl}}/user/63bad7eb0f73c53301b11d6v
 
 ###
 
-POST http://54.90.42.79:80/api/user
+POST {{apiUrl}}/user
 Content-Type: application/json
 
 {
@@ -24,7 +29,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/user/login
+POST {{apiUrl}}/user/login
 Content-Type: application/json
 
 {
@@ -42,7 +47,7 @@ Content-Type: application/json
 }
 ###
 
-DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
+DELETE {{apiUrl}}/user/63cbf908dfe99cb81dbf3e87
 
 ###
 
@@ -53,7 +58,7 @@ DELETE http://localhost:8000/user/delete_client_doc_summary/delete
 DELETE http://localhost:8000/user/email/anbarasuparamasivam@gmail.com
 
 ###
-POST http://54.90.42.79:3056/user/generate_otp
+POST {{apiUrl}}/user/generate_otp
 Content-Type: application/json
 
 {
@@ -62,7 +67,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/user/signup
+POST {{apiUrl}}/user/signup
 Content-Type: application/json
 
 {
@@ -77,4 +82,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3056/user/onboarding/reithick@gmail.com
+GET {{apiUrl}}/user/onboarding/reithick@gmail.com
