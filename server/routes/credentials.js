@@ -10,7 +10,7 @@ router.get('/', async (req, res) =>{
         res.json(all_credentials)
     } catch (error) {
         res.status(500).json({message: error.message})
-    }
+    } 
 })
 
 //Creating one

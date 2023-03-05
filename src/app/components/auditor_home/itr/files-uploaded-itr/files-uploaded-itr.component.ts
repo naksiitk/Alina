@@ -29,9 +29,7 @@ export class FilesUploadedItrComponent implements OnInit {
 
   email : any = ''
   
-  @Input('childToMaster') id_ITR: string;
-
- 
+  @Input('childToMaster') id_ITR: string; 
   displayedColumns: string[] = ['filename','fy','month_quarter', 'files_uploaded'];
 
   show_everything = false;
@@ -49,8 +47,6 @@ export class FilesUploadedItrComponent implements OnInit {
   ngOnInit(): void {
     this.email = this.api_auth.get_email_local('auditor_view_client_email' + this.id_ITR)
     this.getAllfiles();
-   
-    
   };
 
   openDialog() {
@@ -88,7 +84,6 @@ export class FilesUploadedItrComponent implements OnInit {
   };
 
   deletefile(row : any){
-    console.log(row._id);
     this.api.deletefile(row._id)
     .subscribe({
       next:(res) => {
@@ -104,7 +99,7 @@ export class FilesUploadedItrComponent implements OnInit {
     });
   }
   getAllfiles(){
-    console.log(this.email)
+    // console.log(this.email)
     this.api.getFilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
         next:(res)=>{
           this.dataSource = new MatTableDataSource(res);
@@ -167,6 +162,7 @@ export class FilesUploadedItrComponent implements OnInit {
   }
 
   show_uploaded_files(row : any){
+    if(row.seen == 0){
     this.api.dec_client_doc_seen(row._id).subscribe({
       next:(res)=> {
         this._snackBar.open("File Seen","Ok", {
@@ -177,6 +173,7 @@ export class FilesUploadedItrComponent implements OnInit {
           duration: 4000,});
       }
     });
+  }
     this.dialog.open(FilesShowDialogComponent,
       {
         width : '40%', 

@@ -5,8 +5,8 @@
             <mat-label>Email</mat-label>
             <input matInput placeholder="Provide Email " [formControl]="myControl" [matAutocomplete]="auto">
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option}}
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.split('//')[1]">
+                      {{option.split("//")[0]}}
                     </mat-option>
                   </mat-autocomplete>
         </mat-form-field>
@@ -34,7 +34,7 @@
 
         <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>The File Related to</mat-label>
-            <mat-select formControlName="purpose" placeholder="Purpose File Related to">
+            <mat-select  formControlName="purpose" placeholder="Purpose File Related to" >
                 <mat-option value="GST">GST</mat-option>
                 <mat-option value="ITR">Income Tax Returns</mat-option>
                 <mat-option value="TDS"> Tds/Tcs</mat-option>
@@ -43,8 +43,23 @@
 
         <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>File Name to be asked</mat-label>
-            <input formControlName="filename" matInput placeholder="Provide File Name">
-          </mat-form-field>
+            <input formControlName="filename" matInput placeholder="Provide File Name" [value]="inputValue">
+            <button mat-icon-button matSuffix (click)="add_filename()">
+            <mat-icon>add</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="filenames">
+            <td mat-cell *matCellDef="let row"> 
+                {{row.filenames}}
+            </td>
+            </ng-container>
+
+            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+        </table>
 
         <mat-form-field *ngIf="!(file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>Financial Year</mat-label>

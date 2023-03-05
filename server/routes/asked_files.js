@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router()
 const asked_files = require('../models/asked_files')
 const users = require('../models/users')
+const client_doc_summary = require('../models/client_doc_summary')
 
 //Getting All
 router.get('/asked_files/' , async (req,res)=>{
     try {
-        const asked_file_list = await asked_files.find()
+        const asked_file_list = await asked_files.find().sort({$natural:-1})
         res.json(asked_file_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -16,7 +17,7 @@ router.get('/asked_files/' , async (req,res)=>{
 //Getting One
 router.get('/asked_files/:id' , async (req,res)=>{
     try {
-        const asked_file_list = await asked_files.find({email : req.params.id})
+        const asked_file_list = await asked_files.find({email : req.params.id}).sort({$natural:-1})
         res.json(asked_file_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -26,7 +27,7 @@ router.get('/asked_files/:id' , async (req,res)=>{
 //Getting asked_files based on purpose
 router.post('/asked_files/purpose' , async (req,res)=>{
     try {
-        const asked_file_list = await asked_files.find({email : req.body.email, purpose : req.body.purpose})
+        const asked_file_list = await asked_files.find({email : req.body.email, purpose : req.body.purpose}).sort({$natural:-1})
         res.json(asked_file_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -57,8 +58,22 @@ router.post('/asked_files' , async(req,res)=>{
         email : req.body.email,
         PAN : userPAN,
         user : userid,
+        files_uploaded : [],
     })
-    try {
+    try {  
+        await client_doc_summary.updateOne(
+            {email : req.body.email, purpose:req.body.purpose},
+            {unseen: 0, total : 1, user: userid},
+            {upsert:true}
+        ).then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+        });
+
         const newasked_file_client = await asked_clients_list.save()
         res.status(201).json(newasked_file_client);
     } catch (error) {

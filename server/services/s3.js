@@ -24,11 +24,17 @@ module.exports.uploadfile = async(req) => {
 };
 
 module.exports.getfile = async(req) => {
+    try{
     const downloadParams = {
         Key : req.fileKey,
         Bucket : bucketName,
     }
     return s3.getObject(downloadParams).createReadStream();
+    }
+    catch{
+        return "cannot download file";
+    }
+
 };
 
 module.exports.deletefile = async(req) => {

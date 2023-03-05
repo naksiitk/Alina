@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {  Router } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
+import { FilesShowDialogComponent } from 'src/app/components/home/files-show-dialog/files-show-dialog.component';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogDeleteComponent } from '../../../home/dialog-delete/dialog-delete.component';
@@ -25,7 +26,8 @@ export class AskFileItrComponent implements OnInit {
 
     title = 'my-app';
  
-  public email = this.api_auth.get_email_local('auditor_view_client_email_itr')
+  email : any = ''
+  //public email = this.api_auth.get_email_local('auditor_view_client_email_itr')
   
   displayedColumns: string[] = ['filename','fy','month_quarter', 'comments', 'Action'];
 
@@ -43,13 +45,16 @@ export class AskFileItrComponent implements OnInit {
   
   ngOnInit(): void {
     // this.getAllfiles();
+    this.email = this.api_auth.get_email_local('auditor_view_client_email' + this.id_ITR)
     this.getAllaskedfiles();
   };
 
   openDialog() {
+    this.api_auth.save_email_local('email_add_file', this.email)
     this.dialog.open(AskDialogComponent,
     {
-      width : '30%'
+      width : '30%',
+      
     }).afterClosed().subscribe(val => {
       if(val === 'save'){
         this.getAllaskedfiles();
@@ -59,14 +64,14 @@ export class AskFileItrComponent implements OnInit {
   
   uploadfile(row : any){
     row["from_asked_dialog_box"]= true
-    this.dialog.open(DialogComponent,
+    this.dialog.open(AskDialogComponent,
       {
         width : '30%', 
         data:row
       }).afterClosed().subscribe(val => {
         if(val === 'save'){
           this.getAllfiles();
-          this.deletefile(row);
+          //this.deletefile(row);
         }
       })
       
@@ -98,7 +103,7 @@ export class AskFileItrComponent implements OnInit {
     
   }
   getAllfiles(){
-    this.api. getFilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
+    this.api.get_asked_FilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
         next:(res)=>{
           // this.dataSource = new MatTableDataSource(res);
           // this.dataSource.paginator = this.paginator;
@@ -113,7 +118,9 @@ export class AskFileItrComponent implements OnInit {
   }
 
   getAllaskedfiles(){
-    this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
+    // console.log(this.email)
+    // console.log(this.id_ITR)
+      this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":this.id_ITR}).subscribe({
         next:(res)=>{
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
@@ -136,6 +143,37 @@ export class AskFileItrComponent implements OnInit {
     }
   }
 
+  check_upload(row: any)
+  {
+    //console.log(row.files_uploaded.length);
+    if(row.files_uploaded.length == 0)
+    {return true;}
+    else
+    {
+      //console.log("hi")
+      return false;}
+  }
+
+  show_uploaded_files(row : any){
+    this.dialog.open(FilesShowDialogComponent,
+      {
+        width : '30%', 
+        data:row
+      })
+  }
+
+  reminder_upload(row : any){
+    this.api.reminder(row).subscribe({
+      next:(res)=>{this._snackBar.open("Email Sent", "Hurray!!", {
+        duration: 2000,});
+      },
+      error:(err)=>{
+        this._snackBar.open(err.error.Status, "Contact Us", {
+          duration: 2000,});
+      }        
+    });
+
+  }
   
 
 }

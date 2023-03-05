@@ -15,13 +15,15 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
         <td mat-cell *matCellDef="let row"> {{row.filename}} </td>
         </ng-container>
+
+        
     
         <!-- Progress Column -->
-        <!-- <ng-container matColumnDef="purpose">
+        <ng-container matColumnDef="purpose">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Purpose </th>
         <td mat-cell *matCellDef="let row"> {{row.purpose}} </td>
         </ng-container>
-    -->
+   
         <!-- Comments Column -->
         <ng-container matColumnDef="fy">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> F.Y </th>
@@ -40,6 +42,7 @@
             <td style="width: 12% !important;" mat-cell *matCellDef="let row"> {{row.comments}} </td>
           </ng-container>
          
+
           <!-- Fruit Column -->
           <!-- <ng-container matColumnDef="files_uploaded">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Uploaded File </th>
@@ -54,10 +57,15 @@
         <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 2%;">Action</th>
         <td mat-cell *matCellDef="let row"> 
-            <button   mat-button color="primary" (click)="uploadfile(row)">Upload</button> 
-            <button   mat-button color="warn" (click)="openDialogDelete(row)">Delete</button>
-        </td>     
+            <button *ngIf="check_upload(row)" mat-button color="primary" (click)="uploadfile(row)">Upload</button> 
+            <button *ngIf="!check_upload(row)"  mat-button color="primary" (click)="show_uploaded_files(row)"><mat-icon>insert_drive_file</mat-icon></button> 
+            <!-- <button  [disabled]="check_upload(row)" mat-button color="warn" (click)="openDialogDelete(row)">Delete</button> -->
+            <!-- <button  [disabled]="1" mat-button color="primary" (click)="uploadfile(row)">Upload</button> 
+            <button  [disabled]="1" mat-button color="warn" (click)="openDialogDelete(row)">Delete</button> -->
+          </td>     
         </ng-container>
+
+        
 
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -87,8 +95,6 @@
           <td mat-cell *matCellDef="0let row"> {{row.month_quarter}} </td>
         </ng-container> -->
 
-
-        
         <!-- <ng-container  matColumnDef="comments">
           <th style="width: 12% !important;" mat-header-cell *matHeaderCellDef mat-sort-header> Comment </th>
           <td style="width: 12% !important;" mat-cell *matCellDef="let row"> {{row.comments}} </td>
@@ -98,9 +104,11 @@
       <th style="width: 50% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
       <td style="width: 50% !important;" mat-cell *matCellDef="let row"> 
         <div>
-        <button  mat-button (click)="uploadfile(row)"> <mat-icon style="transform: scale(0.75); " color="primary">attach_file</mat-icon> </button> 
-        <button style="position: absolute !important;"  mat-button (click)="openDialogDelete(row)"><mat-icon  style="transform: scale(0.75);" color="warn">delete</mat-icon></button>
-        </div>  
+        <button *ngIf="check_upload(row)" mat-button (click)="uploadfile(row)"> <mat-icon  color="primary">attach_file</mat-icon> </button> 
+        <button *ngIf="!check_upload(row)"  mat-button color="primary" (click)="show_uploaded_files(row)"><mat-icon color="primary">insert_drive_file</mat-icon> </button> 
+        <!-- <button [disabled]="row.files_uploaded.size!=0" style="position: absolute !important;"  mat-button (click)="openDialogDelete(row)"><mat-icon  style="transform: scale(0.75);" color="warn">delete</mat-icon></button> -->
+        <!-- <button [disabled]="row.files_uploaded.size!=0" mat-button (click)="uploadfile(row)"> {{row.files_uploaded}}  </button>  -->
+      </div>  
       </td>     
       </ng-container>
 

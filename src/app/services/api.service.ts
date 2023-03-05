@@ -11,8 +11,16 @@ export class ApiService {
   constructor(private http : HttpClient, private api_auth:AuthService) { }
 
   postfile(data : any){
-    console.log(data)
+    // console.log(data)
     return this.http.post<any>("/doc",data);
+  }
+  postfile_new(data : any){
+    // console.log(data)
+    return this.http.post<any>("/doc/post",data);
+  }
+  postfile_new_asked(data : any, id:string){
+    // console.log(data)
+    return this.http.post<any>("/doc/post_asked/"+id,data);
   }
   getfile(data:any){
     return this.http.get<any>("/doc/"+data);
@@ -22,12 +30,13 @@ export class ApiService {
   }
   putfile(id: number, data: any)
   {
+    // console.log(data)
     return this.http.put<any>('/doc/update/'+id,data);
   }
 
   deletefile(id: number)
   {
-    console.log('/doc/'+id)
+    // console.log('/doc/'+id)
     return this.http.delete<any>('/doc/'+id);
   }
 
@@ -41,7 +50,7 @@ export class ApiService {
   }
 
   post_file_asked(data : any){
-    console.log(data)
+    // console.log(data)
     return this.http.post<any>('/asked_files/asked_files/',data);
   }
 
@@ -59,7 +68,7 @@ export class ApiService {
 
   delete_file_asked(id: number)
   {
-    console.log('/asked_files/'+id)
+    // console.log('/asked_files/'+id)
     return this.http.delete<any>('/asked_files/asked_files/'+id);
   }
 
@@ -87,10 +96,29 @@ export class ApiService {
     return this.http.get<any>("/user/onboarding/"+data);
   }
 
+  reminder(data:any){  
+    return this.http.post<any>("/user/reminder/",data);
+  }
+
   ask_email(data:any){  
     return this.http.post<any>("/user/ask_file_mail",data);
   }
 
+  getclient_all(){  
+    return this.http.get<any>("/user/");
+  }
 
+  getclient_verified(){  
+    return this.http.get<any>("/user/verified/");
+  }
+
+  accept_client_verified(data: any){  
+    return this.http.post<any>("/user/verified/check/", data);
+  }
+
+  delete_client(data: any){  
+    return this.http.delete<any>("/user/email/" +  data);
+  }
+  
 
 }

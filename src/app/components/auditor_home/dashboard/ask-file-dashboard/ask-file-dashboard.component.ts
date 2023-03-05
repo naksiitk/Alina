@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-ask-file-dashboard',
   templateUrl: './ask-file-dashboard.component.html',
@@ -24,23 +24,26 @@ export class AskFileDashboardComponent implements OnInit{
   filteredOptions: Observable<string[]>;
   myControl = new FormControl('');
   options : string[] = []
+  options_email : string[] = []
   purpose_list = ["GST", "ITR", "TDS"];
   file_list !: FormGroup;
-  actionBtn : string = "Save";
-  constructor(private localStorage: LocalStorageService ,private formbuilder : FormBuilder, private api : ApiService,
-     private api_auth : AuthService,private dialogref : MatDialogRef<AskFileDashboardComponent>,private _snackBar: MatSnackBar ){
+  actionBtn : string = "Ask";
+  purpose_selected = "ITR"
 
+
+  constructor(private localStorage: LocalStorageService ,private formbuilder : FormBuilder, private api : ApiService,
+     private api_auth : AuthService,@Inject(MAT_DIALOG_DATA) public editdata: any,private dialogref : MatDialogRef<AskFileDashboardComponent>,private _snackBar: MatSnackBar ){
+      this.purpose_selected  = editdata.purpose_selected
       for (let year = this.selectedYear; year >= 2018; year--) {
         this.years.push(String(year-1)  + "-" + String(year));
     };
     this.api_auth.getalluser().subscribe({
       next:(res)=>{
-         
           for( let option = 0; option < res.length; option++){
-            let opt: string = res[option].email;
+            let opt: string = res[option].user_name +"//"+res[option].email;
             this.options.push(opt);
           }
-        console.log(this.options);
+        //console.log(this.options);
       }
     });
   }
@@ -49,8 +52,8 @@ export class AskFileDashboardComponent implements OnInit{
   ngOnInit(): void {
     
     this.file_list = this.formbuilder.group({
-      filename         : ['', Validators.required],
-      purpose         : ['', Validators.required],
+      filename         : [''],
+      purpose         : [this.purpose_selected, Validators.required],
       comments        : [''],
       email           : [''],
       fy              : ['', Validators.required],
@@ -64,7 +67,7 @@ export class AskFileDashboardComponent implements OnInit{
 
   }
   private _filter(value: string): string[] {
-    console.log(value)
+    //console.log(value)
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
@@ -77,8 +80,7 @@ export class AskFileDashboardComponent implements OnInit{
 
   async All_Client_Ask(){
     //await new Promise (resolve => {
-    if(this.myControl.value != '' && this.file_list.valid){
-      
+    if(this.myControl.value != '' && this.file_list.valid && this.onlyfileName_array.length !=0){
       await new Promise( resolve => {
         this.AskProduct(this.myControl.value);
       resolve("true");}
@@ -90,7 +92,7 @@ export class AskFileDashboardComponent implements OnInit{
     }
     else {
      
-      if(this.userArray.length != 0 && this.file_list.valid){
+      if(this.userArray.length != 0 && this.file_list.valid && this.onlyfileName_array.length !=0){
 
         await new Promise( resolve => {
         for(let index =0; index < this.userArray.length; index ++ ){
@@ -108,8 +110,6 @@ export class AskFileDashboardComponent implements OnInit{
           duration: 2000,});
       }
     }
-    
-  //})
     
 }
 
@@ -131,29 +131,32 @@ async Email_draft(data:any){
   }
   
   async AskProduct(email_client: any){
-    console.log(this.file_list.value)
     if(this.file_list.valid){
       console.log(email_client)
       this.file_list.controls['email'].setValue(email_client);
       await new Promise( resolve => {
-        this.Email_draft(this.file_list.value)
+        let a : string = ''
+        for(let index = 0; index < this.onlyfileName_array.length ; index++)
+        {
+        
+        a = a + ", " + this.onlyfileName_array[index];
+        this.file_list.controls['filename'].setValue(this.onlyfileName_array[index])
         this.api.post_file_asked(this.file_list.value)
-      .subscribe({
+        .subscribe({
         next:(res)=>{this._snackBar.open("Files Asked","OK", {
           duration: 3000,
         });
-        
-        
-        //this.dialogref.close("save")
         },
         error:(err)=>{
           this._snackBar.open(err.error.Status,"Contact Us", {
             duration: 3000,
           });
         }});
-        resolve("true"); })
-    }
-      
+      }
+      this.file_list.controls['filename'].setValue(a)
+      this.Email_draft(this.file_list.value)
+      resolve("true"); }) 
+  }
     }
 
     csv_reader() {
@@ -182,6 +185,23 @@ async Email_draft(data:any){
             this.csv_reader()
          }
       }
+  }
+
+  displayedColumns: string[] = ['filenames'];//, 'Action'];
+  dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+
+  getAllfiles(res : any){ 
+    this.dataSource = new MatTableDataSource(res);
+  }
+  inputValue = "";
+  fileName_array : any[] = [];
+  onlyfileName_array : string[] = [];
+  add_filename(){
+    console.log(this.file_list.value.filename)
+    this.fileName_array.push({'filenames':this.file_list.value.filename});
+    this.onlyfileName_array.push(this.file_list.value.filename)
+    this.inputValue = "";
+    this.getAllfiles(this.fileName_array); 
   }
   
 }

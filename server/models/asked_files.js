@@ -13,6 +13,7 @@ const asked_fileSchema = new mongoose.Schema({
     //Link to file uploaded
     email : { type : String, required : true },
     PAN: { type : String, required: true },
+    files_uploaded : { type : [String]},
     //reference 
     user : {type : mongoose.Schema.Types.ObjectId, ref:'users',required: true}
 });

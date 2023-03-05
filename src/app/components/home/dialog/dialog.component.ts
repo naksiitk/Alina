@@ -79,17 +79,50 @@ export class DialogComponent implements OnInit{
       if(this.file_list.valid){
         this.file_list.controls['uploadedat'].setValue(String(this.date));
         this.formData.append('files_from',this.file_list.value.fy );
-        this.formData.append('files_name',this.file_list.value.email )
+        this.formData.append('files_name',this.file_list.value.email);
+        this.formData.append('fy',this.file_list.value.fy );
+        this.formData.append('email',this.file_list.value.email);
+        this.formData.append('filename',this.file_list.value.filename);
+        this.formData.append('purpose',this.file_list.value.purpose);
+        this.formData.append('comments',this.file_list.value.comments);
+        this.formData.append('uploadedat',this.file_list.value.uploadedat);
+        this.formData.append('month_quarter',this.file_list.value.month_quarter);
         console.log(this.formData)
-        this.api.post_file_upload_aws(this.formData).subscribe({
-          next:(res)=>{
-            this._snackBar.open("File Uploaded Successfully","OK", {
-              duration: 3000,
-            });
+        // this.api.post_file_upload_aws(this.formData).subscribe({
+        //   next:(res)=>{
+        //     this._snackBar.open("File Uploaded Successfully","OK", {
+        //       duration: 3000,
+        //     });
            
-            console.log(res.keys);
-            this.file_list.controls['files_uploaded'].setValue(res.keys); 
-            this.api.postfile(this.file_list.value)
+        //     console.log(res.keys);
+        //     this.file_list.controls['files_uploaded'].setValue(res.keys); 
+        //     this.api.postfile_new(this.file_list.value)
+        //     .subscribe({
+        //       next:(res)=>{
+        //         this._snackBar.open("Files Added","OK", {
+        //           duration: 3000,
+        //         });
+        //       this.file_list.reset();
+        //       this.formData.delete("files");
+        //       this.fileName_array.length = 0;
+        //       this.dialogref.close("save");
+        //       },
+        //       error:(err)=>{
+        //         this._snackBar.open(err.error.Status,"Contact Us", {
+        //           duration: 3000,
+        //         });
+        //       }        
+        //     })
+
+        //   },
+        //   error:(err)=>{
+        //     this._snackBar.open(err.error.Status,"Contact Us", {
+        //       duration: 3000,
+        //     });
+        //   }
+        // }) 
+        
+        this.api.postfile_new(this.formData)
             .subscribe({
               next:(res)=>{
                 this._snackBar.open("Files Added","OK", {
@@ -106,14 +139,13 @@ export class DialogComponent implements OnInit{
                 });
               }        
             })
-
-          },
-          error:(err)=>{
-            this._snackBar.open(err.error.Status,"Contact Us", {
-              duration: 3000,
-            });
-          }
-        })        
+            const keys = [];
+            for (const key of this.formData.keys()) {
+                keys.push(key);
+            }
+            for (const idx in keys) {
+                this.formData.delete(keys[idx]);
+            }
       }
       else{
         this._snackBar.open("File Not filed properly","Contact Us", {
@@ -122,7 +154,7 @@ export class DialogComponent implements OnInit{
       }
     }
     else{
-      this._snackBar.open("It is going to update","Contact Us", {
+      this._snackBar.open("It is going to update", '', {
         duration: 3000,
       });
       this.updateProduct();
@@ -130,91 +162,115 @@ export class DialogComponent implements OnInit{
   }
 
   updateProduct(){
-    this.formData.append('files_from',this.file_list.value.fy );
-    this.formData.append('files_name',this.file_list.value.email )
+    console.log(this.formData.has("files"))
     this.file_list.controls['uploadedat'].setValue(String(this.date));
 
-    if(this.formData.has("files")){
-      this.api.post_file_upload_aws(this.formData).subscribe({
-        next:(res)=>{ 
-          this._snackBar.open("File Uploaded Successfully","OK", {
-            duration: 3000,
-          });
+    if(this.file_list.valid && this.formData.has("files")){
+      this.formData.append('files_from',this.file_list.value.fy );
+      this.formData.append('files_name',this.file_list.value.email );
+      this.formData.append('fy',this.file_list.value.fy );
+      this.formData.append('email',this.file_list.value.email);
+      this.formData.append('filename',this.file_list.value.filename);
+      this.formData.append('purpose',this.file_list.value.purpose);
+      this.formData.append('comments',this.file_list.value.comments);
+      this.formData.append('uploadedat',this.file_list.value.uploadedat);
+      this.formData.append('month_quarter',this.file_list.value.month_quarter); 
+        for (var i = 0; i < this.editdata.files_uploaded.length; i++) {
+          this.formData.append('files_uploaded', this.editdata.files_uploaded[i]);
+      }  
+      console.log(this.file_list.value.files_uploaded)
+      // this.api.post_file_upload_aws(this.formData).subscribe({
+      //   next:(res)=>{ 
+      //     this._snackBar.open("File Uploaded Successfully","OK", {
+      //       duration: 3000,
+      //     });
          
-          let total_files = this.editdata.files_uploaded.concat(res.keys);
-          this.file_list.controls['files_uploaded'].setValue(total_files);
-          console.log(this.file_list.value.files_uploaded)
-          this.api.putfile(this.editdata._id, this.file_list.value)
-            .subscribe({
-              next:(res)=>{
-                this._snackBar.open("File Updated Successfully","OK", {
-                  duration: 3000,
-                });
-                this.api.copy_file_upload_aws(
-                  {files_uploaded : this.editdata.files_uploaded,
-                    source_files_name : this.email,
-                    dest_files_name : this.email,
-                    source_files_from : this.editdata.fy,
-                    dest_files_from : this.file_list.value.fy
-                }).subscribe({
-                  next:(res)=>{
-                    this._snackBar.open("File Updated Successfully","OK", {
-                      duration: 3000,
-                    });
-                  this.file_list.reset();
-                  this.dialogref.close("update");},
-                  error:(err)=>{
-                    this._snackBar.open(err.error.message,"Contact Us", {
-                      duration: 3000,
-                    });}
-                });
-              },
-              error:(err)=>{
-                this._snackBar.open(err.error.message,"Contact Us", {
-                  duration: 3000,
-                });
-              }
-            }) 
-        },
-        error:(err)=>{this._snackBar.open(err.error.message,"Contact Us", {
-          duration: 3000,
-        });}
-      }); 
-    }
-    else{
-      this.file_list.controls['files_uploaded'].setValue(this.editdata.files_uploaded);
-      console.log(this.file_list.value.files_uploaded);
-      this.api.putfile(this.editdata._id, this.file_list.value)
-      .subscribe({
-        next:(res)=>{
-          this._snackBar.open("File Updated Successfully","OK", {
-            duration: 3000,
-          });
-          this.api.copy_file_upload_aws(
-            {files_uploaded : this.editdata.files_uploaded,
-              source_files_name : this.email,
-              dest_files_name : this.email,
-              source_files_from : this.editdata.fy,
-              dest_files_from : this.file_list.value.fy
-          }).subscribe({
-            next:(res)=>{
-              this._snackBar.open("File Updated Successfully","OK", {
-                duration: 3000,
-              });
-            this.file_list.reset();
-            this.dialogref.close("update");},
-            error:(err)=>{this._snackBar.open(err.error.message,"Contact Us", {
+      //     let total_files = this.editdata.files_uploaded.concat(res.keys);
+      //     this.file_list.controls['files_uploaded'].setValue(total_files);
+      //     console.log(this.file_list.value.files_uploaded)
+      //     this.api.putfile(this.editdata._id, this.file_list.value)
+      //       .subscribe({
+      //         next:(res)=>{
+      //           this._snackBar.open("File Updated Successfully","OK", {
+      //             duration: 3000,
+      //           });
+      //           this.api.copy_file_upload_aws(
+      //             {files_uploaded : this.editdata.files_uploaded,
+      //               source_files_name : this.email,
+      //               dest_files_name : this.email,
+      //               source_files_from : this.editdata.fy,
+      //               dest_files_from : this.file_list.value.fy
+      //           }).subscribe({
+      //             next:(res)=>{
+      //               this._snackBar.open("File Updated Successfully","OK", {
+      //                 duration: 3000,
+      //               });
+      //             this.file_list.reset();
+      //             this.dialogref.close("update");},
+      //             error:(err)=>{
+      //               this._snackBar.open(err.error.message,"Contact Us", {
+      //                 duration: 3000,
+      //               });}
+      //           });
+      //         },
+      //         error:(err)=>{
+      //           this._snackBar.open(err.error.message,"Contact Us", {
+      //             duration: 3000,
+      //           });
+      //         }
+      //       }) 
+      //   },
+      //   error:(err)=>{this._snackBar.open(err.error.message,"Contact Us", {
+      //     duration: 3000,
+      //   });}
+      // }); 
+      this.api.putfile(this.editdata._id, this.formData)
+        .subscribe({
+          next:(res)=>{
+            this._snackBar.open("File Updated Successfully","OK", {
               duration: 3000,
-            });}
-          });
-        },
-        error:(err)=>{
-          this._snackBar.open(err.error.message,"Contact Us", {
-            duration: 3000,
-          });
-        }
-      }) 
+            });
+              this.file_list.reset();
+              this.dialogref.close("update");
+              const keys = [];
+              for (const key of this.formData.keys()) {
+                  keys.push(key);
+              }
+              for (const idx in keys) {
+                  this.formData.delete(keys[idx]);
+              }
+            },
+          error:(err)=>{
+            this._snackBar.open(err.error.message,"Contact Us", {
+              duration: 3000,
+            });
+            const keys = [];
+            for (const key of this.formData.keys()) {
+                keys.push(key);
+            }
+            for (const idx in keys) {
+                this.formData.delete(keys[idx]);
+            }
+          }
+        }) 
+        
     }
+    if(this.file_list.valid && !this.formData.has("files")){
+    this.api.putfile(this.editdata._id, this.file_list.value)
+    .subscribe({
+      next:(res)=>{
+        this._snackBar.open("File Updated Successfully","OK", {
+          duration: 3000,
+        });
+          this.file_list.reset();
+          this.dialogref.close("update");},
+      error:(err)=>{
+        this._snackBar.open(err.error.message,"Contact Us", {
+          duration: 3000,
+        });
+      }
+    }) 
+  }
   }
 
   displayedColumns: string[] = ['files_uploaded'];//, 'Action'];
@@ -236,6 +292,7 @@ export class DialogComponent implements OnInit{
         console.log(file)
         this.formData.append('files', file);
         this.fileName_array.push({'files_uploaded':file.name});
+       
         console.log(this.fileName_array);
         this.getAllfiles(this.fileName_array); 
         this._snackBar.open(file.name,"Ok", {

@@ -11,6 +11,10 @@ router.post('/', async (req, res) =>{
     if (user == null) {
         return res.status(404).json({status : "404"}) // email not found
     }
+    if(user.verify == false && user.email != "arasaudit@gmail.com")
+    {
+        return res.status(500).json({status : "Not verified by your Auditor"})
+    }
 
     try{
         if (await bcrypt.compare(req.body.password, user.password)) {
@@ -21,7 +25,7 @@ router.post('/', async (req, res) =>{
                 JWT: jwtToken, 
                 email : user.email,
                 role : user.user_type,
-                name : user.user_name
+                name : user.user_name,
             }) // password correct
         }
         else {

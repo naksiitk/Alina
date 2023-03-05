@@ -114,35 +114,31 @@ export class FileUploadedComponent implements OnInit {
   };
 
   deletefile(row : any){
-    console.log(row.files_uploaded.length );
-    let k = 0, i =0;
-    if(k == i)
-    {
-      this.api.deletefile(row._id)
-      .subscribe({
-        next:(res) => {this._snackBar.open("File Deleted Successfully","OK", {
-          duration: 3000,
-        });
-        this.getAllfiles();
-        },
-        error:(err) => {this._snackBar.open(err.error.message,"Contact Us", {
-          duration: 3000,
-        });}
-        });
-    } 
-
-    console.log(k,i);
-
-    for (i = 0 ; i<= row.files_uploaded.length ; i++)
-    {
-      this.api.delete_file_upload_aws(row, i)
-      .subscribe({
-        next:(res) => {k = k+1; console.log(k)},
-        error:(err) => {this._snackBar.open(err.error.Status,"Contact Us", {
-          duration: 2000,
-        });}
+    this.api.deletefile(row._id)
+    .subscribe({
+      next:(res) => {this._snackBar.open("File Deleted Successfully","OK", {
+        duration: 3000,
       });
-    }  
+      this.getAllfiles();
+      },
+      error:(err) => {this._snackBar.open(err.error.message,"Contact Us", {
+        duration: 3000,
+      });}
+      });
+    // } 
+
+    // console.log(k,i);
+
+    // for (i = 0 ; i<= row.files_uploaded.length ; i++)
+    // {
+    //   this.api.delete_file_upload_aws(row, i)
+    //   .subscribe({
+    //     next:(res) => {k = k+1; console.log(k)},
+    //     error:(err) => {this._snackBar.open(err.error.Status,"Contact Us", {
+    //       duration: 2000,
+    //     });}
+    //   });
+    // }  
   }
   
   getAllfiles(){

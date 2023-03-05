@@ -5,7 +5,7 @@ const otp = require('../models/otp')
 const bcrypt = require('bcrypt')
 const client_doc_summary = require('../models/client_doc_summary')
 const { generateOTP } = require('../services/otp'); 
-const { sendOTP_mail, onboard_mail, ask_mail } = require('../services/mail')
+const { sendOTP_mail, onboard_mail, ask_mail, reminder_mail, delete_mail, verified_mail } = require('../services/mail')
 
 //Getting all
 router.get('/', async (req, res) =>{
@@ -16,10 +16,33 @@ router.get('/', async (req, res) =>{
         res.status(500).json({message: error.message})
     }
 })
+//Getting Verified Users
+router.get('/verified', async (req, res) =>{
+    try {
+        const users = await User.find({verified: false}).sort({$natural:-1})
+        res.json(users)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+//Update verified check 
+router.post('/verified/check', async (req, res) =>{
+    try {
+        console.log(req.body.email)
+        const user = await User.updateOne(
+            {email : req.body.email},
+            {verified: req.body.verified}
+        )
+        res.status(200).json({message: "Verified Successfully"})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
 //Getting Clinet_doc_summary
 router.get('/client_doc_summary', async (req, res) =>{
     try {
-        const users = await client_doc_summary.find()
+        const users = await client_doc_summary.find().sort({$natural:-1})
         res.json(users)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -93,6 +116,28 @@ router.delete('/:id', getUser, async (req, res) =>{
     }
 })
 
+//Deleting email
+router.delete('/email/:id', async (req, res) =>{
+    try {
+        console.log(req.params.id)
+        await delete_mail({to: req.params.id});
+        await User.deleteOne({email : req.params.id})
+        await client_doc_summary.deleteMany({email : req.params.id})
+        
+        res.json({ message: 'Deleted Subscriber'})
+    } catch (err) {
+        res.status(500).json({ message: err.message})
+    }
+})
+
+router.delete('/delete_client_doc_summary/delete', async (req, res) =>{
+    try {
+       await client_doc_summary.deleteMany()   
+        res.json({ message: 'Deleted Subscriber'})
+    } catch (err) {
+        res.status(500).json({ message: err.message})
+    }
+})
 async function getUser(req, res, next) {
     try {
         user = await User.findById(req.params.id)
@@ -131,7 +176,8 @@ router.post('/signup', async (req, res) =>{
             user_name: req.body.user_name,
             user_type: req.body.user_type,
             PAN: req.body.PAN,
-            company_name: req.body.user_name
+            company_name: req.body.user_name,
+            verified: false,
         })
         const newUser = await user.save()
         res.status(201).json(newUser)
@@ -139,7 +185,7 @@ router.post('/signup', async (req, res) =>{
         res.status(400).json({ message: err.message})
     }
 })
-
+//Change Password
 router.post('/password_change', async (req, res) =>{
     const user = await User.findOne({email: req.body.email})
     if(user == null) return res.status(400).json({Status : "Error Occured"})
@@ -237,6 +283,18 @@ router.get('/onboarding/:email', async (req, res) =>{
     if(user != null) return res.status(400).json({Status : "Email already exists"})
     try {
         await onboard_mail({to: req.params.email});
+        return res.status(201).json({Status : "Mail_sent!"})
+    } catch (error) {
+        return res.status(400).json({Status : "Cannot Send Mail"})
+    }
+})
+
+router.post('/reminder', async (req, res) =>{
+    console.log(req.body)
+    const user = await User.findOne({email: req.body.email})
+    if(user == null) return res.status(400).json({Status : "Email Not present"})
+    try {
+        await reminder_mail(req.body);
         return res.status(201).json({Status : "Mail_sent!"})
     } catch (error) {
         return res.status(400).json({Status : "Cannot Send Mail"})

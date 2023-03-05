@@ -33,9 +33,24 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8000/user/verified/check
+Content-Type: application/json
+
+{
+    "email": "anbarasuparamasivam@gmail.com",
+    "verified": "false"
+}
+###
 
 DELETE http://localhost:8000/user/63cbf908dfe99cb81dbf3e87
 
+###
+
+DELETE http://localhost:8000/user/delete_client_doc_summary/delete
+
+###
+
+DELETE http://localhost:8000/user/email/anbarasuparamasivam@gmail.com
 
 ###
 POST http://54.90.42.79:3056/user/generate_otp

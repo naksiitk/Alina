@@ -6,8 +6,8 @@
             <mat-label>Email</mat-label>
             <input matInput placeholder="Provide Email " [formControl]="myControl" [matAutocomplete]="auto">
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option}}
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.split('//')[1]">
+                        {{option.split("//")[0]}}
                     </mat-option>
                   </mat-autocomplete>
         </mat-form-field>

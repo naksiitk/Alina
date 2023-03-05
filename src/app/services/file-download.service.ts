@@ -32,31 +32,33 @@ export class FileDownloadService {
   }
 
 
-  downloadFile(fy : string, email : string, files_uploaded : string){
-    this.getFile(fy, email, files_uploaded)
+  downloadFile(id : string, files_uploaded : string){
+    this.getFile(id, files_uploaded)
     .subscribe(resultBlob => 
       {
         //Success
         console.log('start download:', resultBlob);
-        var blob = new Blob([resultBlob] );
+        var blob = new Blob([resultBlob]);
         saveAs(blob, files_uploaded);
         
       },
     error => {
       //Error
-      console.log(error);
+      this._snackBar.open(error.message,"Contact Us", {
+        duration: 3000,
+      });
     });
   }
 
 
-  getFile(fy : string, email : string, files_uploaded : string): Observable<Blob> {
-    const doc_url = "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
+  getFile(id : string, files_uploaded : string): Observable<Blob> {
+    const doc_url = "/docs_upload/images/" + id  + "/key/" + files_uploaded
     return this.http.get<Blob>(doc_url, { responseType: 'blob' as 'json' })
   }
 
 
-  public getFileBlob(fy : string, email : string, files_uploaded : string) {
-    const doc_url =  "/docs_upload/images/fy/" + fy + "/email/" + email + "/key/" + files_uploaded
+  public getFileBlob(id : string, files_uploaded : string) {
+    const doc_url =  "/docs_upload/images/" + id  + "/key/" + files_uploaded
 
     var subject = new Subject<Blob>();
 

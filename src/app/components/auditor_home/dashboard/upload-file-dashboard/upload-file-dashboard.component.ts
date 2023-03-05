@@ -30,12 +30,12 @@ export class UploadFileDashboardComponent implements OnInit{
   actionBtn : string = "Upload";
   filteredOptions: Observable<string[]>;
   myControl = new FormControl('',Validators.required);
-
+  purpose_selected = "ITR"
 
   constructor(private formbuilder : FormBuilder, private api : ApiService, 
-     private api_auth : AuthService,private dialogref : MatDialogRef<UploadFileDashboardComponent>,
+     private api_auth : AuthService,@Inject(MAT_DIALOG_DATA) public editdata: any,private dialogref : MatDialogRef<UploadFileDashboardComponent>,
     private _snackBar: MatSnackBar){
-
+      this.purpose_selected  = editdata.purpose_selected
       for (let year = this.selectedYear; year >= 2018; year--) {
         this.years.push(String(year-1)  + "-" + String(year));
     };
@@ -43,10 +43,10 @@ export class UploadFileDashboardComponent implements OnInit{
       next:(res)=>{
           this.user_list = res;
           for( let option = 0; option < res.length; option++){
-            let opt: string = res[option].email;
+            let opt: string = res[option].user_name +"//"+res[option].email;
             this.options.push(opt);
           }
-        console.log(this.options);
+        //console.log(this.options);
       }
     });
   }
@@ -56,7 +56,7 @@ export class UploadFileDashboardComponent implements OnInit{
     
     this.file_list = this.formbuilder.group({
       filename         : ['', Validators.required],
-      purpose         : ['', Validators.required],
+      purpose         : [this.purpose_selected, Validators.required],
       comments        : ['', Validators.required],
       files_uploaded  : [[], Validators.required],
       email           : [''],
@@ -75,7 +75,7 @@ export class UploadFileDashboardComponent implements OnInit{
   }
 
   private _filter(value: string): string[] {
-    console.log(value)
+    //console.log(value)
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }

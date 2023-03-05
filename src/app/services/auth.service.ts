@@ -17,17 +17,17 @@ export class AuthService {
   }
 
   user_signup(data : any){
-    console.log(data)
+    // console.log(data)
     return this.http.post<any>('/user/signup',data);
   }
 
   otp_verification(data : any){
-    console.log(data)
+    // console.log(data)
     return this.http.post<any>('/user/otp_verification',data);
   }
 
   change_password(data : any){
-    console.log(data)
+    // console.log(data)
     return this.http.post<any>('/user/password_change',data);
   }
 
@@ -45,10 +45,10 @@ export class AuthService {
   }
 
   checkuser(data : any){
-    console.log(data)
+    // console.log(data)
     return this.http.post<any>('/login',data);
   }
-
+ 
   login_user(data : any) {
     this.checkuser(data)
     .subscribe({

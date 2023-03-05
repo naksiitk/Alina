@@ -7,11 +7,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {  Router } from '@angular/router';
-import { map, Observable, shareReplay } from 'rxjs';
+// import { map, Observable, shareReplay } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogDeleteComponent } from '../../../home/dialog-delete/dialog-delete.component';
-import { DialogComponent } from '../../../home/dialog/dialog.component';
+// import { DialogComponent } from '../../../home/dialog/dialog.component';
+import { AskDialogComponent } from 'src/app/components/auditor_home/ask-dialog/ask-dialog.component';
+import { FilesShowDialogComponent } from '../../files-show-dialog/files-show-dialog.component';
 
 @Component({
   selector: 'app-ask-file',
@@ -26,7 +28,7 @@ export class AskFileComponent implements OnInit {
  
   public email = this.api_auth.get_email_local('email')
   
-  displayedColumns: string[] = ['filename','fy','month_quarter', 'comments', 'Action'];
+  displayedColumns: string[] = ['filename','purpose','fy','month_quarter', 'comments', 'Action'];
   displayedColumns_mobile: string[] = ['filename','Action'];
   show_everything = false;
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
@@ -77,14 +79,15 @@ export class AskFileComponent implements OnInit {
   uploadfile(row : any){
     console.log(this.dialog_size)
     row["from_asked_dialog_box"]= true
-    this.dialog.open(DialogComponent,
+    this.dialog.open(AskDialogComponent,
       {
         width : this.dialog_size, 
         data:row
       }).afterClosed().subscribe(val => {
         if(val === 'save'){
-          this.getAllfiles();
-          this.deletefile(row);
+          this.getAllaskedfiles();
+          console.log("hi")
+          //this.deletefile(row);
         }
       })
       
@@ -131,8 +134,9 @@ export class AskFileComponent implements OnInit {
   }
 
   getAllaskedfiles(){
-    this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":"ITR"}).subscribe({
+    this.api. get_file_asked(this.email).subscribe({
         next:(res)=>{
+          console.log(res)
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -153,6 +157,28 @@ export class AskFileComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  check_upload(row: any)
+  {
+    //console.log(row.files_uploaded.length);
+    if(row.files_uploaded.length == 0)
+    {return true;}
+    else
+    {
+      console.log("hi")
+      return false;}
+  }
+
+  show_uploaded_files(row : any){
+    this.dialog_size_function(this.current_break_point)
+      this.dialog.open(FilesShowDialogComponent,
+        {
+          width : this.dialog_size, 
+          data:row
+        })
+  }
+
+ 
 
   
 

@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
     //for Authenticating into the website, email is the primary key
     email: { type:String, required: true, unique : true },
     password: { type:String, required: true },
-
     //Contact and name
     mobile: {type: [Number]},
     user_name: { type: String},
@@ -12,7 +11,8 @@ const userSchema = new mongoose.Schema({
     //For internal use
     user_type: { type:String , required: true},
     PAN: { type:[String] },
-    company_name: { type: [String]}
+    company_name: { type: [String]},
+    verified: { type : Boolean, required:true},
 })
 
 module.exports = mongoose.model('users',userSchema)

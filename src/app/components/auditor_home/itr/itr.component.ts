@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AskFileDashboardComponent } from '../dashboard/ask-file-dashboard/ask-file-dashboard.component';
+import { UploadFileDashboardComponent } from '../dashboard/upload-file-dashboard/upload-file-dashboard.component';
 
 @Component({
   selector: 'app-itr',
@@ -46,7 +48,7 @@ export class ItrComponent implements OnInit {
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log(this.id)
+          //console.log(this.id)
         },
         error:()=>{
           alert("Error while fetching products");
@@ -69,5 +71,21 @@ export class ItrComponent implements OnInit {
     this.auth_api.save_email_local('email_add_file', email); 
     this.router.navigate(['auditor/' + this.id + '/client_tab',this.id])
     this.hidden = !this.hidden;
+  }
+
+  upload_file(){
+    this.dialog.open(UploadFileDashboardComponent,
+      {
+        width : '30em', 
+        data: {'purpose_selected' : this.id}
+      }) 
+  }
+
+  ask_file(){
+    this.dialog.open(AskFileDashboardComponent,
+      {
+        width : '30em', 
+        data: {'purpose_selected' : this.id}
+      }) 
   }
 }

@@ -20,6 +20,7 @@ export class FilesShowDialogComponent implements OnInit{
   fileName_array : any[] = [];
   JWT = this.localStorage.getJWT()
 
+  backend_route = environment.apiUrl;
   Breakpoints = Breakpoints;
   current_break_point = 0;
   readonly breakpoint$ = this.breakpointObserver
@@ -47,6 +48,7 @@ export class FilesShowDialogComponent implements OnInit{
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
+    
   }
 
   private breakpointChanged() {
@@ -75,6 +77,7 @@ export class FilesShowDialogComponent implements OnInit{
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
   getAllfiles(res : any){ 
+    
     this.dataSource = new MatTableDataSource(res);
   }
 
@@ -84,10 +87,10 @@ export class FilesShowDialogComponent implements OnInit{
     else 
       return false
   }
-
+   
   OpenPDFviewer(fy : string, email : string, files_uploaded : string) {
     this.dialog_size_function(this.current_break_point);
-    this.fileDownloadService.getFileBlob(fy, email, files_uploaded)
+    this.fileDownloadService.getFileBlob(this.filesdata._id, files_uploaded)
     .subscribe(blob => {  
       let dialogref = this.dialog.open(FilePreviewDialogComponent,
         {
@@ -104,6 +107,6 @@ export class FilesShowDialogComponent implements OnInit{
   }
 
   downloadFile(fy : string, email : string, files_uploaded : string) {
-    this.fileDownloadService.downloadFile(fy, email, files_uploaded)
+    this.fileDownloadService.downloadFile(this.filesdata._id, files_uploaded)
   }
 }

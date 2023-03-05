@@ -12,26 +12,29 @@
         <mat-grid-tile [colspan]= 2 [rowspan]= 1 style="margin-right: 5%; border-radius: 20px; background-color: rgb(247, 243, 243);" >
             <div style="margin-top:2% ;">   
                 <i class="fa-sharp fa-solid fa-file-circle-plus fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
-                <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="ask_file()" >Ask File</button>
+                <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="ask_file()" ><a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
+                    [routerLink]="['/auditor/itr','ITR']" ><span style="vertical-align : middle;"> Income Tax Returns </span></a></button>
             </div>
         </mat-grid-tile>
         <mat-grid-tile [colspan]= 2 [rowspan]= 1 style="border-radius: 20px; background-color:white;" >   
             <div style="margin-top:2% ;"> 
-            <i class="fa-sharp fa-solid fa-solid fa-person fa-4x" style="margin-top: 0%;color:rgba(25, 25, 112, 0.822);"></i><br>
-            <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="client_add()">Client Onboard</button>
+                <i class="fa-sharp fa-solid fa-file-circle-plus fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+            <button mat-raised-button color="primary" style="margin-top: 6%;" (click)="client_add()"><a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
+                [routerLink]="['/auditor/gst','GST']" class="mat-list-item-focus" > Goods and Service Tax</a></button>
             </div>
         </mat-grid-tile>
         
         <mat-grid-tile [colspan]= 2 [rowspan]= 1 style="border-radius: 20px;background-color:rgb(247, 243, 243)" >
             <div style="margin-top:2% ;">
-                <i class="fa-sharp fa-solid fa-upload fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
-                <button mat-raised-button color="primary" style="margin-top: 6%;"  (click)="upload_file()">Upload File</button>
+                <i class="fa-sharp fa-solid fa-file-circle-plus fa-4x" style="margin-top: 2%;color:rgba(25, 25, 112, 0.822);"></i><br>
+                <button mat-raised-button color="primary" style="margin-top: 6%;"  (click)="upload_file()"><a mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive" [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" 
+                    [routerLink]="['/auditor/tds','TDS']" >Tds/Tcs</a></button>
             </div>
         </mat-grid-tile>
         <!-- <mat-grid-tile [colspan]= 6 [rowspan]= 1 style="border-radius: 20px; background-color: beige;" >
             <h1>{{date}}</h1>
             </mat-grid-tile> -->
-        <mat-grid-tile [colspan]= 2 [rowspan]= 2 style="border-radius: 20px; background-color: white;" >   
+        <!-- <mat-grid-tile [colspan]= 2 [rowspan]= 2 style="border-radius: 20px; background-color: white;" >   
             <div style="margin-top:2% ;"> 
                 <app-client-doc-list-table [childToMaster]= this.ITR ></app-client-doc-list-table>
             </div>
@@ -45,10 +48,8 @@
             <div style="margin-top:2% ;"> 
                 <app-client-doc-list-table [childToMaster]= this.TDS ></app-client-doc-list-table>
             </div>
-        </mat-grid-tile>
+        </mat-grid-tile> -->
         
-
-
 </mat-grid-list>
 
       

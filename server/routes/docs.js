@@ -3,11 +3,30 @@ const router = express.Router()
 const docs = require('../models/docs')
 const users = require('../models/users')
 const client_doc_summary = require('../models/client_doc_summary')
+const asked_files = require('../models/asked_files')
+const fs = require('fs');
+const util = require('util');
+const unlinkfile = util.promisify(fs.unlink);
+const multer = require("multer")
+const { uploadfile, getfile, deletefile, copyfile } = require('../services/s3')
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now();
+      cb(null, `${Date.now()}_${file.originalname}`);
+    }
+  })
+
+  const upload = multer({ storage });
 
 //Getting All
 router.get('/' , async (req,res)=>{
     try {
-        const doc_list = await docs.find()
+        const doc_list = await docs.find().limit(1).sort({$natural:-1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -16,7 +35,7 @@ router.get('/' , async (req,res)=>{
 //Getting One
 router.get('/:id' , async (req,res)=>{
     try {
-        const doc_list = await docs.find({email : req.params.id})
+        const doc_list = await docs.find({email : req.params.id}).sort({$natural:-1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -36,7 +55,7 @@ router.get('/client_list/:id' , async (req,res)=>{
 //Getting docs based on purpose
 router.post('/purpose' , async (req,res)=>{
     try {
-        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose})
+        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose}).sort({$natural:-1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -82,41 +101,302 @@ router.post('/' , async(req,res)=>{
         res.status(400).json({message: error.message})
     }
 })
+
+//New Posting with files
+router.post('/post' , upload.array("files"),async(req,res)=>{
+    let userPAN
+    let userid
+    try {
+        const user = await users.findOne({email: req.body.email})
+        userPAN = user.PAN[0]
+        userid = user.id
+
+        results = []
+        const files = req.files;
+        let name = user.user_name + "_" + user.PAN[0];
+        name = name.split("/")[0];
+        let files_uploads = []
+        //name.split('/')
+        if(Array.isArray(files) && files.length > 0 )
+        {
+          for (const file of files) 
+            {
+              let file_name = file.filename;
+              files_uploads.push(file_name);
+              file.filename = req.body.fy +"/" + req.body.purpose +"/" 
+              + name +"/" + req.body.filename +"/" + file.filename;
+              await uploadfile({file: file}).then(
+                (result) => {
+                    console.log({result}); // Log the result of 50 Pokemons
+                },
+                (error) => {
+                    // As the URL is a valid one, this will not be called.
+                    return res.status(400).json({Status: error.message}) // Log an error
+                });
+
+              await unlinkfile(file.path).then(
+                (result) => {
+                    console.log({result}); // Log the result of 50 Pokemons
+                },
+                (error) => {
+                    // As the URL is a valid one, this will not be called.
+                    return res.status(400).json({Status: error.message}) // Log an error
+            });
+            }
+        }
+      
+        const clients_list = new docs({
+            filename : req.body.filename,
+            fy: req.body.fy,
+            month_quarter: req.body.month_quarter,
+            uploadedat: req.body.uploadedat,
+            purpose: req.body.purpose,
+            comments: req.body.comments,
+            files_uploaded: files_uploads,
+            email : req.body.email,
+            PAN : userPAN,
+            seen : false,
+            user : userid,
+            lock : false,
+        })
+
+        await client_doc_summary.updateOne(
+            {email : req.body.email, purpose:req.body.purpose},
+            {$inc : {unseen: 1, total : 1}, user: userid},
+            {upsert:true}
+        ).then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+        });
+
+        const newDoc_client = await clients_list.save().then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+        });
+
+        res.status(201).json(newDoc_client);
+    } catch (error) {
+        return res.status(400).json({Status: error.message})
+    }
+})
+
+//Posting asked files
+router.post('/post_asked/:id' , [upload.array("files"),getaskedfiles],async(req,res)=>{
+    let userPAN
+    let userid
+    try {
+        const user = await users.findOne({email: req.body.email})
+        userPAN = user.PAN[0]
+        userid = user.id
+
+        results = []
+        const files = req.files;
+        let name = user.user_name + "_" + user.PAN[0];
+        name = name.split("/")[0];
+        let files_uploads = []
+        //name.split('/')
+        if(Array.isArray(files) && files.length > 0 )
+        {
+          for (const file of files) 
+            {
+              let file_name = file.filename;
+              files_uploads.push(file_name);
+              file.filename = req.body.fy +"/" + req.body.purpose +"/" 
+              + name +"/" + req.body.filename +"/" + file.filename;
+              await uploadfile({file: file}).then(
+                (result) => {
+                    console.log({result}); // Log the result of 50 Pokemons
+                },
+                (error) => {
+                    // As the URL is a valid one, this will not be called.
+                    return res.status(400).json({Status: error.message}) // Log an error
+                });
+
+              await unlinkfile(file.path).then(
+                (result) => {
+                    console.log({result}); // Log the result of 50 Pokemons
+                },
+                (error) => {
+                    // As the URL is a valid one, this will not be called.
+                    return res.status(400).json({Status: error.message}) // Log an error
+            });
+            }
+        }        
+        res.doc.filename =req.body.filename,
+        res.doc.fy= req.body.fy,
+        res.doc.month_quarter= req.body.month_quarter,
+        res.doc.uploadedat= req.body.uploadedat,
+        res.doc.purpose= req.body.purpose,
+        res.doc.comments= req.body.comments,
+        res.doc.files_uploaded= files_uploads,
+        res.doc.email = req.body.email,
+        res.doc.PAN = userPAN,
+        res.doc.user = userid,
+        
+        await client_doc_summary.updateOne(
+            {email : req.body.email, purpose:req.body.purpose},
+            {$inc : {unseen: 1, total : 1}, user: userid},
+            {upsert:true}
+        ).then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+        });
+
+        const newDoc = await res.doc.save().then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+            });
+        res.status(201).json({message:'Updated Successfully'})
+    } catch (error) {
+        return res.status(400).json({Status: error.message})
+    }
+})
 //Updating One
-router.put('/update/:id' ,getDoc, async(req,res)=>{
+router.put('/update/:id' ,upload.array("files"),getDoc, async(req,res)=>{
     if(req.body !=null){
-        res.doc.filename = req.body.filename,
-        res.doc.month_quarter = req.body.month_quarter;
-        res.doc.fy = req.body.fy;
-        res.doc.uploadedat =  req.body.uploadedat;
-        // res.doc.file_name= req.body.file_name;
-        res.doc.purpose= req.body.purpose;
-        res.doc.comments= req.body.comments;
-        res.doc.files_uploaded= req.body.files_uploaded;
-        res.doc.email = req.body.email;
-        res.doc.seen = 0;
         try {
-            if(req.body.purpose ==  res.doc.purpose){
+            let user = await users.findOne({email: res.doc.email})
+            let name = user.user_name + "_" + user.PAN[0];
+            name = name.split("/")[0];
+
+            let file_name_old = res.doc.fy +"/" + res.doc.purpose +"/" 
+            + name +"/" + res.doc.filename
+
+            user = await users.findOne({email: req.body.email})
+            name = user.user_name + "_" + user.PAN[0];
+            name = name.split("/")[0];
+
+            let file_name_new = req.body.fy +"/" + req.body.purpose +"/" 
+            + name +"/" + req.body.filename
+            if(file_name_new ==  file_name_old){
+                if(req.body.seen == 1){
                 await client_doc_summary.updateOne(
                 {email : req.body.email, purpose:req.body.purpose},
                 {$inc : {unseen: 1}},
                 {upsert:true}
-                )
+                )}
             }
             else{
+                if(res.doc.seen == 1){
                 await client_doc_summary.updateOne(
                 {email : res.doc.email, purpose:res.doc.purpose},
                 {$inc : {unseen: -1,total : -1}},
                 {upsert:true}
-                )
-
+                )}
+                else{
+                    await client_doc_summary.updateOne(
+                        {email : res.doc.email, purpose:res.doc.purpose},
+                        {$inc : {total : -1}},
+                        {upsert:true}
+                        )
+                }
                 await client_doc_summary.updateOne(
                 {email : req.body.email, purpose:req.body.purpose},
                 {$inc : {unseen: 1, total:1}},
                 {upsert:true}
                 )
+                let files_uploads = []
+                if(Array.isArray(res.doc.files_uploaded))
+                {files_uploads = res.doc.files_uploaded;}
+                else{
+                    files_uploads = Array(req.body.files_uploaded);
+                }
+
+                for (let file of files_uploads) 
+                    { 
+                    let fileKey = file;
+                    sourcefileKey = file_name_old +"/" + fileKey;
+                    destfileKey = file_name_new +"/" + fileKey;
+                    
+                    await copyfile({ sourcefileKey: sourcefileKey, destfileKey : destfileKey}).then(
+                        (result) => {
+                            console.log({result}); // Log the result of 50 Pokemons
+                        },
+                        (error) => {
+                            // As the URL is a valid one, this will not be called.
+                            return res.status(400).json({Status: error.message}) // Log an error
+                        });
+                    
+                    await deletefile({fileKey:sourcefileKey}).then(
+                        (result) => {
+                            console.log({result}); // Log the result of 50 Pokemons
+                        },
+                        (error) => {
+                            // As the URL is a valid one, this will not be called.
+                            return res.status(400).json({Status: error.message}) // Log an error
+                        }); 
+                    }
             }
-            const newDoc = await res.doc.save()
+
+            res.doc.filename = req.body.filename,
+            res.doc.month_quarter = req.body.month_quarter;
+            res.doc.fy = req.body.fy;
+            res.doc.uploadedat =  req.body.uploadedat;
+            res.doc.purpose= req.body.purpose;
+            res.doc.comments= req.body.comments;
+            res.doc.files_uploaded= req.body.files_uploaded;
+            res.doc.email = req.body.email;
+            res.doc.seen = 0;
+            let files_uploads = []
+            if(Array.isArray(req.body.files_uploaded))
+            {files_uploads = req.body.files_uploaded;}
+            else{
+                files_uploads = Array(req.body.files_uploaded);
+            }
+            console.log(files_uploads)
+            if(Array.isArray(req.files) && req.files.length > 0 )
+            {
+            for (const file of req.files) 
+                {
+                console.log(file)
+                let file_name = file.filename;
+                files_uploads.push(file_name);
+                file.filename = file_name_new +"/" + file.filename;
+                await uploadfile({file: file}).then(
+                    (result) => {
+                        console.log({result}); // Log the result of 50 Pokemons
+                    },
+                    (error) => {
+                        // As the URL is a valid one, this will not be called.
+                        return res.status(400).json({Status: error.message}) // Log an error
+                    });
+
+                await unlinkfile(file.path).then(
+                    (result) => {
+                        console.log({result}); // Log the result of 50 Pokemons
+                    },
+                    (error) => {
+                        // As the URL is a valid one, this will not be called.
+                        return res.status(400).json({Status: error.message}) // Log an error
+                });
+                }
+                res.doc.files_uploaded= files_uploads
+            }
+            console.log(res.doc.files_uploaded)
+            const newDoc = await res.doc.save().then(
+                (result) => {
+                    console.log({result}); // Log the result of 50 Pokemons
+                },
+                (error) => {
+                    // As the URL is a valid one, this will not be called.
+                    return res.status(400).json({Status: error.message}) // Log an error
+                });
             res.status(201).json({message:'Updated Successfully'})
         } catch (error) {
             res.status(400).json({message: error.message})
@@ -137,36 +417,69 @@ router.put('/lock/:id' ,getDoc, async(req,res)=>{
     }
 })
 
-
-
 //Dec while seeing the file
 router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
     try {
+        console.log({email : res.doc.email, purpose:res.doc.purpose})
         if(res.doc.seen == 0){
         await client_doc_summary.updateOne(
             {email : res.doc.email, purpose:res.doc.purpose},
             {$inc : {unseen: -1}},
             {upsert:true}
             )
+        
         res.doc.seen = 1;
         const newDoc = await res.doc.save()
-        res.status(201).json({message:'Updated Successfully'})
+        return res.status(201).json({message:'Updated Successfully'})
         }
     } catch (error) {
-        res.status(400).json({message: error.message})
+        return res.status(400).json({message: error.message})
     }
 })
 
 //Deleting One
 router.delete('/:id' , [OpenJWT, getDoc, Access ], async(req,res)=>{
-
     try {
-        await client_doc_summary.updateOne(
+        
+        if(res.doc.seen == 1){
+            await client_doc_summary.updateOne(
+            {email : res.doc.email, purpose:res.doc.purpose},
+            {$inc : {total : -1}},
+            {upsert:true}
+            )
+        }
+        else{
+            await client_doc_summary.updateOne(
             {email : res.doc.email, purpose:res.doc.purpose},
             {$inc : {unseen: -1, total : -1}},
             {upsert:true}
             )
-        await res.doc.remove();
+        }
+        
+        const user = await users.findOne({email: res.doc.email})
+        let name = user.user_name + "_" + user.PAN[0];
+        let files_uploads = res.doc.files_uploaded;
+        name = name.split("/")[0];
+        let fileKey = res.doc.fy +"/" + res.doc.purpose +"/" 
+            + name +"/" + res.doc.filename;
+        for(let index=0; index < files_uploads.length; index++){
+            await deletefile({fileKey:fileKey+"/"+files_uploads[index]}).then(
+                (result) => {
+                    console.log({result}); 
+                },
+                (error) => {
+                    return res.status(400).json({Status: error.message}) // Log an error
+                });
+        } 
+        await res.doc.remove().then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+            });
+        //res.json(result);
         res.status(200).json({message:'Deleted Successfully'});
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -185,9 +498,28 @@ router.delete('/', async(req,res)=>{
 
 async function getDoc(req,res, next)
 {
+    console.log("hi")
     let doc
     try {
         doc = await docs.findById(req.params.id)
+        
+        if(doc == null){
+            return res.status(404).json({message : 'Cannot Find Doc'})
+        }
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+    res.doc = doc
+    next()
+}
+
+async function getaskedfiles(req,res, next)
+{
+    console.log("hi")
+    let doc
+    try {
+        doc = await asked_files.findById(req.params.id)
+        
         if(doc == null){
             return res.status(404).json({message : 'Cannot Find Doc'})
         }

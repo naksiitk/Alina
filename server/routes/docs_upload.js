@@ -5,6 +5,7 @@ const users = require('../models/users')
 const fs = require('fs');
 const util = require('util');
 const unlinkfile = util.promisify(fs.unlink);
+const docs = require('../models/docs')
 
 const multer = require("multer")
 const { uploadfile, getfile, deletefile, copyfile } = require('../services/s3')
@@ -31,7 +32,7 @@ router.get("/", (req,res) =>{
 router.post("/file", upload.array("files"), async(req,res) =>{
   try {
     results = []
-    // console.log(req)
+    console.log(req)
     const files = req.files;
     console.log(req.files)
     if(Array.isArray(files) && files.length > 0 )
@@ -55,14 +56,27 @@ router.post("/file", upload.array("files"), async(req,res) =>{
   }
 })
 
-router.get("/images/fy/:fy/email/:email/key/:key", [OpenJWT, Access], async(req,res) =>{
+router.get("/images/:id/key/:key",[OpenJWT, getDoc, Access ], async(req,res) =>{
   try {
-    console.log(req.params.fy+"/"+req.params.email+"/"+req.params.key)
-    const fileKey = req.params.fy+"/"+req.params.email+"/"+req.params.key;
-    console.log(fileKey);
+    const user = await users.findOne({email: res.doc.email})
+    let name = user.user_name + "_" + user.PAN[0];
+    name = name.split("/")[0];
+    let fileKey = res.doc.fy +"/" + res.doc.purpose +"/" 
+        + name +"/" + res.doc.filename+"/"+req.params.key;
     const result = await getfile({fileKey:fileKey});
-  
-    //res.download(result)
+    result.pipe(res);
+  } catch (error) {
+    return res.status(500).json({message: error.message})
+  }
+})
+router.get("/mobile/images/:id/key/:key",[getDoc], async(req,res) =>{
+  try {
+    const user = await users.findOne({email: res.doc.email})
+    let name = user.user_name + "_" + user.PAN[0];
+    name = name.split("/")[0];
+    let fileKey = res.doc.fy +"/" + res.doc.purpose +"/" 
+        + name +"/" + res.doc.filename+"/"+req.params.key;
+    const result = await getfile({fileKey:fileKey});
     result.pipe(res);
   } catch (error) {
     return res.status(500).json({message: error.message})
@@ -105,6 +119,23 @@ router.put("/file_copy", async(req,res) =>{
   }
 })
 
+async function getDoc(req,res, next)
+{
+    let doc
+    try {
+        doc = await docs.findById(req.params.id)
+        if(doc == null){
+          doc = await asked_files.findById(req.params.id)
+          if(doc == null)
+            return res.status(404).json({message : 'Cannot Find Doc'})
+        }
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+    res.doc = doc
+    next()
+}
+
 const JWT = require('jsonwebtoken')
 
 function OpenJWT(req, res, next) {
@@ -121,7 +152,7 @@ function OpenJWT(req, res, next) {
 }
 
 async function Access(req, res, next) {
-  if(req.JWT.email == req.params.email) {
+  if(req.JWT.email == res.doc.email) {
     console.log(req.JWT.email,"hi")
     next()
   }

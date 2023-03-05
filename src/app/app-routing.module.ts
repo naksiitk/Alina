@@ -23,6 +23,8 @@ import { ClientAuthGuard } from './guards/client-auth.guard';
 import { AuditorAuthGuard } from './guards/auditor-auth.guard';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
 import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
+import { SignupPageAuditorComponent } from './components/login/signup-page-auditor/signup-page-auditor.component';
+import { ClientDetailsComponent } from './components/auditor_home/client-details/client-details.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -52,11 +54,13 @@ export const routes: Routes = [
       {path: 'itr/:id', component: ItrComponent},
       {path: 'gst/:id', component: ItrComponent},
       {path: 'tds/:id', component: ItrComponent},
+      {path: 'signup_auditor', component: SignupPageAuditorComponent},
       // {path: 'credentials', component: AuditorCredComponent},
       // {path: 'billing_history', component: AudBilingComponent},
       {path: 'ITR/client_tab/:id', component: ClientTabComponent },
       {path: 'GST/client_tab/:id', component: ClientTabComponent },
-      {path: 'TDS/client_tab/:id', component: ClientTabComponent }
+      {path: 'TDS/client_tab/:id', component: ClientTabComponent },
+      {path: 'client_details', component: ClientDetailsComponent }
     ]
   },
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
@@ -68,3 +72,4 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+ClientTabComponent

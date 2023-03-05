@@ -79,6 +79,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ContactUsComponent } from './components/home/contact-us/contact-us.component';
 import { LoaderComponent } from './components/loader/loader.component'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SignupPageAuditorComponent } from './components/login/signup-page-auditor/signup-page-auditor.component';
+import { ClientDetailsComponent } from './components/auditor_home/client-details/client-details.component';
+import { ClientAcceptanceComponent } from './components/auditor_home/client-acceptance/client-acceptance.component';
 // import { LoaderInterceptor } from './services/loader.interceptor';
 
 @NgModule({
@@ -122,7 +125,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     OneTimeFileUploadComponent,
     FilePreviewDialogComponent,
     ContactUsComponent,
-    LoaderComponent
+    LoaderComponent,
+    SignupPageAuditorComponent,
+    ClientDetailsComponent,
+    ClientAcceptanceComponent
   ],
   imports: [
     BrowserModule,

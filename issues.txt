@@ -1,26 +1,13 @@
-before 20
-****:Have different production and dev environment variables
-:Hide scroll bar and add sticky to nav-tool-bar also view height -Ashish
-**** Signup Frontend issue  
-****:Financial year from asked files to upload files - Reithick
-****:Badger in client front end. - Ashish
-****:Front Page of auditor
-****:Make Backend dump logs in a file on the server
-****:Make backend online again after crashing automatically
-
-:jsonwebtoken -> start from viewing the files -> get download differently. 
-****:Add link based onboarding and Filing
-****: Ask Multiple files, Add Multiple clients -> csv file, 
-****: Drafting two different emails for asking files and onboarding
-****: Add forgot PASSWORD
-****: Add signup link in login
+****: Client Details - > Reithick 
+****: Creating a client (Auditor Side) -> Reithick 
+****: Dashboard Changes -> Reithick 
+****: Accepting the client -> Ashish
+****: Ask file : Checkbox, username. -> Reithick
+**** : uploaded files through asking a file should in asked file.
+**** : Uploading issue in PWA and mobile browser. -> Reithick *priority. ** I think it will work now. 
 
 
-After 20
-: Client Details
-: Backend production and development variables
-: Contact Us - Auditor & as well us. 
-: GST and TDS auditor side
-:Change CSS ->PWA
-:Cleaning the codes - Both - Saturday.
-:Technical Documentation - Both Saturday
+: Contact Us - Auditor & as well us.  -> Reithick 
+: History system -> Later
+: Client and Auditor relation -> Ashish
+: One_time_uploaded : JWT and Qr code addition -> Ashish

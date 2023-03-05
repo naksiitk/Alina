@@ -14,6 +14,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     const localStorage =  this.injector.get(LocalStorageService)
     const apiUrl =  environment.apiUrl;
     this.loaderService.show();
+    // console.log(request)
     //console.log("intercepting")
     const new_request = request.clone({
       url: apiUrl + request.url,
