@@ -138,19 +138,18 @@ async Email_draft(data:any){
         let a : string = ''
         for(let index = 0; index < this.onlyfileName_array.length ; index++)
         {
-        
-        a = a + ", " + this.onlyfileName_array[index];
-        this.file_list.controls['filename'].setValue(this.onlyfileName_array[index])
-        this.api.post_file_asked(this.file_list.value)
-        .subscribe({
-        next:(res)=>{this._snackBar.open("Files Asked","OK", {
-          duration: 3000,
-        });
-        },
-        error:(err)=>{
-          this._snackBar.open(err.error.Status,"Contact Us", {
-            duration: 3000,
+          a = a + ", " + this.onlyfileName_array[index];
+          this.file_list.controls['filename'].setValue(this.onlyfileName_array[index])
+          this.api.post_file_asked(this.file_list.value)
+          .subscribe({
+          next:(res)=>{this._snackBar.open("Files Asked","OK", {
+            duration: 5000,
           });
+          },
+          error:(err)=>{
+            this._snackBar.open(err.error.message,"Contact Us", {
+              duration: 5000,
+            });
         }});
       }
       this.file_list.controls['filename'].setValue(a)

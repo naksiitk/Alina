@@ -63,7 +63,7 @@ router.post('/asked_files' , async(req,res)=>{
     try {  
         await client_doc_summary.updateOne(
             {email : req.body.email, purpose:req.body.purpose},
-            {unseen: 0, total : 1, user: userid},
+            {$inc : {unseen: 1, total : 1}, user: userid},
             {upsert:true}
         ).then(
             (result) => {

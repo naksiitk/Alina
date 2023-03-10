@@ -35,7 +35,7 @@ export class SignupPageAuditorComponent implements OnInit {
 
       this.signup_form = this.formbuilder.group({
         user_name : ['', Validators.required],
-        PAN : [''],
+        PAN : ['', Validators.required],
         password : ['', Validators.compose(
           [Validators.minLength(5), Validators.required])],
         retype_password : ['', Validators.compose(

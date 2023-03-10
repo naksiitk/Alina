@@ -20,6 +20,7 @@ export class AskDialogComponent implements OnInit{
   date = new Date(Date.now()).toLocaleString('en-GB').split(',')[0];
   formData = new FormData();
   
+  edit_file_yes = 0;
   purpose_list = ["GST", "ITR", "TDS"];
   file_list !: FormGroup;
   actionBtn : string = "Ask";
@@ -49,6 +50,7 @@ export class AskDialogComponent implements OnInit{
       this.actionBtn = "Upload";
       if(this.editdata.from_asked_dialog_box == 1){
         this.files_asked_upload=1;
+
       this.file_list.controls['filename'].setValue(this.editdata.filename);
       this.file_list.controls['purpose'].setValue(this.editdata.purpose);
       this.file_list.controls['comments'].setValue(this.editdata.comments);

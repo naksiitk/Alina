@@ -78,7 +78,11 @@ export class ItrComponent implements OnInit {
       {
         width : '30em', 
         data: {'purpose_selected' : this.id}
-      }) 
+      }).afterClosed().subscribe(val => {
+        if(val === 'save'){
+          this.getclients();
+        }
+      })
   }
 
   ask_file(){
@@ -86,6 +90,10 @@ export class ItrComponent implements OnInit {
       {
         width : '30em', 
         data: {'purpose_selected' : this.id}
-      }) 
+      }).afterClosed().subscribe(val => {
+        if(val === 'save'){
+          this.getclients();
+        }
+      })
   }
 }

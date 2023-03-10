@@ -133,7 +133,7 @@ exports.sendOTP_mail = async (req) => {
         <div style="color:#000000;font-size:14px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:16.8px;">
         <p style="margin: 0; margin-bottom: 16px;">Dear Sir/Madam,</p>
         <p style="margin: 0; margin-bottom: 16px;">Welcome from Arasuaudit</p>
-        <p style="margin: 0;"><br/>This mail is in reference to the on-boarding in the Alina platform.<br/>Your One Time Password (OTP) is <strong>${req.OTP}</strong>. This password is valid for 10 minutes. On expiry, kindly regenerate the OTP.<br/><br/>Note: In case you have not generated this OTP, please contact us on info_spot1@silversoft.business.<br/><br/>This is a system generated mail. </p>
+        <p style="margin: 0;"><br/>This mail is in reference to the on-boarding by the client of Arasuaudit powered by Alina FMS.<br/>Your One Time Password (OTP) is <strong>${req.OTP}</strong>. This password is valid for 10 minutes. On expiry, kindly regenerate the OTP.<br/><br/>Note: In case you have not generated this OTP, please contact us on info_spot1@silversoft.business.<br/><br/>This is a system generated mail. </p>
         </div>
         </td>
         </tr>
@@ -154,7 +154,6 @@ exports.sendOTP_mail = async (req) => {
         <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tr>
         <td class="pad" style="width:100%;text-align:center;">
-        <h1 style="margin: 0; color: #555555; font-size: 23px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder"><a href="silversoft.business" rel="noopener" style="text-decoration: none; color: #e01253;" target="_blank">Silversoft.business</a></span></h1>
         </td>
         </tr>
         </table>
@@ -220,7 +219,7 @@ exports.onboard_mail = async (req) => {
   var mailOptions = {
       from: 'noreply@silversoft.business',
       to: req.to,
-      subject: 'Signin - Alina FMS from Arasuaudit',
+      subject: 'Signin - Arasuaudit',
       html: `
               <head>
       <title></title>
@@ -328,7 +327,7 @@ exports.onboard_mail = async (req) => {
       <div style="color:#000000;font-size:14px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:16.8px;">
       <p style="margin: 0; margin-bottom: 16px;">Dear Sir/Madam,</p>
       <p style="margin: 0; margin-bottom: 16px;">Welcome from Arasuaudit</p>
-      <p style="margin: 0;"><br/>This mail is in reference to the on-boarding in the Alina FMS.<br/> It is a hassle free file management platform exclusively for the auditors and their clients. As per your Auditors request, Kindly sign-in using the link below <br/> <strong> <a style="text-align:center;" href="silversoft.business/signup"> silversoft.business/signup </a> </strong> <br/>
+      <p style="margin: 0;"><br/>This mail is in reference to the on-boarding powered by Alina FMS.<br/> It is a hassle free file management platform exclusively for the auditors and their clients. As per your Auditors request, Kindly sign-in using the link below <br/> <strong> <a style="text-align:center;" href="silversoft.business/signup"> arasuaudit/signup </a> </strong> <br/>
       <br/>Note: if you feel it is a cold call, please contact us on info_spot1@silversoft.business.<br/><br/>This is a system generated mail on behalf of Arasuaudit. </p>
       </div>
       </td>
@@ -350,7 +349,6 @@ exports.onboard_mail = async (req) => {
       <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
       <tr>
       <td class="pad" style="width:100%;text-align:center;">
-      <h1 style="margin: 0; color: #555555; font-size: 23px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder"><a href="silversoft.business" rel="noopener" style="text-decoration: none; color: #e01253;" target="_blank">Silversoft.business</a></span></h1>
       </td>
       </tr>
       </table>
@@ -524,7 +522,7 @@ exports.verified_mail = async (req) => {
       <div style="color:#000000;font-size:14px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:16.8px;">
       <p style="margin: 0; margin-bottom: 16px;">Dear Sir/Madam,</p>
       <p style="margin: 0; margin-bottom: 16px;">Welcome from Arasuaudit</p>
-      <p style="margin: 0;"><br/>This mail is in reference to the verification of your Account By your auditor- Arasuaudit in the Alina FMS.<br/>. The account is  <br/> <strong>Verified</strong> <br/>
+      <p style="margin: 0;"><br/>This mail is in reference to the verification of your Account By your auditor- Arasuaudit powewred by Alina FMS.<br/>. The account is <strong>Verified</strong>
       <br/>Note: If you feel it is a cold call, please contact us on info_spot1@silversoft.business.<br/><br/>This is a system generated mail on behalf of Arasuaudit. </p>
       </div>
       </td>
@@ -546,7 +544,6 @@ exports.verified_mail = async (req) => {
       <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
       <tr>
       <td class="pad" style="width:100%;text-align:center;">
-      <h1 style="margin: 0; color: #555555; font-size: 23px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder"><a href="silversoft.business" rel="noopener" style="text-decoration: none; color: #e01253;" target="_blank">Silversoft.business</a></span></h1>
       </td>
       </tr>
       </table>
@@ -721,7 +718,7 @@ exports.delete_mail = async (req) => {
       <div style="color:#000000;font-size:14px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:16.8px;">
       <p style="margin: 0; margin-bottom: 16px;">Dear Sir/Madam,</p>
       <p style="margin: 0; margin-bottom: 16px;">Welcome from Arasuaudit</p>
-      <p style="margin: 0;"><br/>This mail is in reference to the verification of your Account By your auditor- Arasuaudit in the Alina FMS.<br/>. The account is <br/> <strong>Deleted</strong> <br/>
+      <p style="margin: 0;"><br/>This mail is in reference to the verification of your Account By your auditor- Arasuaudit powered by Alina FMS.<br/>. The account is <strong>Deleted</strong>.
       <br/>Note: Kindly contact your Auditor, for further cllarifications. If you feel it is a cold call, please contact us on info_spot1@silversoft.business.<br/><br/>This is a system generated mail on behalf of Arasuaudit. </p>
       </div>
       </td>
@@ -743,7 +740,6 @@ exports.delete_mail = async (req) => {
       <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
       <tr>
       <td class="pad" style="width:100%;text-align:center;">
-      <h1 style="margin: 0; color: #555555; font-size: 23px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder"><a href="silversoft.business" rel="noopener" style="text-decoration: none; color: #e01253;" target="_blank">Silversoft.business</a></span></h1>
       </td>
       </tr>
       </table>
@@ -918,13 +914,13 @@ exports.ask_mail = async (req,res) => {
       <div style="color:#000000;font-size:14px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:16.8px;">
       <p style="margin: 0; margin-bottom: 16px;">Dear Sir/Madam,</p>
       <p style="margin: 0; margin-bottom: 16px;">Greetings from Arasuaudit</p>
-      <p style="margin: 0;"><br/>The following Comments were provided while asking a file: <br/>
+      <p style="margin: 0;"><br/>The following Comments were provided while asking a file: <br/><br/>
       File name : ${req.filename} <br/>
       FY : ${req.fy} <br/>
       Purpose : ${req.purpose} <br/>
-      Comments : ${req.comments}<br/>
-      To Upload the necessary files, login to the <a href="silversoft.business"> silversoft.business </a> under <strong> files asked by your auditor </strong> click on Upload and Upload it. <br/>
-      This is mail is from Arasuaudit.
+      Comments : ${req.comments}<br/><br/>
+      To Upload the necessary files, login to the <a href="arasuaudit.com"> arasuaudit.com </a> under <strong> files asked by your auditor </strong> click on Upload and Upload it. <br/>
+      This mail is from Arasuaudit.
       </p>
       </div>
       </td>
@@ -946,7 +942,6 @@ exports.ask_mail = async (req,res) => {
       <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
       <tr>
       <td class="pad" style="width:100%;text-align:center;">
-      <h1 style="margin: 0; color: #555555; font-size: 23px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder"><a href="silversoft.business" rel="noopener" style="text-decoration: none; color: #e01253;" target="_blank">Silversoft.business</a></span></h1>
       </td>
       </tr>
       </table>
@@ -1133,7 +1128,7 @@ exports.reminder_mail = async (req,res) => {
       Purpose : ${req.purpose} <br/>
       Comments : ${req.comments}<br/>
       <br/>
-      To Upload the necessary files, login to the <a href="silversoft.business"> silversoft.business </a> under <strong> files asked by your auditor </strong> click on Upload and Upload it. <br/>
+      To Upload the necessary files, login to the <a href="arasuaudit.com"> arasuaudit.com </a> under <strong> files asked by your auditor </strong> click on Upload and Upload it. <br/>
       This mail is from Alina on behalf of Arasuaudit. Do not reply to this mail.
       </p>
       </div>
@@ -1156,7 +1151,6 @@ exports.reminder_mail = async (req,res) => {
       <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
       <tr>
       <td class="pad" style="width:100%;text-align:center;">
-      <h1 style="margin: 0; color: #555555; font-size: 23px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder"><a href="silversoft.business" rel="noopener" style="text-decoration: none; color: #e01253;" target="_blank">Silversoft.business</a></span></h1>
       </td>
       </tr>
       </table>

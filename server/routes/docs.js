@@ -55,7 +55,7 @@ router.get('/client_list/:id' , async (req,res)=>{
 //Getting docs based on purpose
 router.post('/purpose' , async (req,res)=>{
     try {
-        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose}).sort({$natural:-1})
+        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose}).sort({$natural:1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -157,7 +157,7 @@ router.post('/post' , upload.array("files"),async(req,res)=>{
             PAN : userPAN,
             seen : false,
             user : userid,
-            lock : false,
+            lock : true,
         })
 
         await client_doc_summary.updateOne(
@@ -389,14 +389,7 @@ router.put('/update/:id' ,upload.array("files"),getDoc, async(req,res)=>{
                 res.doc.files_uploaded= files_uploads
             }
             console.log(res.doc.files_uploaded)
-            const newDoc = await res.doc.save().then(
-                (result) => {
-                    console.log({result}); // Log the result of 50 Pokemons
-                },
-                (error) => {
-                    // As the URL is a valid one, this will not be called.
-                    return res.status(400).json({Status: error.message}) // Log an error
-                });
+            await res.doc.save()
             res.status(201).json({message:'Updated Successfully'})
         } catch (error) {
             res.status(400).json({message: error.message})
@@ -529,6 +522,19 @@ async function getaskedfiles(req,res, next)
     res.doc = doc
     next()
 }
+
+router.delete('/client_doc_summary/delete/:id',  async(req,res)=>{
+    try {
+        await client_doc_summary.deleteOne({_id: req.params.id}, function (err, _) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+        res.status(200).json({message:'Deleted Successfully'});
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
 
 const JWT = require('jsonwebtoken')
 

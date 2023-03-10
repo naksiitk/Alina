@@ -1,5 +1,5 @@
-@apiUrl = http://localhost:8000
-# @apiUrl = https://silversoft.business/api
+#@apiUrl = http://localhost:8000
+@apiUrl = https://silversoft.business/api
 
 @JWT = 
 
@@ -13,10 +13,15 @@ GET {{apiUrl}}/doc/client_list/ITR
 
 ###
 
+DELETE {{apiUrl}}/doc/client_doc_summary/delete/64065a72c3e763107c0f57ad
+
+
+###
+
 PUT http://localhost:8000/doc/client_summary/seen/6403338e88883611f50372b1
 ###
 
-GET http://localhost:8000/user/client_doc_summary
+
 GET {{apiUrl}}/user/client_doc_summary
 
 ###
@@ -84,4 +89,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/asked_files/asked_files
+GET {{apiUrl}}/asked_files/asked_files

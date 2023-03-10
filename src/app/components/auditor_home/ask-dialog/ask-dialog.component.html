@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Ask for a file</h1>
 <div mat-dialog-content>
     <form [formGroup] = "file_list">
-        <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-form-field *ngIf="files_asked_upload==0" appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>The File Related to</mat-label>
             <mat-select formControlName="purpose" placeholder="Purpose File Related to">
                 <mat-option value="GST">GST</mat-option>
@@ -10,26 +10,26 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-form-field *ngIf="files_asked_upload==0"  appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>File Name to be asked</mat-label>
             <input formControlName="filename" matInput placeholder="Provide File Name">
           </mat-form-field>
 
-        <mat-form-field *ngIf="!(file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-form-field *ngIf="files_asked_upload==0 && !(file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>Financial Year</mat-label>
             <mat-select formControlName="fy" placeholder="F.Y">
                 <mat-option *ngFor="let year of years" [value]="year">{{ year }} </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST'" appearance="outline" style="margin-top: 1%; width: 56%; margin-right: 1%;">
+        <mat-form-field *ngIf="files_asked_upload==0 && file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST'" appearance="outline" style="margin-top: 1%; width: 56%; margin-right: 1%;">
             <mat-label>Financial Year</mat-label>
             <mat-select formControlName="fy" placeholder="F.Y"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option *ngFor="let year of years" [value]="year">{{ year }} </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="file_list.value.purpose == 'TDS' " appearance="outline" style="width: 40%;">
+        <mat-form-field *ngIf="files_asked_upload==0 && file_list.value.purpose == 'TDS' " appearance="outline" style="width: 40%;">
             <mat-label>Quarter</mat-label>
             <mat-select formControlName="month_quarter" placeholder="Quarter"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option value="Q1">Q1</mat-option>
@@ -39,7 +39,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="file_list.value.purpose == 'GST' " appearance="outline" style=" width: 40%;">
+        <mat-form-field *ngIf="files_asked_upload==0 && file_list.value.purpose == 'GST' " appearance="outline" style=" width: 40%;">
             <mat-label>Month</mat-label>
             <mat-select formControlName="month_quarter" placeholder="Month"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option value="Apr">Apr</mat-option>
@@ -55,7 +55,7 @@
                 <mat-option value="Mar">Mar</mat-option>
             </mat-select>
         </mat-form-field>
-          <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
+          <mat-form-field appearance="outline" style="margin-top: 1%; width: 53vh!important;">
               <mat-label>Comments</mat-label>
               <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
               </mat-form-field>

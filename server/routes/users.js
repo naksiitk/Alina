@@ -102,8 +102,22 @@ router.post('/', async (req, res) =>{
 })
 
 //Updating one
-router.patch('/:id', getUser, (req, res) =>{
-    
+router.patch('/:id', getUser, async(req, res) =>{
+    res.user.email =  req.body.email, 
+    res.user.mobile = req.body.mobile,
+    res.user.user_name =  req.body.user_name,
+    res.user.user_type = req.body.user_type,
+    res.user.PAN = req.body.PAN,
+    res.user.company_name =  req.body.user_name
+    const newDoc = await res.user.save().then(
+        (result) => {
+            console.log({result}); // Log the result of 50 Pokemons
+        },
+        (error) => {
+            // As the URL is a valid one, this will not be called.
+            return res.status(400).json({Status: error.message}) // Log an error
+        });
+
 })
 
 //Deleting one

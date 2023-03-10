@@ -70,7 +70,7 @@ export class AskFileItrComponent implements OnInit {
         data:row
       }).afterClosed().subscribe(val => {
         if(val === 'save'){
-          this.getAllfiles();
+          this.getAllaskedfiles();
           //this.deletefile(row);
         }
       })

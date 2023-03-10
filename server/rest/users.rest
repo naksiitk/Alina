@@ -1,4 +1,4 @@
-# @apiUrl = http://localhost:8000
+#@apiUrl = http://localhost:8000
 @apiUrl = https://silversoft.business/api
 
 @JWT = 
@@ -83,3 +83,17 @@ Content-Type: application/json
 ###
 
 GET {{apiUrl}}/user/onboarding/reithick@gmail.com
+
+###
+
+
+PATCH  {{apiUrl}}/user/640308a164de55aa2c034fee
+Content-Type: application/json
+
+{
+    "email": "agrotop.india@gmail.com",
+    "mobile": "9585606369",
+    "user_name": "agrotop farm equipment private limited",
+    "user_type": "client",
+    "PAN": "AAHCS3132M"
+}
