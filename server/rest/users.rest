@@ -1,5 +1,5 @@
-#@apiUrl = http://localhost:8000
-@apiUrl = https://silversoft.business/api
+@apiUrl = http://localhost:8000
+# @apiUrl = https://silversoft.business/api
 
 @JWT = 
 
@@ -19,8 +19,8 @@ POST {{apiUrl}}/user
 Content-Type: application/json
 
 {
-    "email": "arasuaudit@gmail.com",
-    "password": "qwerty99",
+    "email": "auditor",
+    "password": "123123123",
     "mobile": "9443245889",
     "user_name": "Anbarasu",
     "user_type": "auditor",
@@ -33,8 +33,8 @@ POST {{apiUrl}}/user/login
 Content-Type: application/json
 
 {
-    "email": "1",
-    "password": "1"
+    "email": "auditor",
+    "password": "123123123"
 }
 
 ###

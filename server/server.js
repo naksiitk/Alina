@@ -70,6 +70,8 @@ app.listen(8000, () => console.log('Server Started'))
 /////////////////////////////////////////////////////////////////////
 /////// Error Handling MiddleWare
 
+const createError = require('http-errors');
+
 // 404 Handler
 app.use((req, res, next) => {
     next(createError(404));

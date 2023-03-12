@@ -197,6 +197,8 @@ async Email_draft(data:any){
   onlyfileName_array : string[] = [];
   add_filename(){
     console.log(this.file_list.value.filename)
+    if(this.file_list.value.filename == '') return 
+    
     this.fileName_array.push({'filenames':this.file_list.value.filename});
     this.onlyfileName_array.push(this.file_list.value.filename)
     this.inputValue = "";

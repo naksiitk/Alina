@@ -8,7 +8,7 @@ const unlinkfile = util.promisify(fs.unlink);
 const docs = require('../models/docs')
 
 const multer = require("multer")
-const { uploadfile, getfile, deletefile, copyfile } = require('../services/s3')
+const { uploadfile, getfile, getzippedfiles, deletefile, copyfile } = require('../services/s3')
 
 
 const storage = multer.diskStorage({
@@ -69,6 +69,21 @@ router.get("/images/:id/key/:key",[OpenJWT, getDoc, Access ], async(req,res) =>{
     return res.status(500).json({message: error.message})
   }
 })
+
+router.get("/download/zip/:id",[OpenJWT, getDoc, Access ], async(req,res) =>{
+  try {
+  const user = await users.findOne({email: res.doc.email})
+  let name = user.user_name + "_" + user.PAN[0];
+    name = name.split("/")[0];
+    let folder = res.doc.fy +"/" + res.doc.purpose +"/" 
+        + name +"/" + res.doc.filename;
+    const result = await getzippedfiles({folder: folder, files_array : res.doc.files_uploaded});
+    result.pipe(res);
+  } catch (error) {
+    return res.status(500).json({message: error.message})
+  }
+})
+
 router.get("/mobile/images/:id/key/:key",[getDoc], async(req,res) =>{
   try {
     const user = await users.findOne({email: res.doc.email})
@@ -154,12 +169,12 @@ function OpenJWT(req, res, next) {
 async function Access(req, res, next) {
   if(req.JWT.email == res.doc.email) {
     console.log(req.JWT.email,"hi")
-    next()
+    return next()
   }
   else {
     const user = await users.findOne({email: req.JWT.email})
     if(user.user_type == 'auditor') {
-      next()
+      return next()
     }
     else return res.status(403).json({'message' : 'Hello Access Denied, Invalid JWT'})
   }

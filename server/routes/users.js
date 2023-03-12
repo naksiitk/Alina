@@ -81,7 +81,8 @@ router.post('/', async (req, res) =>{
             user_name: req.body.user_name,
             user_type: req.body.user_type,
             PAN: req.body.PAN,
-            company_name: req.body.user_name
+            company_name: req.body.user_name,
+            verified: false
         })
         
         const newUser = await user.save();

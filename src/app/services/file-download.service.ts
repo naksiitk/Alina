@@ -56,8 +56,30 @@ export class FileDownloadService {
     return this.http.get<Blob>(doc_url, { responseType: 'blob' as 'json' })
   }
 
+  downloadZip(id : string){
+    this.getZip(id)
+    .subscribe(resultBlob => 
+      {
+        //Success
+        console.log('start download:', resultBlob);
+        var blob = new Blob([resultBlob]);
+        saveAs(blob, id + '.zip');
+        
+      },
+    error => {
+      //Error
+      this._snackBar.open(error.message,"Contact Us", {
+        duration: 3000,
+      });
+    });
+  }
 
-  public getFileBlob(id : string, files_uploaded : string) {
+  getZip(id : string): Observable<Blob> {
+    const doc_url = "/docs_upload/download/zip/" + id
+    return this.http.get<Blob>(doc_url, { responseType: 'blob' as 'json' })
+  }
+
+  getFileBlob(id : string, files_uploaded : string) {
     const doc_url =  "/docs_upload/images/" + id  + "/key/" + files_uploaded
 
     var subject = new Subject<Blob>();

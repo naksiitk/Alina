@@ -19,6 +19,7 @@ export class FilesShowDialogComponent implements OnInit{
   doc_url = ''
   fileName_array : any[] = [];
   JWT = this.localStorage.getJWT()
+ 
 
   backend_route = environment.apiUrl;
   Breakpoints = Breakpoints;
@@ -108,5 +109,9 @@ export class FilesShowDialogComponent implements OnInit{
 
   downloadFile(fy : string, email : string, files_uploaded : string) {
     this.fileDownloadService.downloadFile(this.filesdata._id, files_uploaded)
+  }
+
+  downloadZip() {
+    this.fileDownloadService.downloadZip(this.filesdata._id)
   }
 }

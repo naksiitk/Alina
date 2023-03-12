@@ -79,7 +79,7 @@
                             </mat-form-field>
                             <span *ngIf="!pass"> <p style="color: red;"> please type correct password </p>   </span> 
                         <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button  (click)="Otp_generation()">Next</button>
+                        <button mat-button  (click)="Otp_generation('OTP GENERATED')">Next</button>
                     </form> 
                       
                     </ng-template>
@@ -100,7 +100,8 @@
                                 <ng-otp-input   formControlName="otp_phone" [config]="{length:5}"></ng-otp-input> -->
                             </form>
                                 <br>
-                            <button mat-button (click)="Otp_verification()">Next</button>
+                                <button mat-button (click)="Otp_generation('New OTP GENERATED')">Resend</button>
+                                <button mat-button (click)="Otp_verification()">Next</button>
                         </ng-template>
                         </mat-step>
                     <mat-step>

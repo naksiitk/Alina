@@ -1,6 +1,7 @@
 require('dotenv');
 const S3 = require('aws-sdk/clients/s3');
 const fs = require('fs')
+const s3Zip = require('s3-zip')
 
 const bucketName = process.env.AWS_S3
 const region = process.env.AWS_region
@@ -27,12 +28,29 @@ module.exports.getfile = async(req) => {
     try{
     const downloadParams = {
         Key : req.fileKey,
-        Bucket : bucketName,
+        Bucket : bucketName
     }
     return s3.getObject(downloadParams).createReadStream();
     }
     catch{
         return "cannot download file";
+    }
+
+};
+
+module.exports.getzippedfiles = async(req) => {
+
+    try{
+    const downloadParams = {
+        s3: s3,
+        bucket: bucketName,
+        debug: true
+    }
+    return s3Zip.archive(downloadParams, req.folder, req.files_array)
+    }
+    catch (err) {
+        console.log(err)
+        return "cannot download the zip";
     }
 
 };

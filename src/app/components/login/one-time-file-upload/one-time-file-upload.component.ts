@@ -144,14 +144,14 @@ export class OneTimeFileUploadComponent implements OnInit {
       }
     }      
   }
-  Otp_generation(){
+  Otp_generation(snackbar_msg : string){
     {
       if(this.signup_form.valid){
         console.log(this.signup_form.value)
         this.api_auth.generate_otp({"email":this.signup_form.value.email})
         .subscribe({
           next:(res)=>{
-            this._snackBar.open('OTP GENERATED', 'HURRAH !!!!!', {
+            this._snackBar.open(snackbar_msg, 'HURRAH !!!!!', {
               duration: 2000,
             });  
           this.otp_verified = 1;         
