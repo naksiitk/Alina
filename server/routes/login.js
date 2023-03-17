@@ -9,12 +9,13 @@ router.post('/', async (req, res) =>{
     const user = await User.findOne({email: req.body.email})
 
     if (user == null) {
-        return res.status(404).json({status : "404"}) // email not found
+        return res.status(404).json({message : "Email Not Found"}) // email not found
     }
-    if(user.verify == false && user.email != "arasaudit@gmail.com")
+    if(user.verified == false && user.email != "arasaudit@gmail.com")
     {
-        return res.status(500).json({status : "Not verified by your Auditor"})
+        return res.status(500).json({message : "Not verified by your Auditor"})
     }
+    console.log(user.verified)
 
     try{
         if (await bcrypt.compare(req.body.password, user.password)) {
@@ -29,7 +30,7 @@ router.post('/', async (req, res) =>{
             }) // password correct
         }
         else {
-            res.status(400).json({status : "400"}) // password incorrect
+            res.status(400).json({message : "Incorrect Credentials"}) // password incorrect
         }
     } catch (err) {
         res.status(500).json({ message: err.message})

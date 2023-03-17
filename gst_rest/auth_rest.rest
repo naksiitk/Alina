@@ -1,0 +1,4 @@
+###
+
+GET https://gstsandbox.charteredinfo.com/taxpayerapi/dec/v1.0/authenticate?action=OTPREQUEST&aspid=1720553323&password=Reithick@1&gstin=33AANCS2882A1ZG&username=TN_NT2.2265
+

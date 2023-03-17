@@ -77,6 +77,7 @@ export class ItrComponent implements OnInit {
     this.dialog.open(UploadFileDashboardComponent,
       {
         width : '30em', 
+        // height : '95vh',
         data: {'purpose_selected' : this.id}
       }).afterClosed().subscribe(val => {
         if(val === 'save'){

@@ -10,27 +10,43 @@
         <mat-tab label="Files Uploaded">
             <mat-card class="card-inside-tab">
                 <mat-card-header>
-                  <!-- <div mat-card-avatar class="example-header-image"></div> -->
-                  <!-- <mat-card-title>Files Uploaded</mat-card-title> -->
-                  <mat-card-subtitle>These are the files uploaded by the client</mat-card-subtitle>
-
+                  <!-- <mat-card-subtitle>These are the files uploaded by the client</mat-card-subtitle> -->
                 </mat-card-header>
 
                 <mat-card-content>
+                  <mat-accordion>   
+                    <mat-expansion-panel [expanded]= true>
+                      <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Files Uploaded 
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
                     <app-files-uploaded-itr [childToMaster]=this.id></app-files-uploaded-itr>
-                </mat-card-content>
+                
+                  </mat-expansion-panel>
+
+                  <mat-expansion-panel style="margin-top: 2%;"   >
+                    <mat-expansion-panel-header style="margin-bottom: 0.6%;" >
+                    <mat-panel-title style="margin-top: 0.9%;"  >
+                      Files yet to be uploaded by Client
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <app-ask-file-itr [childToMaster]=this.id ></app-ask-file-itr>
+                </mat-expansion-panel>
+    
+              </mat-accordion> 
+                  </mat-card-content>
 
                 <mat-card-actions align="start">
-                    <!-- --- Edit or Delte Action Comes Here --- -->
+                   
                 </mat-card-actions>
             </mat-card>
         </mat-tab>
 
-        <mat-tab label="Filed Asked">
+        <!-- <mat-tab label="Filed Asked">
             <mat-card class="card-inside-tab">
               <mat-card-header>
-                <!-- <div mat-card-avatar class="example-header-image"></div> -->
-                <!-- <mat-card-title>Files Uploaded</mat-card-title> -->
+               
                 <mat-card-subtitle>Files to be asked to the client</mat-card-subtitle>
 
               </mat-card-header>
@@ -40,10 +56,10 @@
               </mat-card-content>
 
               <mat-card-actions align="start">
-                  <!-- --- Edit or Delte Action Comes Here --- -->
+                  
               </mat-card-actions>
           </mat-card>
-        </mat-tab>
+        </mat-tab> -->
 
         <mat-tab *ngIf="current_finish==0" label="Returns Uploaded">
             <mat-card class="card-inside-tab">

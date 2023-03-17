@@ -70,8 +70,9 @@ export class AuthService {
               }); 
           }
         },
-    error:()=>{
-      this._snackBar.open('INCORRECT CREDENTIALS', 'TRY AGAIN !!!!!', {
+    error:(err)=>{
+      // console.log(err.error.message)
+      this._snackBar.open(err.error.message, 'TRY AGAIN !!!!!', {
         duration: 2000,
       }); 
     }

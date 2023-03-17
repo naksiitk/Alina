@@ -26,16 +26,16 @@ const storage = multer.diskStorage({
 //Getting All
 router.get('/' , async (req,res)=>{
     try {
-        const doc_list = await docs.find().limit(1).sort({$natural:-1})
+        const doc_list = await docs.find().sort({$natural:-1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 })
-//Getting One
+//Getting One All For clients side
 router.get('/:id' , async (req,res)=>{
     try {
-        const doc_list = await docs.find({email : req.params.id}).sort({$natural:-1})
+        const doc_list = await docs.find({email : req.params.id, asked:false}).sort({$natural:-1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -52,10 +52,10 @@ router.get('/client_list/:id' , async (req,res)=>{
 })
 
 
-//Getting docs based on purpose
+//Getting docs based on purpose and files uploaded is []
 router.post('/purpose' , async (req,res)=>{
     try {
-        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose}).sort({$natural:1})
+        const doc_list = await docs.find({email : req.body.email, purpose : req.body.purpose, 'files_uploaded': {$ne : []}}).sort({seen:1, updatedAt:-1})
         res.json(doc_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -86,6 +86,7 @@ router.post('/' , async(req,res)=>{
         seen : false,
         user : userid,
         lock : false,
+        asked : false
     })
 
     await client_doc_summary.updateOne(
@@ -158,6 +159,7 @@ router.post('/post' , upload.array("files"),async(req,res)=>{
             seen : false,
             user : userid,
             lock : true,
+            asked : false
         })
 
         await client_doc_summary.updateOne(
@@ -189,7 +191,7 @@ router.post('/post' , upload.array("files"),async(req,res)=>{
 })
 
 //Posting asked files
-router.post('/post_asked/:id' , [upload.array("files"),getaskedfiles],async(req,res)=>{
+router.post('/post_asked/:id' , [upload.array("files"),getDoc],async(req,res)=>{
     let userPAN
     let userid
     try {
@@ -230,17 +232,19 @@ router.post('/post_asked/:id' , [upload.array("files"),getaskedfiles],async(req,
             });
             }
         }        
-        res.doc.filename =req.body.filename,
-        res.doc.fy= req.body.fy,
-        res.doc.month_quarter= req.body.month_quarter,
-        res.doc.uploadedat= req.body.uploadedat,
-        res.doc.purpose= req.body.purpose,
-        res.doc.comments= req.body.comments,
-        res.doc.files_uploaded= files_uploads,
-        res.doc.email = req.body.email,
-        res.doc.PAN = userPAN,
-        res.doc.user = userid,
-        
+        res.doc.filename =req.body.filename;
+        res.doc.fy= req.body.fy;
+        res.doc.month_quarter= req.body.month_quarter;
+        res.doc.uploadedat= req.body.uploadedat;
+        res.doc.purpose= req.body.purpose;
+        res.doc.comments= req.body.comments;
+        res.doc.files_uploaded= files_uploads;
+        res.doc.email = req.body.email;
+        res.doc.PAN = userPAN;
+        res.doc.user = userid;
+        res.doc.asked = true;
+        res.doc.seen = false;
+        res.doc.loc = true
         await client_doc_summary.updateOne(
             {email : req.body.email, purpose:req.body.purpose},
             {$inc : {unseen: 1, total : 1}, user: userid},
@@ -478,16 +482,37 @@ router.delete('/:id' , [OpenJWT, getDoc, Access ], async(req,res)=>{
         res.status(500).json({message: error.message})
     }
 })
-//Delete All
-router.delete('/', async(req,res)=>{
+
+//Delete Client Doc Summary
+router.get('/client_doc_summary_delete/delete/:id' , async(req,res)=>{
     try {
-        await docs.deleteMany();
-        await client_doc_summary.deleteMany();
+        
+        let doc = client_doc_summary.findById(req.params.id)
+        await doc.remove().then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+            });
+        //res.json(result);
         res.status(200).json({message:'Deleted Successfully'});
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 })
+
+//Delete All
+// router.delete('/', async(req,res)=>{
+//     try {
+//         await docs.deleteMany();
+//         await client_doc_summary.deleteMany();
+//         res.status(200).json({message:'Deleted Successfully'});
+//     } catch (error) {
+//         res.status(500).json({message: error.message})
+//     }
+// })
 
 async function getDoc(req,res, next)
 {
@@ -565,4 +590,85 @@ async function Access(req, res, next) {
       else return res.status(403).json({'message' : 'Hello Access Denied, Invalid JWT'})
     }
   }
+
+
+//Transferring Asked Files Field to DOC  with field docs added
+router.get('/post_asked/from_asked_to_doc/id/1' , async(req,res)=>{
+    let userPAN
+    let userid
+    let asked_files_id;
+    try {
+        
+        asked_files_id = await asked_files.find()
+        console.log(asked_files_id.length)
+        for (let index = 0; index < asked_files_id.length; index++) {
+            let doc;
+            doc = asked_files_id[index]
+            //console.log(asked_files[index])
+            let clients_list = new docs({
+                filename : doc.filename,
+                fy: doc.fy,
+                month_quarter: doc.month_quarter,
+                purpose: doc.purpose,
+                comments: doc.comments,
+                files_uploaded: doc.files_uploaded,
+                email : doc.email,
+                PAN : doc.PAN ,               
+                seen : true,
+                user : doc.user,               
+                lock : false,
+                asked : true,
+            })
+            await clients_list.save().then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+            });
+        
+        }
+       
+        res.status(201).json({message:'Updated Successfully'})
+    } catch (error) {
+        return res.status(400).json({Status: error.message})
+}
+})
+
+
+//Adding asked field
+router.get('/post_asked/from_asked_to_doc/id/2' , async(req,res)=>{
+    let userPAN
+    let userid
+    let asked_files_id;
+    try {
+        
+        asked_files_id = await docs.find()
+        console.log(asked_files_id.length)
+        for (let index = 0; index < asked_files_id.length; index++) {
+            let doc;
+            doc = asked_files_id[index]
+            //console.log(asked_files[index])
+            doc.asked = false;
+            
+            await doc.save().then(
+            (result) => {
+                console.log({result}); // Log the result of 50 Pokemons
+            },
+            (error) => {
+                // As the URL is a valid one, this will not be called.
+                return res.status(400).json({Status: error.message}) // Log an error
+            });
+        
+        }
+       
+        res.status(201).json({message:'Updated Successfully'})
+    } catch (error) {
+        return res.status(400).json({Status: error.message})
+}
+})
+
+
+
 module.exports = router

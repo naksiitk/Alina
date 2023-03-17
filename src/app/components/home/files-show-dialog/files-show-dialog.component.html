@@ -1,5 +1,5 @@
-<div *ngIf="current_break_point==0" align="center">
-    <table mat-table [dataSource]="dataSource" matSort>
+<div  *ngIf="current_break_point==0" align="center">
+    <table mat-table [dataSource]="dataSource" >
         
         <ng-container matColumnDef="files_uploaded">
             <th mat-header-cell *matHeaderCellDef> Files Uploaded </th>
@@ -27,7 +27,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
-
+    <mat-paginator style="margin-bottom: 2%;" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </div>
 
 <div *ngIf="current_break_point==1" align="center">
@@ -55,7 +55,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns_mobile;"></tr>
 
     </table>
-
+    <mat-paginator style="margin-bottom: 2%;" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </div>
 
 

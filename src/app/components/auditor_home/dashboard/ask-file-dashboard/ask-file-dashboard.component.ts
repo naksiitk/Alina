@@ -147,7 +147,7 @@ async Email_draft(data:any){
           });
           },
           error:(err)=>{
-            this._snackBar.open(err.error.message,"Contact Us", {
+            return this._snackBar.open(err.error.message,"Contact Us", {
               duration: 5000,
             });
         }});

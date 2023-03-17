@@ -22,7 +22,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="files_asked_upload==0 && file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST'" appearance="outline" style="margin-top: 1%; width: 56%; margin-right: 1%;">
+        <mat-form-field *ngIf="files_asked_upload==0 && (file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 56%; margin-right: 1%;">
             <mat-label>Financial Year</mat-label>
             <mat-select formControlName="fy" placeholder="F.Y"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option *ngFor="let year of years" [value]="year">{{ year }} </mat-option>
@@ -55,17 +55,18 @@
                 <mat-option value="Mar">Mar</mat-option>
             </mat-select>
         </mat-form-field>
-          <mat-form-field appearance="outline" style="margin-top: 1%; width: 53vh!important;">
-              <mat-label>Comments</mat-label>
-              <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
-              </mat-form-field>
+
+        <mat-form-field appearance="outline" style="margin-top: 2%;">
+            <mat-label>Comments</mat-label>
+            <textarea rows="4" cols="500" formControlName="comments" matInput placeholder="Comment about the file"></textarea>
+            </mat-form-field>
           <!-- <div mat-dialog-action [align]="'center'">
               <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
           </div> -->
     </form>
 
     <input type="file" class="file-input" (change)="upload($event)" multiple #fileUpload>
-        <div *ngIf="files_asked_upload == 1" mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 0%;">
+        <div  mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 0%;">
             <!-- {{fileName || "No file uploaded yet."}} -->
             <button mat-mini-fab color="primary" class="upload-btn"
             (click)="fileUpload.click()">
@@ -73,11 +74,11 @@
             </button>
         </div>
 
-        <table *ngIf="files_asked_upload == 1" mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="files_uploaded">
-                <th mat-header-cell *matHeaderCellDef> </th>
+                <!-- <th mat-header-cell *matHeaderCellDef> </th> -->
             <td mat-cell *matCellDef="let row"> 
-                {{row.files_uploaded.slice(0,30)}}
+                {{row.files_uploaded}}
             </td>
             </ng-container>
         
@@ -88,14 +89,14 @@
             </td>     
             </ng-container> -->
         
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         
         </table>
 
-    <div mat-dialog-action [align]="'center'">
-        <button mat-raised-button color="warn" style="margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
-        <button mat-raised-button color="primary" style="width: 45%" mat-dialog-close>Close</button>
+    <div  mat-dialog-action [align]="'center'">
+        <button mat-raised-button color="warn" style="margin-top: 10% !important; margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+        <button mat-raised-button color="primary" style="width: 45%; margin-top: 10% !important;" mat-dialog-close>Close</button>
     </div>
             
 </div>

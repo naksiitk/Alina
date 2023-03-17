@@ -6,8 +6,18 @@
 **** : uploaded files through asking a file should in asked file.
 **** : Uploading issue in PWA and mobile browser. -> Reithick *priority. ** I think it will work now. 
 
-
-: Contact Us - Auditor & as well us.  -> Reithick 
 : History system -> Later
 : Client and Auditor relation -> Ashish
-: One_time_uploaded : JWT and Qr code addition -> Ashish
+
+Animation - Pipeline (Client to Auditor to Gov portal to Client)
+www.accbot.in (URL) - Done. 
+GST API ( Tax pro ) - Done
+
+info@accbot.in - Need to get.
+Credentials 
+Front End - Table and Add a Credential. 
+
+Back End -  
+1. { message } 
+
+

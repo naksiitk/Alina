@@ -4,7 +4,8 @@
 <div class = "container" style="margin-top: 1%; margin-left: 6%; margin-right:6%;">
 <mat-form-field>
     <mat-label>Filter</mat-label>
-    <input matInput placeholder="File Name" #input>
+    <input matInput (keyup)="applyFilter($event)" placeholder="File Name" #input>
+    
     </mat-form-field>
     
     <div class="mat-elevation-z8">

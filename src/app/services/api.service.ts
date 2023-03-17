@@ -41,6 +41,7 @@ export class ApiService {
   }
 
   getclient(data:any){  
+    console.log(data)
     return this.http.get<any>('/doc/client_list/'+data);
   }
 

@@ -12,7 +12,9 @@ const credentialSchema = new mongoose.Schema({
     password : { type : String, required : true },
 
     registered_mobile: { type : Number},
-    registered_email: { type: String}
-});
+    registered_email: { type: String}},
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model('credentials', credentialSchema);

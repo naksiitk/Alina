@@ -1,5 +1,5 @@
-#@apiUrl = http://localhost:8000
-@apiUrl = https://silversoft.business/api
+@apiUrl = http://localhost:8000
+#@apiUrl = https://silversoft.business/api
 
 @JWT = 
 
@@ -89,4 +89,12 @@ Content-Type: application/json
 
 ###
 
-GET {{apiUrl}}/asked_files/asked_files
+GET {{apiUrl}}/asked_files/asked_files_old
+
+###
+
+GET {{apiUrl}}/doc/post_asked/from_asked_to_doc/id/1
+
+###
+
+GET {{apiUrl}}/doc/client_doc_summary_delete/delete/640b8ae900706ad3ab294114

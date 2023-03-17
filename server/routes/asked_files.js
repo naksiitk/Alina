@@ -3,9 +3,18 @@ const router = express.Router()
 const asked_files = require('../models/asked_files')
 const users = require('../models/users')
 const client_doc_summary = require('../models/client_doc_summary')
-
+const docs = require('../models/docs')
 //Getting All
 router.get('/asked_files/' , async (req,res)=>{
+    try {
+        const asked_file_list = await docs.find({asked : true}).sort({$natural:-1})
+        res.json(asked_file_list)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+router.get('/asked_files_old/' , async (req,res)=>{
     try {
         const asked_file_list = await asked_files.find().sort({$natural:-1})
         res.json(asked_file_list)
@@ -17,17 +26,17 @@ router.get('/asked_files/' , async (req,res)=>{
 //Getting One
 router.get('/asked_files/:id' , async (req,res)=>{
     try {
-        const asked_file_list = await asked_files.find({email : req.params.id}).sort({$natural:-1})
+        const asked_file_list = await docs.find({email : req.params.id,asked : true}).sort({$natural:-1})
         res.json(asked_file_list)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 })
 
-//Getting asked_files based on purpose
+//Getting asked_files based on purpose not yet submitted
 router.post('/asked_files/purpose' , async (req,res)=>{
     try {
-        const asked_file_list = await asked_files.find({email : req.body.email, purpose : req.body.purpose}).sort({$natural:-1})
+        const asked_file_list = await docs.find({email : req.body.email, purpose : req.body.purpose, asked : true, files_uploaded : []}).sort({$natural:-1})
         res.json(asked_file_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -38,6 +47,7 @@ router.post('/asked_files/purpose' , async (req,res)=>{
 router.post('/asked_files' , async(req,res)=>{
     let userPAN
     let userid
+    console.log(req.body)
     try {
         const user = await users.findOne({email: req.body.email})
         if(user!= null){
@@ -46,10 +56,8 @@ router.post('/asked_files' , async(req,res)=>{
         else{
             res.status(500).json({message: "Email-id not there"})
         }
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-    const asked_clients_list = new asked_files({
+    
+    const asked_clients_list = new docs({
         filename : req.body.filename,
         fy: req.body.fy,
         month_quarter : req.body.month_quarter,
@@ -59,11 +67,13 @@ router.post('/asked_files' , async(req,res)=>{
         PAN : userPAN,
         user : userid,
         files_uploaded : [],
-    })
-    try {  
+        seen : true,
+        lock : false,
+        asked : true
+    })  
         await client_doc_summary.updateOne(
             {email : req.body.email, purpose:req.body.purpose},
-            {$inc : {unseen: 1, total : 1}, user: userid},
+            {$inc : {total : 1}, user: userid},
             {upsert:true}
         ).then(
             (result) => {
@@ -122,7 +132,7 @@ async function getasked_file(req,res, next)
 {
     let asked_file
     try {
-        asked_file = await asked_files.findById(req.params.id)
+        asked_file = await docs.findById(req.params.id)
         if(asked_file == null){
             return res.status(404).json({message : 'Cannot Find asked_file'})
         }

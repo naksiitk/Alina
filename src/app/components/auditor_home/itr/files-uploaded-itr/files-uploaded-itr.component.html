@@ -14,7 +14,7 @@
         <!-- ID Column -->
         <ng-container matColumnDef="filename">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
-        <td [ngStyle]="row.seen && {'font-weight': 'bold'}" mat-cell *matCellDef="let row"> {{row.filename}} </td>
+        <td [ngStyle]="{'font-weight': row.seen ? 'normal' : 'bold'}" mat-cell *matCellDef="let row"> {{row.filename}} </td>
         </ng-container>
     
         <!-- Progress Column -->
@@ -25,7 +25,7 @@
     -->
         <!-- Comments Column -->
         <ng-container matColumnDef="fy">
-          <th style="width: 5% !important;" mat-header-cell *matHeaderCellDef mat-sort-header> F.Y </th>
+          <th style=" width: 5% !important;" mat-header-cell *matHeaderCellDef mat-sort-header> F.Y </th>
           <td style="width: 5% !important;" mat-cell *matCellDef="let row"> {{row.fy}} </td>
         </ng-container>
 
@@ -62,10 +62,13 @@
         <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 2%;">Action</th>
         <td mat-cell *matCellDef="let row"> 
-            <button  [disabled]="row.lock" mat-button color="primary" (click)="editfile(row)"><mat-icon>edit</mat-icon></button> 
-            <button  [disabled]="row.lock" mat-button color="warn" (click)="openDialogDelete(row)"><mat-icon>delete</mat-icon></button> 
-            <mat-slide-toggle [(ngModel)] = row.lock (change)="isChecked(row._id,row.lock)"></mat-slide-toggle>
-        </td>     
+            <button *ngIf="row.asked==false ||  !check_upload(row)" [disabled]="row.lock" mat-button color="primary" (click)="editfile(row)"><mat-icon>edit</mat-icon></button> 
+            <button *ngIf="row.asked==false ||  !check_upload(row)" [disabled]="row.lock" mat-button color="warn" (click)="openDialogDelete(row)"><mat-icon>delete</mat-icon></button> 
+            <mat-slide-toggle *ngIf="row.asked==false ||  !check_upload(row)" [(ngModel)] = row.lock (change)="isChecked(row._id,row.lock)"></mat-slide-toggle>
+            <button *ngIf="row.asked==true &&  check_upload(row)" mat-button color="primary" (click)="uploadfile(row)">Upload</button>
+            <button *ngIf="row.asked==true &&  check_upload(row)" mat-button color="warn" (click)="reminder_upload(row)" >Reminder</button>  
+         
+          </td>     
         </ng-container>
 
     

@@ -7,7 +7,10 @@ const client_doc_summary_Schema = new mongoose.Schema({
     email : { type : String, required : true },
     purpose : { type : String, required : true },
     //reference 
-    user : {type : mongoose.Schema.Types.ObjectId, ref:'users',required: true}
-});
+    user : {type : mongoose.Schema.Types.ObjectId, ref:'users',required: true}},
+    {
+        timestamps: true
+    });
+
 
 module.exports = mongoose.model('client_doc_summary', client_doc_summary_Schema);

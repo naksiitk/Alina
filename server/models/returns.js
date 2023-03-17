@@ -18,6 +18,9 @@ const returnSchema = new mongoose.Schema({
     // seen: { type: Boolean, required: true },
     //reference 
     user : {type : mongoose.Schema.Types.ObjectId, ref:'users',required: true}
+},
+{
+    timestamps: true
 });
 
 module.exports = mongoose.model('returns', returnSchema);

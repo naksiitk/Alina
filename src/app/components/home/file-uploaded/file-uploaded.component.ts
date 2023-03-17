@@ -196,8 +196,8 @@ export class FileUploadedComponent implements OnInit {
 
   counter = 1;
   getAllaskedfiles(){
-    this.api. get_asked_FilesWithPurpose({"email":this.email, "purpose":"ITR"}).subscribe({
-        next:(res)=>{
+    this.api. get_file_asked(this.api_auth.get_email_local('email')).subscribe({
+      next:(res)=>{
           this.counter = res.length;
         }
       })

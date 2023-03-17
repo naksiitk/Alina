@@ -1,4 +1,4 @@
-import { Component ,Inject, Input, OnInit} from '@angular/core';
+import { Component ,Inject, Input, OnInit,ViewChild} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,14 +8,14 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { FilePreviewDialogComponent } from '../file-preview-dialog/file-preview-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-files-show-dialog',
   templateUrl: './files-show-dialog.component.html',
   styleUrls: ['./files-show-dialog.component.css']
 })
 export class FilesShowDialogComponent implements OnInit{
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   doc_url = ''
   fileName_array : any[] = [];
   JWT = this.localStorage.getJWT()
@@ -39,7 +39,7 @@ export class FilesShowDialogComponent implements OnInit{
       let file = filesdata.files_uploaded[index];
       if(file){
         this.fileName_array.push({'files_uploaded':file});
-        this.getAllfiles(this.fileName_array); 
+        // this.getAllfiles(this.fileName_array); 
       }
     }
     console.log(filesdata)
@@ -48,7 +48,8 @@ export class FilesShowDialogComponent implements OnInit{
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
-    
+    this.getAllfiles(this.fileName_array)
+    // this.dataSource.paginator = this.paginator;
   }
 
   private breakpointChanged() {
@@ -79,6 +80,7 @@ export class FilesShowDialogComponent implements OnInit{
   getAllfiles(res : any){ 
     
     this.dataSource = new MatTableDataSource(res);
+    this.dataSource.paginator = this.paginator;
   }
 
   IsPDF(filename : string) {

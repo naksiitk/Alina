@@ -1,7 +1,7 @@
 <!-- <h1 mat-dialog-title>Upload File</h1> -->
-<div mat-dialog-content>
-    <form [formGroup] = "file_list">
-        
+<div style="height: 80vh !important;">
+<div  style="height: 80vh !important; margin: 2vh;">
+    <form  [formGroup] = "file_list">    
         <mat-form-field appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Provide Email " [formControl]="myControl" [matAutocomplete]="auto">
@@ -72,7 +72,7 @@
             <textarea formControlName="comments" matInput placeholder="Comment about the file"></textarea>
         </mat-form-field>
        
-    </form>
+    
         <input type="file" class="file-input" (change)="upload($event)" multiple #fileUpload>
         <div mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 0%;">
             <!-- {{fileName || "No file uploaded yet."}} -->
@@ -84,23 +84,24 @@
 
         <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="files_uploaded">
-                <th mat-header-cell *matHeaderCellDef> </th>
+                <!-- <th mat-header-cell *matHeaderCellDef> </th> -->
             <td mat-cell *matCellDef="let row"> 
                 {{row.files_uploaded.slice(0,30)}}
             </td>
             </ng-container>
 
         
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         
         </table>
    
-    <div mat-dialog-action [align]="'center'">
-        <button mat-raised-button color="warn" style="margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+    <div mat-dialog-action [align]="'center'" style="margin-top: 5%;">
+        <button mat-raised-button color="warn" style=" margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
         <button mat-raised-button color="primary" style="width: 45%" mat-dialog-close>Close</button>
     </div>
-            
+</form>
+</div>      
 </div>
 
 

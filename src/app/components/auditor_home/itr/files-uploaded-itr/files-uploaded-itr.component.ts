@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DialogDeleteComponent } from '../../../home/dialog-delete/dialog-delete.component';
 import { DialogComponent } from '../../../home/dialog/dialog.component';
 import { FilesShowDialogComponent } from '../../../home/files-show-dialog/files-show-dialog.component';
+import { AskDialogComponent } from '../../ask-dialog/ask-dialog.component';
 
 
 @Component({
@@ -21,10 +22,16 @@ import { FilesShowDialogComponent } from '../../../home/files-show-dialog/files-
 })
 export class FilesUploadedItrComponent implements OnInit {
 
-  
+  show_everything = true;
 
   constructor(public dialog: MatDialog, private api : ApiService, private route: Router, private breakpointObserver: BreakpointObserver
     , private api_auth : AuthService, public _snackBar: MatSnackBar) {
+
+      if(this.show_everything == true){
+        this.displayedColumns.push("uploadedat");
+        this.displayedColumns.push("comments");
+        this.displayedColumns.push("Action");
+      }
     };
 
   email : any = ''
@@ -32,7 +39,7 @@ export class FilesUploadedItrComponent implements OnInit {
   @Input('childToMaster') id_ITR: string; 
   displayedColumns: string[] = ['filename','fy','month_quarter', 'files_uploaded'];
 
-  show_everything = false;
+  
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -167,6 +174,7 @@ export class FilesUploadedItrComponent implements OnInit {
       next:(res)=> {
         this._snackBar.open("File Seen","Ok", {
           duration: 1000,});
+        this.getAllfiles();
       },
       error:(err)=> {
         this._snackBar.open(err.error.message,"Contact Us", {
@@ -180,4 +188,43 @@ export class FilesUploadedItrComponent implements OnInit {
         data:row
       })
     }
+
+    check_upload(row: any)
+    {
+      //console.log(row.files_uploaded.length);
+      if(row.files_uploaded.length == 0)
+      {return true;}
+      else
+      {
+        //console.log("hi")
+        return false;}
+    }
+    
+    reminder_upload(row : any){
+      this.api.reminder(row).subscribe({
+        next:(res)=>{this._snackBar.open("Email Sent", "Hurray!!", {
+          duration: 2000,});
+        },
+        error:(err)=>{
+          this._snackBar.open(err.error.Status, "Contact Us", {
+            duration: 2000,});
+        }        
+      });
+  
+    }
+
+    uploadfile(row : any){
+      row["from_asked_dialog_box"]= true
+      this.dialog.open(AskDialogComponent,
+        {
+          width : '30%', 
+          data:row
+        }).afterClosed().subscribe(val => {
+          if(val === 'save'){
+            this.getAllfiles();
+            //this.deletefile(row);
+          }
+        })
+        
+      };
 }

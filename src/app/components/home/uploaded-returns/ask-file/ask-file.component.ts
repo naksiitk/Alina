@@ -90,7 +90,7 @@ export class AskFileComponent implements OnInit {
           //this.deletefile(row);
         }
       })
-      
+      console.log(this.dialog_size)
     };
 
   openDialogDelete(row: any) {
