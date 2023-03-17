@@ -17,7 +17,7 @@ const s3 = new S3({
 module.exports.uploadfile = async(req) => {
     const filestream = fs.createReadStream(req.file.path);
     const uploadParams = {
-        Bucket : bucketName,
+        Bucket : bucketName, 
         Body : filestream,
         Key : req.file.filename 
     }

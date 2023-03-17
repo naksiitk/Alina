@@ -147,7 +147,7 @@ export class FilesUploadedItrComponent implements OnInit {
 
   isChecked(id : string, lock:Boolean)
   {
-    console.log(id);
+    // console.log(id);
     this.api.locking_the_file(id, {"lock":lock}).subscribe({
       next:(res)=>{
         if(lock == true){

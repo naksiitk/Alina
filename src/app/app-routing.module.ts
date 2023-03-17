@@ -11,7 +11,7 @@ import { AuditorHomeComponent } from './components/auditor_home/auditor-home/aud
 import { DashboardComponent } from './components/auditor_home/dashboard/dashboard.component';
 import { ItrComponent } from './components/auditor_home/itr/itr.component';
 // import { TdsComponent } from './components/auditor_home/tds/tds.component';
-// import { AuditorCredComponent } from './components/auditor_home/auditor-cred/auditor-cred.component';
+import { AuditorCredComponent } from './components/auditor_home/auditor-cred/auditor-cred.component';
 // import { AudBilingComponent } from './components/auditor_home/aud-biling/aud-biling.component';
 // import { GstComponent } from './components/auditor_home/gst/gst.component';
 import { ClientTabComponent } from './components/auditor_home/itr/client-tab/client-tab.component';
@@ -25,6 +25,7 @@ import { ForgotPasswordComponent } from './components/login/forgot-password/forg
 import { OneTimeFileUploadComponent } from './components/login/one-time-file-upload/one-time-file-upload.component';
 import { SignupPageAuditorComponent } from './components/login/signup-page-auditor/signup-page-auditor.component';
 import { ClientDetailsComponent } from './components/auditor_home/client-details/client-details.component';
+import { CredentialClientComponent } from './components/home/credential-client/credential-client.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -39,7 +40,7 @@ export const routes: Routes = [
     children: [
       {path: '', redirectTo: '/home/file_uploaded', pathMatch: 'full'},
       {path: 'file_uploaded', component: FileUploadedComponent},
-      // {path: 'credentials', component: CredentialsComponent},
+      {path: 'credentials', component: CredentialClientComponent},
       // {path: 'uploaded_returns', component: UploadedReturnsComponent},
       // {path: 'billing_history', component: BillingHistoryComponent}
     ]
@@ -55,7 +56,7 @@ export const routes: Routes = [
       {path: 'gst/:id', component: ItrComponent},
       {path: 'tds/:id', component: ItrComponent},
       {path: 'signup_auditor', component: SignupPageAuditorComponent},
-      // {path: 'credentials', component: AuditorCredComponent},
+      {path: 'credentials', component: AuditorCredComponent},
       // {path: 'billing_history', component: AudBilingComponent},
       {path: 'ITR/client_tab/:id', component: ClientTabComponent },
       {path: 'GST/client_tab/:id', component: ClientTabComponent },

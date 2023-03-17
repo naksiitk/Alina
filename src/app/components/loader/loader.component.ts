@@ -11,7 +11,7 @@ export class LoaderComponent {
   isLoading: Subject<boolean> = this.loaderService.isLoading;
   
   constructor(private loaderService: LoaderService) {
-    console.log("loader scene")
-    console.log(this.isLoading)
+    // console.log("loader scene")
+    // console.log(this.isLoading)
   }
 }

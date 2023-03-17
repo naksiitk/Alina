@@ -1,1 +1,31 @@
-<p>auditor-cred works!</p>
+<h2 style="text-align: center; margin-top: 2%;">You are viewing Credential Page</h2>
+
+<div  style="margin-top:4% ; text-align: center !important;">
+    <button mat-raised-button color="warn" style="text-align: center !important;"  (click)="openDialog()">Add Login & Password </button>
+</div>
+
+<div class = "tab-container">
+    <mat-tab-group>
+        <mat-tab  label="GST">
+            <mat-card class="card-inside-tab">
+                <mat-card-content>
+                    <app-credentials [childToMaster]="'GST'"></app-credentials>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <mat-tab  label="ITR">
+            <mat-card class="card-inside-tab">
+                <mat-card-content>
+                    <app-credentials [childToMaster]="'ITR'"></app-credentials>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <mat-tab  label="Others">
+            <mat-card class="card-inside-tab">
+                <mat-card-content>
+                    <app-credentials [childToMaster]="'others'"></app-credentials>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+</div>

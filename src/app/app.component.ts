@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
   constructor() {
-    console.log(environment.production); // Logs false for development environment
+    // console.log(environment.production); // Logs false for development environment
   }
 
   ngOnInit(): void {

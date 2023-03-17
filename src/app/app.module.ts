@@ -24,7 +24,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
-// import { CredentialsComponent } from './components/home/credentials/credentials.component';
+import { CredentialsComponent } from './components/home/credentials/credentials.component';
 import { FileUploadedComponent } from './components/home/file-uploaded/file-uploaded.component';
 import {MatTabsModule} from '@angular/material/tabs';
 // import { BillingHistoryComponent } from './components/home/billing-history/billing-history.component';
@@ -36,7 +36,7 @@ import { AuditorHomeComponent } from './components/auditor_home/auditor-home/aud
 import { ItrComponent } from './components/auditor_home/itr/itr.component';
 // import { GstComponent } from './components/auditor_home/gst/gst.component';
 // import { TdsComponent } from './components/auditor_home/tds/tds.component';
-// import { AuditorCredComponent } from './components/auditor_home/auditor-cred/auditor-cred.component';
+import { AuditorCredComponent } from './components/auditor_home/auditor-cred/auditor-cred.component';
 // import { AudBilingComponent } from './components/auditor_home/aud-biling/aud-biling.component';
 import { DashboardComponent } from './components/auditor_home/dashboard/dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -82,6 +82,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SignupPageAuditorComponent } from './components/login/signup-page-auditor/signup-page-auditor.component';
 import { ClientDetailsComponent } from './components/auditor_home/client-details/client-details.component';
 import { ClientAcceptanceComponent } from './components/auditor_home/client-acceptance/client-acceptance.component';
+import { CredentialClientComponent } from './components/home/credential-client/credential-client.component';
+// import { CredentialDialogComponent } from './components/home/credentials/credential-dialog/credential-dialog.component';
 // import { LoaderInterceptor } from './services/loader.interceptor';
 
 @NgModule({
@@ -92,14 +94,14 @@ import { ClientAcceptanceComponent } from './components/auditor_home/client-acce
     HomeComponent,
     DialogComponent,
     UploadedReturnsComponent,
-    // CredentialsComponent,
+    CredentialsComponent,
     FileUploadedComponent,
     // BillingHistoryComponent,
     AuditorHomeComponent,
     ItrComponent,
     // GstComponent,
     // TdsComponent,
-    // AuditorCredComponent,
+    AuditorCredComponent,
     // AudBilingComponent,
     DashboardComponent,
     DialogDeleteComponent,
@@ -128,7 +130,9 @@ import { ClientAcceptanceComponent } from './components/auditor_home/client-acce
     LoaderComponent,
     SignupPageAuditorComponent,
     ClientDetailsComponent,
-    ClientAcceptanceComponent
+    ClientAcceptanceComponent,
+    CredentialClientComponent,
+    // CredentialDialogComponent
   ],
   imports: [
     BrowserModule,
