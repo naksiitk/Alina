@@ -64,7 +64,7 @@ export class SignupPageAuditorComponent implements OnInit {
       })
     }
 
-    Otp_generation(){
+    Otp_generation(snackbar_msg : string){
       if(this.signup_form.value.password == this.signup_form.value.retype_password)
       {
         if(this.signup_form.valid && this.email_form.valid){
@@ -73,7 +73,7 @@ export class SignupPageAuditorComponent implements OnInit {
           this.api.generate_otp({"email":this.email_form.value.email})
           .subscribe({
             next:(res)=>{
-              this._snackBar.open('OTP GENERATED', 'HURRAH !!!!!', {
+              this._snackBar.open(snackbar_msg, 'HURRAH !!!!!', {
                 duration: 2000,
               });           
             this.myStepper.next();

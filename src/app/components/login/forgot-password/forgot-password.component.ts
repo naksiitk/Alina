@@ -48,14 +48,14 @@ export class ForgotPasswordComponent implements OnInit {
       })
     }
 
-    Otp_generation(){
+    Otp_generation(snackbar_msg : string){
       {
         if(this.email_form.valid){
           console.log(this.email_form.value)
           this.api.generate_otp_forgot({"email":this.email_form.value.email})
           .subscribe({
             next:(res)=>{
-              this._snackBar.open('OTP GENERATED', 'HURRAH !!!!!', {
+              this._snackBar.open(snackbar_msg, 'HURRAH !!!!!', {
                 duration: 2000,
               });           
             this.myStepper.next();
