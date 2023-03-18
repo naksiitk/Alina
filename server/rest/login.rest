@@ -1,10 +1,12 @@
 @apiUrl = http://localhost:8000
 # @apiUrl = https://silversoft.business/api
 
+###
+
 POST {{apiUrl}}/login
 Content-Type: application/json
 
 {
-    "email": "reithick@gmail.com",
-    "password": "123123123"
+    "email": "arasuaudit@gmail.com",
+    "password": "qwerty99"
 }

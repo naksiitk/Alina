@@ -124,7 +124,7 @@ export class ApiService {
   //Credentials URL for BackEnd
 
   deletecredentials(data: any){  
-    return this.http.delete<any>("/credential/delete/" +  data);
+    return this.http.post<any>("/credential/delete/" +  data,'');
   }
 
   getcredentials_client(get_details_option : string){

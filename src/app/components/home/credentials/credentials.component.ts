@@ -55,7 +55,7 @@ export class CredentialsComponent implements OnInit {
       this.displayedColumns = ['credential_type', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
       }
     else{
-      this.displayedColumns = ['user_name', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
+      this.displayedColumns = ['user.user_name', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
     }
     
     this.getAllcredentials();

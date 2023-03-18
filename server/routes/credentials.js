@@ -62,7 +62,7 @@ async function getCredentials(req, res, next) {
 
 //Creating one
 router.post('/add_new_credential', [OpenJWT, Access], async (req, res) =>{
-    const credential = await credentials.findOne({email: req.body.email, credential_type: req.body.credential_type})
+    const credential = await credentials.findOne({email: req.body.email, PANorGSTIN: req.body.PANorGSTIN})
     if(credential != null) return res.status(400).json({ message : "Credential Already Exists"})
 
     try{
