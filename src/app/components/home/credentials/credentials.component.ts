@@ -52,10 +52,10 @@ export class CredentialsComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.get_details_option == 'client'){
-      this.displayedColumns = ['credential_type', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
+      this.displayedColumns = ['credential_type', 'user_id','password','PANorGSTIN', 'registered_mobile', 'registered_email', 'Action'];
       }
     else{
-      this.displayedColumns = ['user.user_name', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
+      this.displayedColumns = ['user.user_name', 'user_id','password','PANorGSTIN', 'registered_mobile', 'registered_email', 'Action'];
     }
     
     this.getAllcredentials();

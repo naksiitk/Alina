@@ -43,10 +43,10 @@ export class DialogCredentialsComponent {
     this.credential_form = this.formbuilder.group({
       credential_type : ['', Validators.required],
       user_id : ['', Validators.required],
-      PAN_GSTN : ['', Validators.required],
+      PANorGSTIN : ['', Validators.required],
       password : ['', Validators.required],
-      reg_mobile : ['', Validators.required],
-      reg_email : ['', Validators.required],
+      registered_mobile : ['', Validators.required],
+      registered_email : ['', Validators.required],
       email : [this.email]
     })
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -67,6 +67,9 @@ export class DialogCredentialsComponent {
   AddProduct(){
 
       if((this.credential_form.valid && this.which_side==0) || (this.credential_form.valid && this.which_side==1 && this.myControl.value != '')){
+        if(this.which_side==1){
+        this.credential_form.controls['email'].setValue(this.myControl.value);
+        }
         this.api.AddCredentials(this.credential_form.value)
         .subscribe({
           next:(res)=>{

@@ -137,7 +137,7 @@ export class ApiService {
     }
 
   }
-
+ 
   AddCredentials(data : any){
     return this.http.post<any>('/credential/add_new_credential/',data);
   }

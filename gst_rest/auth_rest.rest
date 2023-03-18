@@ -2,3 +2,6 @@
 
 GET https://gstsandbox.charteredinfo.com/taxpayerapi/dec/v1.0/authenticate?action=OTPREQUEST&aspid=1720553323&password=Reithick@1&gstin=33AANCS2882A1ZG&username=TN_NT2.2265
 
+###
+
+GET https://gstapi.charteredinfo.com/commonapi/v1.1/search?aspid=ASPID&password=ASPAcPassword&Action=TP&Gstin=CallerGstin&SearchGstin=GSTINOfTaxPayerToSearch
