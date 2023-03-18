@@ -64,8 +64,9 @@ function OpenJWT(req, res, next) {
 }
 
 /////////////////////////////////////////////////////////////////////
-/////// Start Listening 
-app.listen(8000, () => console.log('Server Started'))
+/////// Start Listening
+port = 8000
+app.listen(port, () => console.log('Server Started on port: ' + port))
 
 /////////////////////////////////////////////////////////////////////
 /////// Error Handling MiddleWare

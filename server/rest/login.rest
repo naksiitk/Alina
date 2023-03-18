@@ -1,5 +1,5 @@
-# @apiUrl = http://localhost:8000
-@apiUrl = https://silversoft.business/api
+@apiUrl = http://localhost:8000
+# @apiUrl = https://silversoft.business/api
 
 POST {{apiUrl}}/login
 Content-Type: application/json
