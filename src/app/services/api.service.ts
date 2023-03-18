@@ -41,7 +41,7 @@ export class ApiService {
   }
 
   getclient(data:any){  
-    console.log(data)
+    // console.log(data)
     return this.http.get<any>('/doc/client_list/'+data);
   }
 
@@ -121,5 +121,29 @@ export class ApiService {
     return this.http.delete<any>("/user/email/" +  data);
   }
   
+  //Credentials URL for BackEnd
+
+  deletecredentials(data: any){  
+    return this.http.delete<any>("/credential/delete/" +  data);
+  }
+
+  getcredentials_client(get_details_option : string){
+    if(get_details_option == 'client')
+    {
+    return this.http.get<any>("/credential/client/all/");
+    }
+    else {
+      return this.http.get<any>("/credential/auditor/all/purpose/"+get_details_option);
+    }
+
+  }
+
+  AddCredentials(data : any){
+    return this.http.post<any>('/credential/add_new_credential/',data);
+  }
+
+
+  
+
 
 }

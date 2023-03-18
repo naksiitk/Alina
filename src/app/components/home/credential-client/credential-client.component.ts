@@ -2,14 +2,16 @@ import { BreakpointObserver , Breakpoints} from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { DialogCredentialsComponent } from '../../home/dialog-credentials/dialog-credentials.component';
+import { DialogCredentialsComponent } from '../dialog-credentials/dialog-credentials.component';
+import { DialogComponent } from '../dialog/dialog.component';
+
 
 @Component({
-  selector: 'app-auditor-cred',
-  templateUrl: './auditor-cred.component.html',
-  styleUrls: ['./auditor-cred.component.css']
+  selector: 'app-credential-client',
+  templateUrl: './credential-client.component.html',
+  styleUrls: ['./credential-client.component.css']
 })
-export class AuditorCredComponent implements OnInit {
+export class CredentialClientComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public breakpointObserver: BreakpointObserver){};
 
@@ -56,8 +58,6 @@ export class AuditorCredComponent implements OnInit {
     this.dialog.open(DialogCredentialsComponent,
     {
       width : this.dialog_size,
-      data : {which_side : 1},
     })
   };
-
 }

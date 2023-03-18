@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, Input} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { range } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { CredentialsService } from 'src/app/services/credentials.service';
-import { DialogCredentialsComponent } from '../dialog-credentials/dialog-credentials.component';
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
-
-export interface RowValue {
-  name: string;
-  colon: string;
-  value: string;
-  _id: string;
-}
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-credentials',
@@ -20,84 +17,125 @@ export interface RowValue {
   styleUrls: ['./credentials.component.css']
 })
 export class CredentialsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'colon','value'];
-  dataSource: [RowValue[][],RowValue[][],RowValue[][]] = [[],[],[]]
-  credential_type = ['GST', 'Income Tax', 'TDS'];
+  displayedColumns: string[]
+  @Input('childToMaster') get_details_option: string;
 
-  constructor(public dialog: MatDialog, private api : CredentialsService, private api_auth: AuthService) {};
+  constructor(public dialog: MatDialog, private api : ApiService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver
+    , private api_auth : AuthService,public _snackBar: MatSnackBar,
+    ) {
+
+      
+        
+    };
+
+  title = 'my-app';
+
+  public email = this.api_auth.get_email_local('email')
+  
+  // displayedColumns_mobile: string[] = ['filename','files_uploaded'];
+
+  dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+
+  Breakpoints = Breakpoints;
+  current_break_point = 0;
+  readonly breakpoint$ = this.breakpointObserver
+    .observe([Breakpoints.HandsetPortrait])
+    .pipe(
+      tap(value => console.log(value)),
+      distinctUntilChanged()
+    );
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  
+  
 
   ngOnInit(): void {
+    if(this.get_details_option == 'client'){
+      this.displayedColumns = ['credential_type', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
+      }
+    else{
+      this.displayedColumns = ['user_name', 'user_id','password','PAN_GSTIN', 'registered_mobile', 'registered_email', 'Action'];
+    }
+    
     this.getAllcredentials();
+
+    this.breakpoint$.subscribe(() =>
+      this.breakpointChanged()
+    );
+
+    
+  
   };
 
-  getAllcredentials() {
-    const user_email = this.api_auth.get_email_local('email')
+  private breakpointChanged() {
+    if(this.breakpointObserver.isMatched(Breakpoints.HandsetPortrait)) {
+      this.current_break_point = 1;
+  //    this.dialog_size = '90%';
+    } else {
+      this.current_break_point = 0;
+  //    this.dialog_size = '30%';
+    } 
+  }
+  dialog_size = '30%'
+  dialog_size_function(current_break_point : Number)
+  {
+    if(this.current_break_point) {
+      this.dialog_size = '95%';
+    } else {
+      this.dialog_size = '30%';
+    } 
+    return this.dialog_size
+  }
+  
+  openDialogDelete(row: any) {
+    this.dialog_size_function(this.current_break_point)
+    const dialogRef = this.dialog.open(DialogDeleteComponent, {
+      width : this.dialog_size,
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) this.deletecredentials(row);
+    })
+  };
 
-    this.api.FetchAllCredentials({email : user_email}).subscribe({
-      next:(res)=>{
-        
-        var a = 0, b = 0, c =0;
-        for(var i= 0; i < res.length; i++) {
-
-          let row0: RowValue = {name: res[i].credential_type + ' user_name', colon: ':', value: res[i].user_id, _id:res[i]._id}
-          let row1: RowValue = {name: res[i].credential_type + ' password', colon: ':', value: res[i].password, _id:res[i]._id}
-          let row2: RowValue = {name: 'Registered Mobile', colon: ':', value: res[i].registered_mobile, _id:res[i]._id}
-          let row3: RowValue = {name: 'Registered Email', colon: ':', value: res[i].registered_email, _id:res[i]._id}
-
-          if(res[i].credential_type == 'GST') { this.dataSource[0][a] = [row0,row1,row2,row3]; a = a+1; }
-          if(res[i].credential_type == 'ITR') { this.dataSource[1][b] = [row0,row1,row2,row3]; b = b+1; }
-          if(res[i].credential_type == 'TDS') { this.dataSource[2][c] = [row0,row1,row2,row3]; c = c+1; }
-
-        }
-
-        console.log(res);
-        // this.dataSource = res;
+  deletecredentials(row : any){
+    this.api.deletecredentials(row._id)
+    .subscribe({
+      next:(res) => {this._snackBar.open("Credential Deleted Successfully","OK", {
+        duration: 3000,
+      });
+      this.getAllcredentials();
       },
-      error:()=>{
-        alert("Error while fetching products");
-      }
+      error:(err) => {this._snackBar.open(err.error.message,"Contact Us", {
+        duration: 3000,
+      });}
+      });
+  }
+  
+  getAllcredentials(){
+    this.api.getcredentials_client(this.get_details_option).subscribe({
+        next:(res)=>{
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error:(err)=>{
+          this._snackBar.open(err.error.message,"Contact Us", {
+            duration: 3000,
+          });
+        }
     })
   }
 
-  openDialogAdd(type: string) {
-    const dialogRef = this.dialog.open(DialogCredentialsComponent, {
-      width : '30%'
-    });
-    
-    dialogRef.afterClosed().subscribe(result => {
-      if(result === 'add'){
-        this.getAllcredentials();
-      }
-    })
-  };
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  openDialogEdit(tabno: number,indexno: number) {
-    let credential_id = this.dataSource[tabno][indexno][0]._id
-    console.log(credential_id)
-    const dialogRef = this.dialog.open(DialogCredentialsComponent, {
-      width : '30%'
-    });
-    
-    dialogRef.afterClosed().subscribe(result => {
-      if(result === 'edit'){
-        this.getAllcredentials();
-      }     
-    })
-  };
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
-  openDialogDelete(tabno: number,indexno: number) {
-    let credential_id = this.dataSource[tabno][indexno][0]._id
-  
-    const dialogRef = this.dialog.open(DialogDeleteComponent, {
-      width : '30%'
-    });
-    
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) this.deleteCredentials(credential_id);
-    })
-  };
-
-  deleteCredentials(credential_id: any) {
-    this.api.DeleteOneCredentials(credential_id)
-  };
+ 
 }
