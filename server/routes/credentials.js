@@ -67,7 +67,11 @@ router.post('/add_new_credential', [OpenJWT, Access], async (req, res) =>{
 
     try{
         const client = await users.findOne({email : req.body.email})
-        
+
+        if(req.body.credential_type == 'GST') {
+            await checkGSTstatus({PANorGSTIN : req.body.PANorGSTIN});
+        }
+
         const credential = new credentials({
             email: req.body.email, 
             credential_type: req.body.credential_type,
@@ -123,6 +127,7 @@ router.post('/delete/:id', [OpenJWT], async (req, res) =>{
 })
 
 const JWT = require('jsonwebtoken')
+const { checkGSTstatus } = require('../services/gst')
 
 function OpenJWT(req, res, next) {
     const authHeader = req.headers.authorization
