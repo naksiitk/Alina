@@ -69,7 +69,18 @@ router.post('/add_new_credential', [OpenJWT, Access], async (req, res) =>{
         const client = await users.findOne({email : req.body.email})
 
         if(req.body.credential_type == 'GST') {
-            await checkGSTstatus({PANorGSTIN : req.body.PANorGSTIN});
+            let status
+            let gsterror
+
+            await checkGSTstatus({PANorGSTIN : req.body.PANorGSTIN})
+            .then((GSTstatusres) => {
+                status = GSTstatusres.status
+
+                if(GSTstatusres.status != 200) gsterror = GSTstatusres.error.message
+                else console.log('GSTIN is correct')
+            })
+
+            if(status !=200) return res.status(status).json({message : gsterror})
         }
 
         const credential = new credentials({
@@ -87,9 +98,9 @@ router.post('/add_new_credential', [OpenJWT, Access], async (req, res) =>{
             user: client._id
         })
         const newCredential = await credential.save()
-        res.status(201).json(newCredential)
+        return res.status(201).json(newCredential)
     } catch (err) {
-        res.status(400).json({ message: err.message})
+        return res.status(400).json({ message: err.message})
     }
 })
 
