@@ -21,3 +21,7 @@ Back End -
 1. { message } 
 
 
+1. Bulk Reminders - After Hiring.
+2. 2A GST Reconcilliation - After Hiring. 
+
+

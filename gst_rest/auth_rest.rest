@@ -4,4 +4,10 @@ GET https://gstsandbox.charteredinfo.com/taxpayerapi/dec/v1.0/authenticate?actio
 
 ###
 
-GET https://gstapi.charteredinfo.com/commonapi/v1.1/search?aspid=ASPID&password=ASPAcPassword&Action=TP&Gstin=CallerGstin&SearchGstin=GSTINOfTaxPayerToSearch
+GET https://gstapi.charteredinfo.com/commonapi/v1.1/search?aspid=1720553323&password=Reithick@1&Action=TP&Gstin=33AKMPK5944M1ZN&SearchGstin=33AKMPK5944M1ZN
+
+
+###
+
+GET https://gstapi.charteredinfo.com/commonapi/v1.0/returns?aspid=1720553323&password=Reithick@1&Action=RETTRACK&Gstin=33AKMPK5944M1ZN&fy=2022-23
+

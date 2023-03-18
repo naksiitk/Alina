@@ -1,0 +1,26 @@
+@apiUrl = http://localhost:8000
+# @apiUrl = https://silversoft.business/api
+
+
+###
+
+GET https://gstapi.charteredinfo.com/commonapi/v1.0/returns?aspid=1720553323&password=Reithick@1&Action=RETTRACK&Gstin=33AKMPK5944M1ZN&fy=2022-23
+
+###
+
+
+GET {{apiUrl}}/gst/getreturnstatus/
+Content-Type: application/json
+{
+    "GSTIN" : gstin,
+    "fy" : 2017-2018,
+}
+
+{
+rtn_month : 'Feb',
+rtn_type : {"GSTR1","GSTR3B"},
+filed : {"true", "false"},
+dof : :{"11-12-2022", "blank"},
+arn : {"AB331122441454O","blank"},
+},
+
