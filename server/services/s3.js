@@ -46,7 +46,9 @@ module.exports.getzippedfiles = async(req) => {
         bucket: bucketName,
         debug: true
     }
-    return s3Zip.archive(downloadParams, req.folder, req.files_array)
+    return s3Zip.archive(downloadParams, req.folder, req.files_array).on('error', (e) => {
+        "cannot download the zip"
+      })
     }
     catch (err) {
         console.log(err)

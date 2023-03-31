@@ -135,12 +135,27 @@ export class ApiService {
     else {
       return this.http.get<any>("/credential/auditor/all/purpose/"+get_details_option);
     }
-
   }
  
   AddCredentials(data : any){
     return this.http.post<any>('/credential/add_new_credential/',data);
   }
+
+  getcredentials_client_ITR(email :any){
+    return this.http.get<any>("/credential/client/AIS/"+email);
+  }
+
+  // Python script API 
+
+  generate_ais_scrap(data : any){
+    // console.log(data)
+    return this.http.post<any>("http://localhost:3056/", data)
+  }
+
+  show_ais_scrap(data: any){
+    return this.http.get<any>("/credential/AIS/AIS/show/"+data)
+  }
+
 
 
   

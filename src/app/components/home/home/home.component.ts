@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit{
   
   title = 'my-app';
   email : any = this.localStorage.getEmail();
-  
+  Name : any = this.localStorage.getName();
   logout(){
     this.authService.logout_user()
     }

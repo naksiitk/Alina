@@ -43,7 +43,7 @@
           <ng-container matColumnDef="unseen">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
             <td style="padding-top: 1%;padding-bottom: 1%;" mat-cell *matCellDef="let row" > 
-              <button mat-raised-button matBadge="."  [matBadgeHidden]="hidden" (click)="router_link_client_tab(row.email)">
+              <button mat-raised-button matBadge="{{row.unseen}}"  [matBadgeHidden]="hidden" (click)="router_link_client_tab(row.email)">
                   View
               </button>
                 </td>

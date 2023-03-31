@@ -3,6 +3,7 @@ const router = express.Router()
 const credentials = require('../models/credentials')
 const users = require('../models/users')
 const bcrypt = require('bcrypt')
+const AIS = require('../models/AIS_scrap_data')
 
 // Getting all
 router.get('/', async (req, res) =>{
@@ -124,6 +125,17 @@ router.get('/client/all', [OpenJWT, IsClient],async (req,res) => {
     }
 })
 
+router.get('/client/AIS/:id',async (req,res) => {
+    try {
+        const All_credentials = await credentials.find({email: req.params.id, credential_type:'ITR'})
+        if(All_credentials == null) return res.status(404).json({message : 'No credentials found'})
+        return res.status(200).json(All_credentials)
+    } catch (err) {
+        return res.status(500).json({ message : err.message })
+    }
+})
+
+
 //Deleting one
 router.post('/delete/:id', [OpenJWT], async (req, res) =>{
     try {
@@ -139,6 +151,7 @@ router.post('/delete/:id', [OpenJWT], async (req, res) =>{
 
 const JWT = require('jsonwebtoken')
 const { checkGSTstatus } = require('../services/gst')
+const AIS_scrap_data = require('../models/AIS_scrap_data')
 
 function OpenJWT(req, res, next) {
     const authHeader = req.headers.authorization
@@ -176,6 +189,39 @@ async function IsClient(req, res, next) {
     
     else return res.status(403).json({message : 'Access Denied, You are not Client'})
 }
+
+router.get('/AIS/AIS/show/:id',async (req,res) => {
+    try {
+        const credentials_data = await credentials.findById(req.params.id) 
+        const AIS_data = await AIS.find({PAN: credentials_data.PANorGSTIN})
+        // console.log(AIS_data)
+        return res.status(200).json(AIS_data)
+    } catch (err) {
+        return res.status(500).json({ message : err.message })
+    }
+})
+
+// router.post('/AIS/AIS/show',async (req,res) => {
+  
+//         const AIS_data = new AIS({
+//             Amount:'12,11,272',
+//             Amount_description: 'Amount paid/credited',
+//             Count: '6',
+//             Information_category: 'Salary',
+//             Information_code: 'TDS-192',
+//             Information_description:'Salary received (Section 192)',
+//             Information_source: 'TEXAS INSTRUMENTS (INDIA) PRIVATE LIMITED (BLRT02492A)',
+//             PAN: 'CJNPA3578B',
+//             amount_books: 0,
+//             email: 'reithick@gmail.com',
+//             lock: true,
+//             reason: ""
+//         })
+//         const AIS_new = await AIS_data.save()
+//         return res.status(200).json(AIS_new)
+   
+// })
+
 
 
 module.exports = router

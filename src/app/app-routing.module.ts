@@ -26,6 +26,9 @@ import { OneTimeFileUploadComponent } from './components/login/one-time-file-upl
 import { SignupPageAuditorComponent } from './components/login/signup-page-auditor/signup-page-auditor.component';
 import { ClientDetailsComponent } from './components/auditor_home/client-details/client-details.component';
 import { CredentialClientComponent } from './components/home/credential-client/credential-client.component';
+import { AisScrapZenComponent } from './components/ais-scrap-zen/ais-scrap-zen.component';
+import { InfoComponent } from './components/home/info/info.component';
+import { ContactCardComponent } from './components/home/contact-card/contact-card.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -41,6 +44,9 @@ export const routes: Routes = [
       {path: '', redirectTo: '/home/file_uploaded', pathMatch: 'full'},
       {path: 'file_uploaded', component: FileUploadedComponent},
       {path: 'credentials', component: CredentialClientComponent},
+      {path: 'AIS', component: AisScrapZenComponent},
+      {path: 'info', component: InfoComponent },
+      {path: 'contact', component: ContactCardComponent },
       // {path: 'uploaded_returns', component: UploadedReturnsComponent},
       // {path: 'billing_history', component: BillingHistoryComponent}
     ]

@@ -64,7 +64,7 @@
               <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
           </div> -->
     </form>
-
+    <span style="font-size:10px ; color: red;"> *Mutltiple files can be uploaded <br> *Total File size < 1Mb </span>
     <input type="file" class="file-input" (change)="upload($event)" multiple #fileUpload>
         <div  mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 0%;">
             <!-- {{fileName || "No file uploaded yet."}} -->

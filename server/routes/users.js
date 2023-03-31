@@ -82,7 +82,7 @@ router.post('/', async (req, res) =>{
             user_type: req.body.user_type,
             PAN: req.body.PAN,
             company_name: req.body.user_name,
-            verified: false
+            verified: true
         })
         
         const newUser = await user.save();
@@ -192,7 +192,7 @@ router.post('/signup', async (req, res) =>{
             user_type: req.body.user_type,
             PAN: req.body.PAN,
             company_name: req.body.user_name,
-            verified: false,
+            verified: true,
         })
         const newUser = await user.save()
         res.status(201).json(newUser)

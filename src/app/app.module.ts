@@ -83,6 +83,9 @@ import { SignupPageAuditorComponent } from './components/login/signup-page-audit
 import { ClientDetailsComponent } from './components/auditor_home/client-details/client-details.component';
 import { ClientAcceptanceComponent } from './components/auditor_home/client-acceptance/client-acceptance.component';
 import { CredentialClientComponent } from './components/home/credential-client/credential-client.component';
+import { AisScrapZenComponent } from './components/ais-scrap-zen/ais-scrap-zen.component';
+import { InfoComponent } from './components/home/info/info.component';
+import { ContactCardComponent } from './components/home/contact-card/contact-card.component';
 // import { CredentialDialogComponent } from './components/home/credentials/credential-dialog/credential-dialog.component';
 // import { LoaderInterceptor } from './services/loader.interceptor';
 
@@ -132,6 +135,9 @@ import { CredentialClientComponent } from './components/home/credential-client/c
     ClientDetailsComponent,
     ClientAcceptanceComponent,
     CredentialClientComponent,
+    AisScrapZenComponent,
+    InfoComponent,
+    ContactCardComponent,
     // CredentialDialogComponent
   ],
   imports: [

@@ -14,16 +14,28 @@ export class HttpInterceptorService implements HttpInterceptor {
     const localStorage =  this.injector.get(LocalStorageService)
     const apiUrl =  environment.apiUrl;
     this.loaderService.show();
-    // console.log(request)
+    console.log(request.url)
     //console.log("intercepting")
+    if(!request.url.includes("http://localhost:3056/")){
+      const new_request = request.clone({
+        url: apiUrl + request.url,
+        setHeaders: {
+          Authorization: `Bearer ${localStorage.getJWT()}`
+        }
+      });
+      return next.handle(new_request).pipe(
+        finalize(() => this.loaderService.hide()),);
+    }
+  else{
     const new_request = request.clone({
-      url: apiUrl + request.url,
+      url: request.url,
       setHeaders: {
         Authorization: `Bearer ${localStorage.getJWT()}`
       }
     });
-
     return next.handle(new_request).pipe(
       finalize(() => this.loaderService.hide()),);
+  }
+
   }
 }

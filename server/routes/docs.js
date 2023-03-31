@@ -44,7 +44,7 @@ router.get('/:id' , async (req,res)=>{
 //Getting Client Distinct
 router.get('/client_list/:id' , async (req,res)=>{
     try {
-        const clients_list = await client_doc_summary.find({purpose : req.params.id}).populate('user','user_name PAN')
+        const clients_list = await client_doc_summary.find({purpose : req.params.id}).populate('user','user_name PAN').sort({unseen:-1})
         res.json(clients_list)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -85,7 +85,7 @@ router.post('/' , async(req,res)=>{
         PAN : userPAN,
         seen : false,
         user : userid,
-        lock : false,
+        lock : true,
         asked : false
     })
 

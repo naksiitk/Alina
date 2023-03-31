@@ -24,15 +24,13 @@ export class CredentialsComponent implements OnInit {
     , private api_auth : AuthService,public _snackBar: MatSnackBar,
     ) {
 
-      
-        
     };
 
   title = 'my-app';
 
   public email = this.api_auth.get_email_local('email')
   
-  // displayedColumns_mobile: string[] = ['filename','files_uploaded'];
+  displayedColumns_mobile: string[] 
 
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
@@ -53,7 +51,8 @@ export class CredentialsComponent implements OnInit {
   ngOnInit(): void {
     if(this.get_details_option == 'client'){
       this.displayedColumns = ['credential_type', 'user_id','password','PANorGSTIN', 'registered_mobile', 'registered_email', 'Action'];
-      }
+      this.displayedColumns_mobile = ['user_id','password', 'Action'];  
+    }
     else{
       this.displayedColumns = ['user.user_name', 'user_id','password','PANorGSTIN', 'registered_mobile', 'registered_email', 'Action'];
     }

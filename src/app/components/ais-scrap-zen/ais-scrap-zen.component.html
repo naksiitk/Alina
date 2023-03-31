@@ -1,0 +1,70 @@
+<div style="text-align: center; margin-top: 5%;">
+    <!-- GET PAN DETAILS FOR THE MAIL ID AND ITs Credentials -->
+    <form [formGroup] = "file_list">
+        <mat-form-field appearance="outline" style="margin-top: 1%; width: 20%;">
+            <mat-label>PAN</mat-label>
+            <mat-select formControlName="id">   
+                <mat-option *ngFor="let unit of List_units"[value]="unit._id">
+                {{unit.PANorGSTIN}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button style="margin-left: 2%;" color="primary" align="center" (click)="show_AIS()">SHOW</button>
+        <button mat-raised-button style="margin-left: 2%;" color="warn" align="center" (click)="generate_AIS()">GENERATE LATEST</button>
+    </form>
+    </div>
+
+<div style="margin: 2%;">
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="File Name" #input>
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+        <table  mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> email</th>
+            <td mat-cell *matCellDef="let row">{{row.email}}  </td>
+        </ng-container>
+
+        <ng-container matColumnDef="PAN">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> PAN</th>
+            <td mat-cell *matCellDef="let row">{{row.PAN}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Information_source">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Information_source</th>
+            <td mat-cell *matCellDef="let row">{{row.Information_source}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Information_description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Information_description</th>
+            <td mat-cell *matCellDef="let row">{{row.Information_description}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Information_category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Information_category </th>
+            <td mat-cell *matCellDef="let row">{{row.Information_category}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Amount_description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount_description </th>
+            <td mat-cell *matCellDef="let row">{{row.Amount_description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount </th>
+            <td mat-cell *matCellDef="let row">{{row.Amount}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+        </table>
+    
+        <mat-paginator style="margin-bottom: 2%;" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>
