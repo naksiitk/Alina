@@ -40,3 +40,11 @@ td, th {
   position: absolute;
   top: -3px;
 }
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+.container_hover:hover{
+  border-color: red !important;
+}
+

@@ -65,12 +65,13 @@
         <input type="file" class="file-input" (change)="upload($event)" multiple #fileUpload>
         <div mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 0%;">
             <!-- {{fileName || "No file uploaded yet."}} -->
-            <button mat-mini-fab color="primary" class="upload-btn"
+            <button disabled="{{this.file_upload_button_lock}}" mat-mini-fab color="primary" class="upload-btn"
             (click)="fileUpload.click()">
                 <mat-icon>attach_file</mat-icon>
             </button>
         </div>
-        <span style="font-size:10px ; color: red;"> *Mutltiple files can be uploaded <br> *Total File size < 1Mb </span>
+        <span style="font-size:10px ; color: blue;"> *Mutltiple files can be uploaded </span> <br>
+        <span *ngIf="this.size_files > 9000000" style="font-size:20px ; color: red;"> *Total File size < 9Mb </span>
         <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="files_uploaded">
                 <th mat-header-cell *matHeaderCellDef> </th>
@@ -92,7 +93,8 @@
         </table>
    
     <div mat-dialog-action [align]="'center'">
-        <button mat-raised-button color="warn" style="margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+        <button *ngIf="this.size_files <= 9000000" disabled="{{this.file_upload_button_lock}}" mat-raised-button color="warn" style="margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+        <button *ngIf="this.size_files > 9000000" disabled="true" mat-raised-button color="warn" style="margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
         <button mat-raised-button color="primary" style="width: 45%" mat-dialog-close>Close</button>
     </div>
             

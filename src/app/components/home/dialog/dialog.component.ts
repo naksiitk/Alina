@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./dialog.component.css']
 })
 
+
 export class DialogComponent implements OnInit{
   formData = new FormData();
   fileName = '';
@@ -20,11 +21,12 @@ export class DialogComponent implements OnInit{
   d = new Date();
   date = new Date(Date.now()).toLocaleString('en-GB').split(',')[0];
   TDS_Container = false;
-  
+  size_files = 0
   
   purpose_list = ["GST", "ITR", "Others"];
   file_list !: FormGroup;
  
+  file_upload_button_lock = false
   actionBtn : string = "Save";
   constructor(private formbuilder : FormBuilder, private api : ApiService, private dialogref : MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public editdata: any, private api_auth : AuthService,
@@ -59,6 +61,18 @@ export class DialogComponent implements OnInit{
       this.file_list.controls['fy'].setValue(this.editdata.fy);
       this.file_list.controls['month_quarter'].setValue(this.editdata.month_quarter);
       this.file_list.controls['uploadedat'].setValue(this.date);
+
+      if(this.editdata.mobile_view == true)
+      {
+        this.file_list.controls['filename'].disable();
+        this.file_list.controls['purpose'].disable();
+        this.file_list.controls['files_uploaded'].disable();
+        this.file_list.controls['email']. disable();    
+        this.file_list.controls['fy'].disable();
+        this.file_list.controls['month_quarter'].disable();
+        this.file_list.controls['comments'].disable();
+        this.file_upload_button_lock = true
+      }
 
       const files = this.editdata.files_uploaded;
       this.fileName_array.length = 0;
@@ -287,9 +301,11 @@ export class DialogComponent implements OnInit{
     for( let index = 0; index<= files.length; index++)
     {
       let file = files[index];
+      console.log(file) 
       if(file){
         this.file_list.controls['files_uploaded'].setValue([file.name]);
-        console.log(file)
+        this.size_files = this.size_files + file.size;
+
         this.formData.append('files', file);
         this.fileName_array.push({'files_uploaded':file.name});
        

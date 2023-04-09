@@ -19,7 +19,7 @@ export class AskDialogComponent implements OnInit{
   d = new Date();
   date = new Date(Date.now()).toLocaleString('en-GB').split(',')[0];
   formData = new FormData();
-  
+  file_upload_button_lock = false;
   edit_file_yes = 0;
   purpose_list = ["GST", "ITR", "TDS"];
   file_list !: FormGroup;
@@ -45,6 +45,7 @@ export class AskDialogComponent implements OnInit{
       month_quarter   : [''],
       files_uploaded  : [[]],
     }) 
+    
     if(this.editdata)
     {
       this.actionBtn = "Upload";
@@ -58,6 +59,28 @@ export class AskDialogComponent implements OnInit{
       this.file_list.controls['email'].setValue(this.email);
       this.file_list.controls['fy'].setValue(this.editdata.fy);
       this.file_list.controls['month_quarter'].setValue(this.editdata.month_quarter);
+
+    }
+    if(this.editdata.mobile_view == true)
+    {
+     
+      this.file_list.controls['filename'].setValue(this.editdata.filename);
+      this.file_list.controls['purpose'].setValue(this.editdata.purpose);
+      this.file_list.controls['comments'].setValue(this.editdata.comments);
+      this.file_list.controls['files_uploaded'].setValue(this.editdata.files_uploaded);
+      this.file_list.controls['email'].setValue(this.email);
+      this.file_list.controls['fy'].setValue(this.editdata.fy);
+      this.file_list.controls['month_quarter'].setValue(this.editdata.month_quarter);
+
+
+      this.file_list.controls['filename'].disable();
+      this.file_list.controls['purpose'].disable();
+      this.file_list.controls['files_uploaded'].disable();
+      this.file_list.controls['email']. disable();    
+      this.file_list.controls['fy'].disable();
+      this.file_list.controls['month_quarter'].disable();
+      this.file_list.controls['comments'].disable();
+      this.file_upload_button_lock = true
     }
     }
     
@@ -164,7 +187,8 @@ export class AskDialogComponent implements OnInit{
 
   displayedColumns: string[] = ['files_uploaded'];//, 'Action'];
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
-
+  size_files = 0;
+  
   getAllfiles(res : any){ 
     this.dataSource = new MatTableDataSource(res);
   }
@@ -178,7 +202,7 @@ export class AskDialogComponent implements OnInit{
       let file = files[index];
       if(file){
         this.file_list.controls['files_uploaded'].setValue([file.name]);
-        console.log(file)
+        this.size_files = this.size_files + file.size;
         this.formData.append('files', file);
         this.fileName_array.push({'files_uploaded':file.name});
        

@@ -128,6 +128,8 @@ export class UploadFileDashboardComponent implements OnInit{
   displayedColumns: string[] = ['files_uploaded'];//, 'Action'];
   dataSource  : MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
 
+
+  size_files =0
   getAllfiles(res : any){ 
     this.dataSource = new MatTableDataSource(res);
   }
@@ -142,7 +144,7 @@ export class UploadFileDashboardComponent implements OnInit{
       let file = files[index];
       if(file){
         this.file_list.controls['files_uploaded'].setValue([file.name]);
-        console.log(file)
+        this.size_files = this.size_files + file.size;
         this.formData.append('files', file);
         this.fileName_array.push({'files_uploaded':file.name});
         console.log(this.fileName_array);

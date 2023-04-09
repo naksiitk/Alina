@@ -1,0 +1,42 @@
+{
+  "packageId": "business.silversoft.twa",
+  "host": "silversoft.business",
+  "name": "Alina - Arasuaudit",
+  "launcherName": "Alina",
+  "display": "standalone",
+  "themeColor": "#1976D2",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#FAFAFA",
+  "enableNotifications": true,
+  "startUrl": "/login/",
+  "iconUrl": "https://silversoft.business/assets/icons/icon-512x512.png",
+  "maskableIconUrl": "https://silversoft.business/assets/icons/icon-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/home/reithick/Alina/Alina_app/android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "2",
+  "appVersionCode": 2,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://silversoft.business/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://silversoft.business/",
+  "minSdkVersion": 19,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "appVersion": "2"
+}

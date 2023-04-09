@@ -1,0 +1,49 @@
+server {
+  charset utf-8;
+  listen 80 default_server;
+  server_name _;
+
+  # angular app & front-end files
+  location / {
+    root /opt/alina_frontend;
+    try_files $uri /index.html;
+  }
+
+  # node api reverse proxy
+  location /api/ {
+    proxy_pass http://localhost:8000/;
+  }
+}server {
+  charset utf-8;
+    server_name silversoft.business; # managed by Certbot
+
+  # angular app & front-end files
+  location / {
+    root /opt/alina_frontend;
+    try_files $uri /index.html;
+  }
+
+  # node api reverse proxy
+  location /api/ {
+    proxy_pass http://localhost:8000/;
+  }
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/silversoft.business/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/silversoft.business/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}server {
+    if ($host = silversoft.business) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80 ;
+    server_name silversoft.business;
+    return 404; # managed by Certbot
+
+
+}

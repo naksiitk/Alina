@@ -77,8 +77,10 @@ export class AskFileComponent implements OnInit {
   }
   
   uploadfile(row : any){
-    console.log(this.dialog_size)
+    console.log(row)
     row["from_asked_dialog_box"]= true
+    // if(this.current_break_point == 1){row["mobile_view"]= true}
+    // else{row["mobile_view"]= false}
     this.dialog.open(AskDialogComponent,
       {
         width : this.dialog_size, 
@@ -86,11 +88,10 @@ export class AskFileComponent implements OnInit {
       }).afterClosed().subscribe(val => {
         if(val === 'save'){
           this.getAllaskedfiles();
-          console.log("hi")
+          // console.log("hi")
           //this.deletefile(row);
         }
       })
-      console.log(this.dialog_size)
     };
 
   openDialogDelete(row: any) {
@@ -165,7 +166,7 @@ export class AskFileComponent implements OnInit {
     {return true;}
     else
     {
-      console.log("hi")
+      // console.log("hi")
       return false;}
   }
 
@@ -176,6 +177,17 @@ export class AskFileComponent implements OnInit {
           width : this.dialog_size, 
           data:row
         })
+  }
+  add(row : any){
+    console.log(row)
+    this.dialog_size_function(this.current_break_point)
+    if(this.current_break_point == 1){row["mobile_view"]= true}
+    else{row["mobile_view"]= false}
+    this.dialog.open(AskDialogComponent,
+      {
+        width : this.dialog_size,
+        data:row
+      })
   }
 
  

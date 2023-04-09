@@ -2,7 +2,7 @@
 #@apiUrl = https://silversoft.business/api
 
 @JWT = 
-
+###
 GET {{apiUrl}}/doc/
 
 ###
@@ -97,4 +97,8 @@ GET {{apiUrl}}/doc/post_asked/from_asked_to_doc/id/1
 
 ###
 
-GET {{apiUrl}}/doc/client_doc_summary_delete/delete/640b8ae900706ad3ab294114
+GET {{apiUrl}}/doc/client_doc_summary_delete/delete/
+
+###
+
+GET {{apiUrl}}/doc/whatsapp_api1/123

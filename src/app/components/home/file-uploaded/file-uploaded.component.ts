@@ -203,4 +203,20 @@ export class FileUploadedComponent implements OnInit {
       })
   }
 
+  add(row : any){
+    this.dialog_size_function(this.current_break_point)
+    if(this.current_break_point == 1){row["mobile_view"]= true}
+    else{row["mobile_view"]= false}
+    
+    this.dialog.open(DialogComponent,
+      {
+        width : this.dialog_size,
+        data:row
+      }).afterClosed().subscribe(val => {
+        if(val === 'update'){
+          this.getAllfiles();
+        }
+      })
+  }
+
 }

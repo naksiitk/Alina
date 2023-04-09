@@ -10,6 +10,8 @@ const unlinkfile = util.promisify(fs.unlink);
 const multer = require("multer")
 const { uploadfile, getfile, deletefile, copyfile } = require('../services/s3')
 
+require('dotenv').config()
+const { sendMessage, getTextMessageInput } = require("../services/whatsapp_meta_api");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -434,6 +436,23 @@ router.put('/client_summary/seen/:id',getDoc,async(req,res)=>{
     }
 })
 
+router.get('/whatsapp_api1/:id', async(req, res)=>{
+    
+    var data = getTextMessageInput(919597221259, 'Welcome to the Movie Ticket Demo App for Node.js!');
+    // console.log(data)
+    await sendMessage(data)
+      .then(function (response) {
+        res.status(200).json({message: "success"});
+        return;
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log(error.response.data);
+        res.sendStatus(500);
+        return;
+      });
+  });
+
 //Deleting One
 router.delete('/:id' , [OpenJWT, getDoc, Access ], async(req,res)=>{
     try {
@@ -503,16 +522,16 @@ router.get('/client_doc_summary_delete/delete/:id' , async(req,res)=>{
     }
 })
 
-//Delete All
-// router.delete('/', async(req,res)=>{
-//     try {
-//         await docs.deleteMany();
-//         await client_doc_summary.deleteMany();
-//         res.status(200).json({message:'Deleted Successfully'});
-//     } catch (error) {
-//         res.status(500).json({message: error.message})
-//     }
-// })
+// Delete All
+router.delete('/', async(req,res)=>{
+    try {
+        await docs.deleteMany();
+        await client_doc_summary.deleteMany();
+        res.status(200).json({message:'Deleted Successfully'});
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
 
 async function getDoc(req,res, next)
 {

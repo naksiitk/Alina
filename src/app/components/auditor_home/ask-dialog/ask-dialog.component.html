@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Ask for a file</h1>
 <div mat-dialog-content>
     <form [formGroup] = "file_list">
-        <mat-form-field *ngIf="files_asked_upload==0" appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-form-field  appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>The File Related to</mat-label>
             <mat-select formControlName="purpose" placeholder="Purpose File Related to">
                 <mat-option value="GST">GST</mat-option>
@@ -10,26 +10,26 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="files_asked_upload==0"  appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-form-field   appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>File Name to be asked</mat-label>
             <input formControlName="filename" matInput placeholder="Provide File Name">
           </mat-form-field>
 
-        <mat-form-field *ngIf="files_asked_upload==0 && !(file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 100%;">
+        <mat-form-field *ngIf=" !(file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 100%;">
             <mat-label>Financial Year</mat-label>
             <mat-select formControlName="fy" placeholder="F.Y">
                 <mat-option *ngFor="let year of years" [value]="year">{{ year }} </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="files_asked_upload==0 && (file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 56%; margin-right: 1%;">
+        <mat-form-field *ngIf=" (file_list.value.purpose == 'TDS' || file_list.value.purpose == 'GST')" appearance="outline" style="margin-top: 1%; width: 56%; margin-right: 1%;">
             <mat-label>Financial Year</mat-label>
             <mat-select formControlName="fy" placeholder="F.Y"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option *ngFor="let year of years" [value]="year">{{ year }} </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="files_asked_upload==0 && file_list.value.purpose == 'TDS' " appearance="outline" style="width: 40%;">
+        <mat-form-field *ngIf=" file_list.value.purpose == 'TDS' " appearance="outline" style="width: 40%;">
             <mat-label>Quarter</mat-label>
             <mat-select formControlName="month_quarter" placeholder="Quarter"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option value="Q1">Q1</mat-option>
@@ -39,7 +39,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="files_asked_upload==0 && file_list.value.purpose == 'GST' " appearance="outline" style=" width: 40%;">
+        <mat-form-field *ngIf=" file_list.value.purpose == 'GST' " appearance="outline" style=" width: 40%;">
             <mat-label>Month</mat-label>
             <mat-select formControlName="month_quarter" placeholder="Month"> <!-- formControlName="purpose" placeholder="Purpose of uploading"> -->
                 <mat-option value="Apr">Apr</mat-option>
@@ -64,11 +64,12 @@
               <textarea formControlName="files_uploaded" mat-raised-button color="basic" style="width: 100%; margin-bottom: 6%;">Upload File</textarea>
           </div> -->
     </form>
-    <span style="font-size:10px ; color: red;"> *Mutltiple files can be uploaded <br> *Total File size < 1Mb </span>
+    <span style="font-size:10px ; color: blue;"> *Mutltiple files can be uploaded </span> <br>
+        <span *ngIf="this.size_files > 9000000" style="font-size:20px ; color: red;"> *Total File size < 9Mb </span>
     <input type="file" class="file-input" (change)="upload($event)" multiple #fileUpload>
         <div  mat-dialog-action [align]="'center'" class="file-upload" style="margin-bottom: 0%;">
             <!-- {{fileName || "No file uploaded yet."}} -->
-            <button mat-mini-fab color="primary" class="upload-btn"
+            <button disabled="{{this.file_upload_button_lock}}" mat-mini-fab color="primary" class="upload-btn"
             (click)="fileUpload.click()">
                 <mat-icon>attach_file</mat-icon>
             </button>
@@ -95,7 +96,8 @@
         </table>
 
     <div  mat-dialog-action [align]="'center'">
-        <button mat-raised-button color="warn" style="margin-top: 10% !important; margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+        <button *ngIf="this.size_files <= 9000000" disabled="{{this.file_upload_button_lock}}" mat-raised-button color="warn" style="margin-top: 10% !important; margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
+        <button *ngIf="this.size_files > 9000000" disabled="true" mat-raised-button color="warn" style="margin-top: 10% !important; margin-right: 4%; width: 45%;" (click) = "AddProduct()">{{actionBtn}}</button>
         <button mat-raised-button color="primary" style="width: 45%; margin-top: 10% !important;" mat-dialog-close>Close</button>
     </div>
             

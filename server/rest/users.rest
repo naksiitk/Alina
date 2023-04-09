@@ -1,5 +1,5 @@
-@apiUrl = http://localhost:8000
-# @apiUrl = https://silversoft.business/api
+#@apiUrl = http://localhost:8000
+@apiUrl = https://silversoft.business/api
 
 @JWT = 
 
@@ -62,7 +62,7 @@ POST {{apiUrl}}/user/generate_otp
 Content-Type: application/json
 
 {
-    "email": "2"
+    "email": "arasuaudit@gmail.com"
 }
 
 ###
@@ -71,13 +71,13 @@ POST {{apiUrl}}/user/signup
 Content-Type: application/json
 
 {
-    "email": "2",
-    "password": "2",
-    "mobile": "9887241556",
-    "user_name": "reithick",
-    "user_type": "client",
-    "PAN": "MOPJD4592D",
-    "OTP": "cbHDT"
+    "email": "arasuaudit@gmail.com",
+    "password": "Arasuaudit@1",
+    "mobile": "9443245889",
+    "user_name": "Arasu & Assoicates",
+    "user_type": "auditor",
+    "PAN": "AFFPA9322K",
+    "OTP": "YoryR"
 }
 
 ###
