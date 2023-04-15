@@ -186,6 +186,7 @@ router.post('/post' , upload.array("files"),async(req,res)=>{
                 return res.status(400).json({Status: error.message}) // Log an error
         });
 
+        await files_uploaded_mail({body: req.body, name: name,files_uploads: files_uploads})
         res.status(201).json(newDoc_client);
     } catch (error) {
         return res.status(400).json({Status: error.message})
@@ -581,6 +582,7 @@ router.delete('/client_doc_summary/delete/:id',  async(req,res)=>{
 })
 
 const JWT = require('jsonwebtoken')
+const { files_uploaded_mail } = require('../services/mail')
 
 function OpenJWT(req, res, next) {
     const authHeader = req.headers.authorization
