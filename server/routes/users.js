@@ -5,7 +5,7 @@ const otp = require('../models/otp')
 const bcrypt = require('bcrypt')
 const client_doc_summary = require('../models/client_doc_summary')
 const { generateOTP } = require('../services/otp'); 
-const { sendOTP_mail, onboard_mail, ask_mail, reminder_mail, delete_mail, verified_mail } = require('../services/mail')
+const { sendOTP_mail, onboard_mail, ask_mail, reminder_mail, delete_mail, verified_mail, new_signup_mail } = require('../services/mail')
 
 //Getting all
 router.get('/', async (req, res) =>{
@@ -185,8 +185,11 @@ router.post('/signup', async (req, res) =>{
 
     if(OTP_in_db.OTP != req.body.OTP) return res.status(400).json({Status : "OTP not correct"})
 
-    
-    
+    req.body.PAN = req.body.PAN.toUpperCase() 
+    let PAN1 = req.body.PAN.toString()
+    const regex = new RegExp('[A-Z]{5}[0-9]{4}[A-Z]');
+    if(!regex.test(PAN1)) return res.status(400).json({Status : "PAN incorrect " + req.body.PAN})
+
     try{
         const salt = await bcrypt.genSalt()
         let hashedpassword = await bcrypt.hash(req.body.password, salt)
@@ -206,6 +209,7 @@ router.post('/signup', async (req, res) =>{
         })
         const newUser = await user.save()
         res.status(201).json(newUser)
+        await new_signup_mail(newUser)
     } catch (err) {
         res.status(400).json({ message: err.message})
     }
