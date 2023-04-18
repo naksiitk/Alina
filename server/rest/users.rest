@@ -1,5 +1,5 @@
-#@apiUrl = http://localhost:8000
-@apiUrl = https://silversoft.business/api
+@apiUrl = http://localhost:8000
+#@apiUrl = https://silversoft.business/api
 
 @JWT = 
 
@@ -76,7 +76,7 @@ Content-Type: application/json
     "mobile": "9443245889",
     "user_name": "Arasu & Assoicates",
     "user_type": "auditor",
-    "PAN": "AFFPA9322K",
+    "PAN": "CJNPB3571B1",
     "OTP": "YoryR"
 }
 

@@ -24,7 +24,7 @@
     <!-- Value from default config. -->
     <string name="launchUrl" translatable="false">https://silversoft.business/login/</string>
     <!-- Value from default config. -->
-    <string name="launcherName" translatable="false">Alina</string>
+    <string name="launcherName" translatable="false">Arasuaudit</string>
     <!-- Value from default config. -->
     <color name="navigationColor">#000000</color>
     <!-- Value from default config. -->

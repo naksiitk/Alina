@@ -835,9 +835,9 @@ androidx.core.text.util.FindAddress$ZipRange
 androidx.core.view.VelocityTrackerCompat
 business.silversoft.twa.R$id
 androidx.core.text.PrecomputedTextCompat$PrecomputedTextFutureTask$PrecomputedTextCallback
-business.silversoft.twa.R$style
 androidx.lifecycle.LifecycleRegistry$1
 androidx.browser.customtabs.CustomTabsSessionToken$1
+business.silversoft.twa.R$style
 androidx.core.app.ActivityRecreator$3
 androidx.core.widget.TintableCompoundButton
 androidx.browser.trusted.TrustedWebActivityServiceConnection$NotificationsEnabledArgs:
